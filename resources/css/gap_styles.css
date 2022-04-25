@@ -1,0 +1,115 @@
+/*NORMALIZE hace que todos los elementos se vean consistentes en los diferentes navegadores.
+Por lo tanto, ha de ser la PRIMERA libreria que cargue el archivo index.html*/
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+ @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap");
+ html {
+   line-height: 1.15;
+   /* 1 */
+   -webkit-text-size-adjust: 100%;
+   /* 2 */
+ }
+
+ h1 {
+    font-size: 3.6rem;
+  }
+
+
+ a {
+    font-family: "Montserrat", sans-serif;
+    text-decoration: none;
+  }
+
+
+.logo_y_contactos-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+
+
+
+.logo_y_nombre-empresa {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .logo_y_nombre-empresa a > img {
+    height: 65px;
+  }
+
+  .logo_y_nombre-empresa a {
+    color: #1C1C1C;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+
+.datos-contacto {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+  }
+.dato_icono-valor {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+  
+  .dato_icono-valor p{
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #1C1C1C;
+    margin: 0;
+  }
+
+
+  .banner_y_slider-contenedor {
+    background-color: #1C1C1C;  /*editar a #1C1C1C*/
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+  }
+
+
+
+
+
+  .contenedor_slider-marcas {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+  }
+
+
+  
+  #slider-marcas {
+    width: 2000px;
+    height: 70px;
+    background-image: url(/images/banner-carrusel.png);
+    background-size: 100% 100%;
+    animation: slider 25s infinite linear;
+    background-repeat: repeat;
+    animation-direction: reverse;
+  }
+
+  
+@keyframes slider {
+    to {
+      background-position: 2001px;
+    }
+  }
+
+  img {
+    max-width: 100%;
+  }
