@@ -345,47 +345,47 @@
         <!-- FIN Todos los archivos JS -->
 
         <!-- jQuery-V1.12.4 -->
-        <!-- <script src="js/vendor/jquery-1.12.4.min.js"></script> -->
+        <!-- <script src="../js_original/vendor/jquery-1.12.4.min.js"></script> -->
         <!-- Popper js -->
-        <!-- <script src="js/vendor/popper.min.js"></script> -->
+        <!-- <script src="../js_original/vendor/popper.min.js"></script> -->
         <!-- Bootstrap V4.1.3 Fremwork js -->
-        <!-- <script src="js/bootstrap.min.js"></script> -->
+        <!-- <script src="../js_original/bootstrap.min.js"></script> -->
         <!-- Ajax Mail js -->
-        <!-- <script src="js/ajax-mail.js"></script> -->
+        <!-- <script src="../js_original/ajax-mail.js"></script> -->
         <!-- Meanmenu js -->
-        <!-- <script src="js/jquery.meanmenu.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.meanmenu.min.js"></script> -->
         <!-- Wow.min js -->
-        <!-- <script src="js/wow.min.js"></script> -->
+        <!-- <script src="../js_original/wow.min.js"></script> -->
         <!-- Slick Carousel js -->
-        <!-- <script src="js/slick.min.js"></script> -->
+        <!-- <script src="../js_original/slick.min.js"></script> -->
         <!-- Owl Carousel-2 js -->
-        <!-- <script src="js/owl.carousel.min.js"></script> -->
+        <!-- <script src="../js_original/owl.carousel.min.js"></script> -->
         <!-- Magnific popup js -->
-        <!-- <script src="js/jquery.magnific-popup.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.magnific-popup.min.js"></script> -->
         <!-- Isotope js -->
-        <!-- <script src="js/isotope.pkgd.min.js"></script> -->
+        <!-- <script src="../js_original/isotope.pkgd.min.js"></script> -->
         <!-- Imagesloaded js -->
-        <!-- <script src="js/imagesloaded.pkgd.min.js"></script> -->
+        <!-- <script src="../js_original/imagesloaded.pkgd.min.js"></script> -->
         <!-- Mixitup js -->
-        <!-- <script src="js/jquery.mixitup.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.mixitup.min.js"></script> -->
         <!-- Countdown -->
-        <!-- <script src="js/jquery.countdown.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.countdown.min.js"></script> -->
         <!-- Counterup -->
-        <!-- <script src="js/jquery.counterup.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.counterup.min.js"></script> -->
         <!-- Waypoints -->
-        <!-- <script src="js/waypoints.min.js"></script> -->
+        <!-- <script src="../js_original/waypoints.min.js"></script> -->
         <!-- Barrating -->
-        <!-- <script src="js/jquery.barrating.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.barrating.min.js"></script> -->
         <!-- Jquery-ui -->
-        <!-- <script src="js/jquery-ui.min.js"></script> -->
+        <!-- <script src="../js_original/jquery-ui.min.js"></script> -->
         <!-- Venobox -->
-        <!-- <script src="js/venobox.min.js"></script> -->
+        <!-- <script src="../js_original/venobox.min.js"></script> -->
         <!-- Nice Select js -->
-        <!-- <script src="js/jquery.nice-select.min.js"></script> -->
+        <!-- <script src="../js_original/jquery.nice-select.min.js"></script> -->
         <!-- ScrollUp js -->
-        <!-- <script src="js/scrollUp.min.js"></script> -->
+        <!-- <script src="../js_original/scrollUp.min.js"></script> -->
         <!-- Main/Activator js -->
-        <!-- <script src="js/main.js"></script> -->
+        <!-- <script src="../js_original/main.js"></script> -->
     </body>
 
 <!-- index30:23-->

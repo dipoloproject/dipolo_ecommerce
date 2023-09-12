@@ -19,10 +19,9 @@ const mix = require('laravel-mix');
 
 //  COMPILACION: CSS y JS
 mix.styles([
-            'resources/css/gap_styles.css',
+            // 'resources/css/fontawesome.releases.v5.0.1.css.all.css',
             'resources/css/material-design-iconic-font.min.css',
-            'resources/css/font-awesome.min.css',
-            /*'resources/css/fontawesome.releases.v5.0.1.css.all.css',        */
+            'resources/css/font-awesome.min.css',            
             'resources/css/fontawesome-stars.css',
             'resources/css/meanmenu.css',
             'resources/css/owl.carousel.min.css',
@@ -35,9 +34,13 @@ mix.styles([
             'resources/css/bootstrap.min.css',
             'resources/css/helper.css',
             'resources/css/style.css',
-            'resources/css/responsive.css'
+            'resources/css/responsive.css',
+            'resources/css/gap_styles.css',
             
 ], 'public/css/all.css')
+
+
+
 .scripts([
             'resources/js/vendor/modernizr-2.8.3.min.js',
             'resources/js/vendor/jquery-1.12.4.min.js',        
@@ -61,6 +64,7 @@ mix.styles([
             'resources/js/jquery.nice-select.min.js',
             'resources/js/scrollUp.min.js',
             'resources/js/main.js',
+
 ], 'public/js/all.js');
 //
 
