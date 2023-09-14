@@ -1553,6 +1553,7 @@ textarea:focus {
 		line-height: 45px;
 		font-weight: 500;
 }
+/*	Estilo comentado
 .item-text::before {
 		content: "";
 		position: absolute;
@@ -1562,6 +1563,7 @@ textarea:focus {
 		background: rgba(255,255,255,.3);
 		top: -3px;
 }
+*/
 .cart-item-count {
 		position: absolute;
 		top: -25px;

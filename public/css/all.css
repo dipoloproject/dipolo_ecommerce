@@ -14231,6 +14231,7 @@ textarea:focus {
 		line-height: 45px;
 		font-weight: 500;
 }
+/*	Estilo comentado
 .item-text::before {
 		content: "";
 		position: absolute;
@@ -14240,6 +14241,7 @@ textarea:focus {
 		background: rgba(255,255,255,.3);
 		top: -3px;
 }
+*/
 .cart-item-count {
 		position: absolute;
 		top: -25px;
@@ -19202,3 +19204,117 @@ Por lo tanto, ha de ser la PRIMERA libreria que cargue el archivo index.html*/
   img {
     max-width: 100%;
   }
+
+
+
+/*Estilos para el boton del carrito de compras*/
+  .hm-minicart-trigger {
+		border-radius: 10px;  /*estilo editado (redondeo de esquinas) 2px*/
+		/*background: #0484bc;  /* estilo editado #e80f0f */
+    background: #333333;
+		color: #fff;
+		height: 45px;
+		cursor: pointer;
+		display: block;
+		position: relative;
+		padding: 0 15px 0 55px;
+}
+
+/*Estilos para el boton del carrito de compras para que cambie de color al pasar el cursor por encima*/
+/*.hm-minicart-trigger:hover {
+	background: #0484bc;  /*estilo editado #333333*/
+/*	color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}*/
+
+
+/*Estilos para el simbolo del carrito de compras*/
+.item-icon::before {
+  content: "\f07a"; /*estilo editado*/
+  position: absolute;
+  font-family: fontawesome;
+  left: 10px;
+  top: 6px;
+  display: block;
+  font-size: 20px;
+}
+
+/*Estilos para el boton de buscar que tiene la lupita. El boton esta en la pantalla de HOME*/
+button.li-btn {
+	border: none;
+	background: #333333;/*estilo editado #fed700*/
+	color: #ffffff; /*estilo editado #242424*/
+	font-size: 20px;
+	width: 45px;
+	border-radius: 0 2px 2px 0;
+	height: 45px;
+	line-height: 45px;
+	position: absolute;
+	right: -1px;
+	top: -1px;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+button.li-btn:hover {
+	background: #0484bc;  /*estilo editado #333333*/
+	color: #ffffff;
+}
+
+
+
+/*Estilos del numerito encima del corazon de favoritos y del carrito de compras*/
+.cart-item-count {
+  position: absolute;
+  top: -15px;   /*-25*/
+  left: -60px;
+  display: block;
+  overflow: hidden;
+  min-width: 26px;
+  line-height: 26px;
+  font-size: 12px;
+  font-weight: 700;       /*400*/
+  color: #ffffff;       /*#242424*/
+  background: #0484bc;  /*#fed700*/
+  text-align: center;
+  border-radius: 100%;
+}
+/*este etilo está copiado y no se modificó, sólo que es necesario que esté puesto aqui para no dañar los estilos*/
+.wishlist-item-count {
+  top: -10px;
+  left: -10px;
+}
+/*\.Estilos del numerito encima del corazon de favoritos y del carrito de compras*/
+
+/*Esta clase fue eliminada de la hora de estilos style_css. se la resguarda aqui por las dudas*/
+/*.item-text::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  height: 22px;
+  width: 1px;
+  background: rgba(255,255,255,.3);
+  top: -3px;
+}*/
+
+
+
+/*Estilos para el corazon de Lista de deseos*/
+.hm-wishlist > a {
+	border: 0px solid #e1e1e1;  /*1px solid #e1e1e1*/
+  background: #242424;
+  border-radius: 50%;
+	font-size: 20px;
+	color: #ffffff;
+	width: 45px;
+	text-align: center;
+	height: 45px;
+	line-height: 45px;
+	display: block;
+	transition: all 0.3s ease-in-out;
+}
+
+.hm-wishlist > a:hover {
+	background: #242424;  /*estilo editado #333333*/
+	color: #0484bc;
+}
+/*\.Estilos para el corazon de Lista de deseos*/

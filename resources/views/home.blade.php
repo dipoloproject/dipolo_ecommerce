@@ -72,58 +72,23 @@
                 <!-- Begin Header Middle Area -->
                 <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
                     <div class="container">
-                        <div class="row logo_y_contactos-row">
+                        <div class="row">
                             <!-- Begin Header Logo Area -->
                             <div class="col-lg-3">
-
                                 <div class="logo pb-sm-30 pb-xs-30">
-                                    <div class="logo_y_nombre-empresa">
-                                            <a href="#">
-                                                <img src="/images/logo-DIPOLO.png" alt="logo_dipolo">
-                                            </a>
-                                            <a href="#">
-                                                DIPOLO
-                                            </a>
-                                    </div> <!-- FIN class="logo_y_nombre-empresa" -->
+                                    <a href="#">
+                                        <img src="/images/logo-DIPOLO.png" alt="logo_dipolo" height=50px>
+                                        <span class="h3 font-weight-bold text-dark align-middle">
+                                            DIPOLO
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                             <!-- Header Logo Area End Here -->
-                            
-                            <!-- Datos de contacto -->
-                            <div class="datos-contacto"><!-- Telefono, Whatsapp y Correo electronico -->
-                                <div class="dato_icono-valor">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-                                    </svg><!-- svg de telefono -->
-                                    <p>(0381) 4276926</p>
-                                </div><!-- telefono -->
-                
-                                <div class="dato_icono-valor">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
-                                        <path d="M9 10a0.5 .5 0 0 0 1 0v-1a0.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a0.5 .5 0 0 0 0 -1h-1a0.5 .5 0 0 0 0 1" />
-                                    </svg><!-- svg de whatsapp -->
-                                    <p>(0381) 153312204</p>
-                                </div><!-- whatsapp -->
-                
-                                <div class="dato_icono-valor">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#ffbf00" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <rect x="3" y="5" width="18" height="14" rx="2" />
-                                        <polyline points="3 7 12 13 21 7" />
-                                    </svg><!-- svg de correo electronico -->
-                                    <p>info@dipolo.com.ar</p>
-                                </div><!-- correo electronico -->
-                            </div><!-- datos de contacto -->
-                            <!-- FIN Datos de contacto -->
-
-
                             <!-- Begin Header Middle Right Area -->
-                            <!-- <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15"> -->
+                            <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                                 <!-- Begin Header Middle Searchbox Area -->
-                                <!-- <form action="#" class="hm-searchbox">
+                                <form action="#" class="hm-searchbox">
                                     <select class="nice-select select-search-category">
                                         <option value="0">All</option>                         
                                         <option value="10">Laptops</option>                     
@@ -198,24 +163,25 @@
                                     </select>
                                     <input type="text" placeholder="Enter your search key ...">
                                     <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
-                                </form> -->
+                                </form>
                                 <!-- Header Middle Searchbox Area End Here -->
                                 <!-- Begin Header Middle Right Area -->
-                                <!-- <div class="header-middle-right">
-                                    <ul class="hm-menu"> -->
+                                <div class="header-middle-right">
+                                    <ul class="hm-menu">
                                         <!-- Begin Header Middle Wishlist Area -->
-                                        <!-- <li class="hm-wishlist">
+                                        <li class="hm-wishlist">
                                             <a href="wishlist.html">
                                                 <span class="cart-item-count wishlist-item-count">0</span>
-                                                <i class="fa fa-heart-o"></i>
+                                                <i class="fa fa-heart"></i>
                                             </a>
-                                        </li> -->
+                                        </li>
                                         <!-- Header Middle Wishlist Area End Here -->
                                         <!-- Begin Header Mini Cart Area -->
-                                        <!-- <li class="hm-minicart">
+                                        <li class="hm-minicart">
                                             <div class="hm-minicart-trigger">
                                                 <span class="item-icon"></span>
-                                                <span class="item-text">£80.00
+                                                <span class="item-text">
+                                                                        <!-- £80.00 -->
                                                     <span class="cart-item-count">2</span>
                                                 </span>
                                             </div>
@@ -259,10 +225,10 @@
                                             </div>
                                         </li>
                                         <!-- Header Mini Cart Area End Here -->
-                                    <!-- </ul> -->
-                                <!-- </div> -->
+                                    </ul>
+                                </div>
                                 <!-- Header Middle Right Area End Here -->
-                            <!-- </div> -->
+                            </div>
                             <!-- Header Middle Right Area End Here -->
                         </div>
                     </div>
@@ -277,12 +243,9 @@
                                 <div class="hb-menu">
                                     <nav>
                                         <ul>
-                                            
                                             <li class="home">
                                                 <a href="index.html" class="fa fa-home" style="font-size: x-large;"></a>
                                             </li>
-                                            
-                                            
                                             <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
                                                 <ul class="megamenu hb-megamenu">
                                                     <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
@@ -407,6 +370,16 @@
                 </div>
                 <!-- Header Bottom Area End Here -->
 
+                <!-- Begin Mobile Menu Area -->
+                <div class="mobile-menu-area d-lg-none d-xl-none col-12">
+                    <div class="container"> 
+                        <div class="row">
+                            <div class="mobile-menu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile Menu Area End Here -->
 
                 <!-- ANIMACION + BANNER -->
                 <div class="banner_y_slider-contenedor">
@@ -422,19 +395,6 @@
                 </div>
                 <!-- FIN ANIMACION + BANNER -->
 
-
-
-
-                <!-- Begin Mobile Menu Area -->
-                <div class="mobile-menu-area d-lg-none d-xl-none col-12">
-                    <div class="container"> 
-                        <div class="row">
-                            <div class="mobile-menu">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Mobile Menu Area End Here -->
             </header>
             <!-- Header Area End Here -->
             <!-- Begin Slider With Banner Area -->
