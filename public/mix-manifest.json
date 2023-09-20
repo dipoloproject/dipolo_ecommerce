@@ -1,4 +1,8 @@
 {
+    "/css/administration/administration_all.css": "/css/administration/administration_all.css",
+    "/css/administration/datatables.css": "/css/administration/datatables.css",
+    "/js/administration/administration_all.js": "/js/administration/administration_all.js",
+    "/js/administration/datatables.js": "/js/administration/datatables.js",
     "/css/all.css": "/css/all.css",
     "/js/all.js": "/js/all.js"
 }
