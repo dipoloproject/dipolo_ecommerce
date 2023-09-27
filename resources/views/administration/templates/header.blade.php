@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="csrf-token" class="csrf-token" content="{{ csrf_token() }}">
+
   <title>AdminLTE 3 | Dashboardasdffa</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -501,6 +504,42 @@
 
 
 		<!-- OPCIONES -->
+      <li class="nav-item">
+				<a href="#" class="nav-link">
+          <!-- <i class="nav-icon fas">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+              <path d="M15 16L20 21M20 16L15 21M4 21C4 17.134 7.13401 14 11 14M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </i> -->
+					<i class="nav-icon fas fa-tags" style="color:#01c4e7;"></i>
+					<p>
+						Marcas y modelos
+						<i class="fas fa-angle-left right"></i>
+					</p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+						<a href="pages/tables/simple.html" class="nav-link">
+							<i class="fas fa-list nav-icon" style="color:#ffffff;"></i>
+              <!-- <i class="nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="20px" height="20px" viewBox="-1 0 19 19" class="cf-icon-svg"><path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zM5.164 6.17a.792.792 0 0 0-.792-.792H4.37a.792.792 0 0 0 0 1.583h.002a.792.792 0 0 0 .792-.791zm0 3.475a.792.792 0 0 0-.792-.791H4.37a.792.792 0 0 0 0 1.583h.002a.792.792 0 0 0 .792-.792zm0 3.476a.792.792 0 0 0-.792-.791H4.37a.792.792 0 1 0 0 1.583h.002a.792.792 0 0 0 .792-.792zM13.45 6.17a.792.792 0 0 0-.792-.791H6.922a.792.792 0 1 0 0 1.583h5.736a.792.792 0 0 0 .792-.791zm0 3.476a.792.792 0 0 0-.792-.791H6.922a.792.792 0 1 0 0 1.583h5.736a.792.792 0 0 0 .792-.792zm0 3.476a.792.792 0 0 0-.792-.791H6.922a.792.792 0 1 0 0 1.583h5.736a.792.792 0 0 0 .792-.792z"/></svg>
+              </i> -->
+							<p>Ver todos</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="pages/tables/data.html" class="nav-link">
+              <!-- <i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="20px" height="20px" viewBox="-1.7 0 20.4 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"/></svg>
+              </i> -->
+							<i class="fas fa-plus-circle nav-icon" style="color:#ffffff;"></i>
+							<p>Agregar</p>
+						</a>
+					</li>
+				</ul>
+			</li>
+
+
 			<li class="nav-item">
 				<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-users" style="color:#a1d9d9;"></i>
@@ -527,7 +566,10 @@
 
 			<li class="nav-item">
 				<a href="#" class="nav-link">
-					<i class="nav-icon fas fa-tags text-danger"></i>
+          <i class="nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#ff3d00" width="20px" height="20px" viewBox="0 0 20 20"><path d="M12.825 10.653c.118-.258.445-.497.727-.529s.539-.29.571-.572c.034-.28.272-.608.529-.727a.69.69 0 0 0 .369-.72c-.058-.278.068-.663.276-.854a.689.689 0 0 0 .127-.801 1.017 1.017 0 0 1 0-.897.688.688 0 0 0-.127-.801c-.208-.193-.333-.577-.276-.854a.691.691 0 0 0-.369-.722 1.03 1.03 0 0 1-.529-.727.689.689 0 0 0-.571-.572 1.024 1.024 0 0 1-.727-.528.686.686 0 0 0-.722-.366 1.024 1.024 0 0 1-.854-.278c-.193-.21-.553-.266-.8-.127s-.652.139-.898 0a.684.684 0 0 0-.801.125 1.022 1.022 0 0 1-.854.278.685.685 0 0 0-.72.367c-.119.256-.446.495-.728.527a.69.69 0 0 0-.572.573 1.023 1.023 0 0 1-.529.726.69.69 0 0 0-.366.722c.055.277-.07.662-.278.854s-.266.552-.127.801c.139.246.139.651 0 .897a.69.69 0 0 0 .127.802c.209.19.333.575.278.854a.687.687 0 0 0 .366.72c.258.119.495.447.528.727.034.282.29.54.572.572s.609.272.728.529a.688.688 0 0 0 .72.366c.278-.055.663.069.854.278a.69.69 0 0 0 .801.127c.246-.139.651-.139.898 0s.607.081.8-.127c.193-.21.576-.333.854-.278a.69.69 0 0 0 .723-.365zM10 9.399a3.4 3.4 0 1 1 0-6.8 3.4 3.4 0 0 1 0 6.8zm-4.025 2.01l-1.243 7.049 3.128-.464 2.781 1.506 1.238-7.021a6.707 6.707 0 0 1-5.904-1.07zm7.986.048a6.741 6.741 0 0 1-.99.597l-.748 4.236 3.369-1.828-1.631-3.005z"/></svg>
+          </i>
+					<!-- <i class="nav-icon fas fa-tags text-danger"></i> -->
 					<p>
 						Categorias
 						<i class="fas fa-angle-left right"></i>
@@ -589,7 +631,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="pages/tables/data.html" class="nav-link">
+						<a href="{{route('administracion.productos.agregar')}}" class="nav-link">
 							<i class="fas fa-plus-circle nav-icon" style="color:#588100;"></i>
 							<p>Agregar</p>
 						</a>
@@ -956,25 +998,7 @@
               <p>Level 1</p>
             </a>
           </li>
-          <li class="nav-header">LABELS</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Important</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-warning"></i>
-              <p>Warning</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
-              <p>Informational</p>
-            </a>
-          </li>
+          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

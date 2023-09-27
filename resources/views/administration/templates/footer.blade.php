@@ -17,9 +17,10 @@
 
 
 <!-- Todos los archivos JS -->
-<script src="{{asset("js./administration/administration_all.js")}}"></script>
+	<!-- El archivo administration_all.js genera conflictos (comportamientos dinamicos) al cohexistir con datatables.js, por eso sólo se usa datatables.js -->
+		<!-- <script src="{{asset("js./administration/administration_all.js")}}"></script> -->
 
-
+	<script src="{{asset("js./administration/datatables.js")}}"></script>
 
 <!-- \.Todos los archivos JS -->
 
@@ -29,9 +30,9 @@
 <!-- jQuery UI 1.11.4 -->
 <!-- <script src="adminlte3/plugins/jquery-ui/jquery-ui.min.js"></script> -->
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
+    <!-- <script>
+      $.widget.bridge('uibutton', $.ui.button)
+    </script> -->
 <!-- Bootstrap 4 -->
 <!-- <script src="adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 <!-- ChartJS -->
@@ -60,7 +61,7 @@
 <!-- <script src="adminlte3/dist/js/pages/dashboard.js"></script> -->
 
 
-<script src="{{asset("js./administration/datatables.js")}}"></script>
+<!-- <script src="{{asset("js./administration/datatables.js")}}"></script> -->
 
 
 </body>

@@ -42,6 +42,7 @@ const mix = require('laravel-mix');
         ], 'public/css/administration/administration_all.css')
 
 
+        // ESTILOS PARA DATATABLES
         mix.styles([
             'resources/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
             'resources/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
@@ -52,7 +53,7 @@ const mix = require('laravel-mix');
         .scripts([
             'resources/adminlte3/plugins/jquery/jquery.min.js',
             'resources/adminlte3/plugins/jquery-ui/jquery-ui.min.js',
-
+            'resources/adminlte3/plugins/resolve_conflict_in_jQuery_UI_tooltip_with_Bootstrap_tooltip.js',
             'resources/adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js',        
             'resources/adminlte3/plugins/chart.js/Chart.min.js',
             'resources/adminlte3/plugins/sparklines/sparkline.js',
@@ -70,6 +71,7 @@ const mix = require('laravel-mix');
         ], 'public/js/administration/administration_all.js')
 
 
+        // JS PARA DATATALES
         .scripts([
                 'resources/adminlte3/plugins/jquery/jquery.min.js',
                 'resources/adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js',
