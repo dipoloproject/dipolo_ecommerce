@@ -73,6 +73,74 @@ class ProductsController extends Controller
     }
 
 
+
+    
+    public function subir_archivos_productos(Request $request){
+
+        //return $request->file('archivos')[1];exit;
+        $request->validate([    //  impone condiciones a cada elemento del array archivos
+            'archivos'=> 'required|array|min:1',
+            'archivos.*'=> 'required|image|max:2048'
+        ]);
+        return $request->all();
+        
+
+        echo "fin";exit;
+
+        $conteo = count($_FILES["archivos"]["name"]);   //var_dump($conteo);exit;
+        for ($i = 0; $i < $conteo; $i++) {
+            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
+            $nombreArchivo = $_FILES["archivos"]["name"][$i];
+            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            // Renombrar archivo
+                $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
+            // Mover del temporal al directorio actual
+                    //echo $nuevoNombre."<br>";
+                    //echo $extension."<br>";
+                    //echo filesize($_FILES["archivos"]["tmp_name"][$i])."<br>";  // tamaño en bytes del archivo
+                //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
+        }
+        // Responder al cliente
+        //echo json_encode(true);
+        
+        
+        
+        exit;
+                
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            return response()->json([
+                //'hay_registros'=> $hay_registros,
+                'modelos'=> $modelos
+            ]); //  esto se retorn al ajax
+    }
+
+
+    /*public function subir_archivos_productos(){
+        echo "adsf";exit;
+        $conteo = count($_FILES["archivos"]["name"]);
+        for ($i = 0; $i < $conteo; $i++) {
+            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
+            $nombreArchivo = $_FILES["archivos"]["name"][$i];
+            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            // Renombrar archivo
+                $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
+            // Mover del temporal al directorio actual
+                //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
+        }
+        // Responder al cliente
+        echo json_encode(true);
+    }*/
+
+
+
+
+
     /**
      * Show the form for creating a new resource.
      *

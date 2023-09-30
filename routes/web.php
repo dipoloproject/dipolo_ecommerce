@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('/admin/productos/crear', [ProductsController::class, 'crear'])->name('administracion.productos.agregar');
     
     Route::post('/ajax_fetch_modelos', [ProductsController::class, 'buscar_xmarca']);
+    Route::post('/subir_archivos_productos', [ProductsController::class, 'subir_archivos_productos']);
+    Route::post('/admin/productos/formulario', [ProductsController::class, 'formulario'])->name('administracion.productos.formulario');
 
 //  ECOMMERCE
 

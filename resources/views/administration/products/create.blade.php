@@ -76,17 +76,18 @@
             <!-- left column -->
             <div class="col-md-12">
                 <!-- general form elements -->
-                    <div class="card card-primary">
+                    <div class="card card-primary formulario">
                         <div class="card-header">
                             <h3 class="card-title text-bold">Formulario de creación</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form enctype='multipart/form-data' method='POST' action="#">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Marca</label>
                                     <select class="form-control select2" 
+                                            name="input_marca"        
                                             id="input_marca"
                                             style="width: 100%;">
                                                     <option value="" selected>-</option>
@@ -98,6 +99,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Modelo</label>
                                     <select class="form-control select2" 
+                                            name="input_modelo"
                                             id="input_modelo"
                                             style="width: 100%;">
                                                     <option value="" selected>-</option>
@@ -107,6 +109,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Categoría</label>
                                     <select class="form-control select2" 
+                                            name="input_categoria"
                                             id="input_categoria"
                                             style="width: 100%;">
                                                     <option value="" selected>-</option>
@@ -117,28 +120,34 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Nombre</label>
-                                    <input type="text" class="form-control" id="input_nombre" placeholder="Nombre del producto">
+                                    <input  type="text" 
+                                            class="form-control" 
+                                            name="input_nombre" 
+                                            id="input_nombre" 
+                                            placeholder="Nombre del producto">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Es destacado</label>
                                     <select class="form-control select2" 
+                                            name="input_es_destacado"
                                             id="input_es_destacado"
                                             style="width: 100%;">
-                                                    <option value="-" selected>-</option>
+                                                    <option value="" selected>-</option>
                                                     <option value="N">NO</option>
                                                     <option value="S">SI</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Stock</label>
-                                    <input type="number" class="form-control" id="input_stock">
+                                    <input type="number" class="form-control" name="input_stock" id="input_stock">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Estado</label>
                                     <select class="form-control select2" 
+                                            name="input_estado"
                                             id="input_estado"
                                             style="width: 100%;">
-                                                    <option value="-" selected>-</option>
+                                                    <option value="" selected>-</option>
                                                     <option value="N">Nuevo</option>
                                                     <option value="U">Usado</option>
                                     </select>
@@ -147,8 +156,19 @@
                                     <label for="exampleInputFile">Imágenes</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="input_imagen">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                            <!-- <input  type="file" 
+                                                    class="custom-file-input" 
+                                                    name="input_imagen" 
+                                                    id="input_imagen"
+                                                    name='files[]' multiple> -->
+                                            <input  type="file" multiple 
+                                                    class="custom-file-input" 
+                                                    name="file"
+                                                    id="inputArchivos"
+                                                    accept="image/*">
+                                            <label  class="custom-file-label" 
+                                                    for="exampleInputFile">Choose file</label>
+                                            <output id="list"></output>
                                         </div>
                                         <!-- <div class="input-group-append">
                                             <span class="input-group-text">Upload</span>
@@ -163,7 +183,9 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" 
+                                    class="btn btn-primary"
+                                    id="boton_crear_producto">Crear</button>
                             </div>
                         </form>
                     </div>
