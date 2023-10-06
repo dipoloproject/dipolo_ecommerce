@@ -46,6 +46,7 @@ class ProductsController extends Controller
     public function crear(){
         $marcas = Product::Get_all_brands();
         $categorias = Product::Get_all_categories();
+        
         //echo "<pre>";var_dump($categorias);exit;
         //$manco='chupala';
         return view('administration/products/create', compact('marcas', 'categorias'));

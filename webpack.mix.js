@@ -120,6 +120,7 @@ const mix = require('laravel-mix');
                     'resources/css/responsive.css',
                     'resources/css/gap_styles.css',
                     
+                    
         ], 'public/css/all.css')
 
 

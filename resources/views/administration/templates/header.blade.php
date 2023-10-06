@@ -513,7 +513,7 @@
           </i> -->
 					<i class="nav-icon fas fa-tags" style="color:#01c4e7;"></i>
 					<p>
-						Marcas y modelos
+						Marcas
 						<i class="fas fa-angle-left right"></i>
 					</p>
 				</a>
@@ -528,7 +528,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="pages/tables/data.html" class="nav-link">
+						<a href="{{route('administracion.marcas.agregar')}}" class="nav-link">
               <!-- <i>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="20px" height="20px" viewBox="-1.7 0 20.4 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"/></svg>
               </i> -->
