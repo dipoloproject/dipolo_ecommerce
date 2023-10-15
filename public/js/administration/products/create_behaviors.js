@@ -41,10 +41,12 @@ $(document).ready(function() {
     //\.ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
 
 
+    
+    
     //  REFERENCIAR EL BOTON CREAR producto
-        const   $btnCrearProducto= document.querySelector("#boton_crear_producto");
+    const   $btnCrearProducto= document.querySelector("#boton_crear_producto");
 
-    const   $inputArchivos= document.querySelector("#inputArchivos");   
+    const   $inputArchivos= document.querySelector("#inputArchivos");
 
             $btnCrearProducto.addEventListener("click", async () => {
                 //  FILES
@@ -80,6 +82,8 @@ $(document).ready(function() {
                         });
                 //  \.INPUTS 
 
+                    var input_archivos_alert= document.getElementById("input_archivos_alert");
+
                 //  AJAX
                     $.ajax({
                         //async: false,   //  hace que esto se ejecute si o si antes de seguir con el siguiente codigo
@@ -93,12 +97,41 @@ $(document).ready(function() {
                         dataType: "json",
                         processData: false,
                         contentType: false,
-                        success: function (response) {                        
-                            //console.log(response);
+                        beforeSend:function (response) {                        
+                            //input_archivos_alert.style.visibility="hidden";
+                            //input_archivos_alert.innerHTML= "";
+                            // $(".alert").fadeTo(500, 1)
+                        },// \.beforeSend
+                        success: function (response) {
+                            console.log(response.mensaje);
+                            if(response.mensaje!=""){
+                                input_archivos_alert.innerHTML= response.mensaje;
+                                $(".alert").fadeTo(500, 1);
+                                setTimeout(function() {
+                                    $(".alert").fadeTo(500, 0);
+                                    //$(".alert").slideUp(500);
+                                }, 2000);
+                            }
+                            
+                            
+                            //   $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+                            //     $("#success-alert").slideUp(500);
+                            //   });
+                            
+                            //console.log(response.mensaje);
+                            //input_archivos_alert.style.visibility="visible";
+                            
+                            //console.log(input_archivos_alert.innerHTML);
+                            // setTimeout(function(){
+                            //     input_archivos_alert.innerHTML= "";
+                            //     input_archivos_alert.style.transition="opacity 500ms ease;";
+                            //     input_archivos_alert.style.visibility="hidden";
+                            // }, 3000);
                         },// \.success
                     });
                 // \.ajax
             });
+
 
 
 

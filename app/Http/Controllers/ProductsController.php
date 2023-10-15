@@ -78,21 +78,39 @@ class ProductsController extends Controller
     
     public function subir_archivos_productos(Request $request){
 
-        //return $request->file('archivos')[1];exit;
-        $request->validate([    //  impone condiciones a cada elemento del array archivos
-            'archivos'=> 'required|array|min:1',
-            'archivos.*'=> 'required|image|max:2048'
-        ]);
-        return $request->all();
-        
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;
+        */
 
-        echo "fin";exit;
+        try {
+            $request->validate([    //  impone condiciones a cada elemento del array archivos
+                'archivos'=> 'required|array|min:1',
+                'archivos.*'=> 'required|image|max:2048'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $th) {
+            //var_dump($th->validator->errors());exit;
+            
+            //return $th->validator->errors()->first();
+            //echo  $th->validator->errors()->first();
+            //return $th->validator->errors();
 
-        $conteo = count($_FILES["archivos"]["name"]);   //var_dump($conteo);exit;
+            return response()->json([
+                'mensaje'=> $th->validator->errors()->first()
+            ]);
+        }
+    
+        /*  Ver contenido completo de $request (todo)
+            return $request->all();
+        */
+
+        //echo "fin";exit;
+
+        $conteo = count($_FILES["archivos"]["name"]);   //var_dump($conteo);exit; // cantidad de archivos a subir
         for ($i = 0; $i < $conteo; $i++) {
-            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
-            $nombreArchivo = $_FILES["archivos"]["name"][$i];
-            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            //  Archivo en sí + Extension
+                $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
+                $nombreArchivo = $_FILES["archivos"]["name"][$i];
+                $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
             // Renombrar archivo
                 $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
             // Mover del temporal al directorio actual
@@ -100,11 +118,13 @@ class ProductsController extends Controller
                     //echo $extension."<br>";
                     //echo filesize($_FILES["archivos"]["tmp_name"][$i])."<br>";  // tamaño en bytes del archivo
                 //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
+            //  Por cada archivo multimedia seleccionado, guarda en ubicacion destino con el nombre previamente establecido
+                $request->file('archivos')[$i]->storeAs('public/archivos_multimedia/', $nuevoNombre);
         }
         // Responder al cliente
-        //echo json_encode(true);
+            //echo json_encode(true);
         
-        
+        //MENSAJES DE ERROR AL CARGAR UN ARCHIVO + TRADUCIR MENSAJES DE ERROR
         
         exit;
                 

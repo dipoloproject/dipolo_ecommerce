@@ -174,6 +174,12 @@
                                             <span class="input-group-text">Upload</span>
                                         </div> -->
                                     </div>
+
+                                    <!-- NOTIFICACION-ALERTA sobre archivos precargados (para subir) -->
+                                        <div class="alert alert-danger fade mb-0 py-1" 
+                                            id="input_archivos_alert"
+                                            style="background-color:#f8d7da;color:#721c24;" 
+                                            role="alert">&nbsp;</div>
                                 </div>
                                 <!-- <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
