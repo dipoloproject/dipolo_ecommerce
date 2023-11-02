@@ -429,16 +429,16 @@
                                         <!-- single-product-wrap start -->
                                         <div class="single-product-wrap">
                                             <div class="product-image">
-                                                <a href="single-product.html">
-                                                    <img src="images/product/large-size/1.jpg" alt="Li's Product Image">
+                                                <a href="{{route('producto_singular',['id' => 2])}}">
+                                                    <img src="../../storage/archivos_multimedia/6536ea8519202_0.png" alt="Li's Product Image">
                                                 </a>
-                                                <span class="sticker">New</span>
+                                                <span class="sticker bg-danger">NewGAP</span>
                                             </div>
                                             <div class="product_desc">
                                                 <div class="product_desc_info">
                                                     <div class="product-review">
                                                         <h5 class="manufacturer">
-                                                            <a href="shop-left-sidebar.html">Graphic Corner</a>
+                                                            <a href="shop-left-sidebar.html">Graphic Corner adfa</a>
                                                         </h5>
                                                         <div class="rating-box">
                                                             <ul class="rating">

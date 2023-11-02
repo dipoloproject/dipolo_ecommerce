@@ -35,6 +35,7 @@
     <!-- TODOS LOS ESTILOS -->
         <link rel="stylesheet" href="{{asset("css./administration/administration_all.css")}}">
         <link rel="stylesheet" href="{{asset("css./administration/datatables.css")}}">
+        <link rel="stylesheet" href="{{asset("css./iziToast/iziToast.css")}}">
     <!-- \.TODOS LOS ESTILOS -->
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

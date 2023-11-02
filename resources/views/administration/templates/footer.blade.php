@@ -22,6 +22,8 @@
 
 	<script src="{{asset("js./administration/datatables.js")}}"></script>
 
+  <script src="{{asset("js./iziToast/iziToast.js")}}"></script>
+
 <!-- \.Todos los archivos JS -->
 
 

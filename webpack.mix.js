@@ -36,10 +36,11 @@ const mix = require('laravel-mix');
                     'resources/adminlte3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
                     'resources/adminlte3/plugins/daterangepicker/daterangepicker.css',
                     'resources/adminlte3/plugins/summernote/summernote-bs4.min.css',
-                    
-                    
-                    
         ], 'public/css/administration/administration_all.css')
+        /*
+            En:
+                'resources/adminlte3/dist/css/adminlte.min.css' se modificó content:"Browse" por content:"Examinar"*/
+
 
 
         // ESTILOS PARA DATATABLES
@@ -48,6 +49,12 @@ const mix = require('laravel-mix');
             'resources/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
             'resources/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css',
         ], 'public/css/administration/datatables.css')
+
+
+        //  ESTILOS IZITOAST
+        mix.styles([
+            'resources/iziToast/dist/css/iziToast.css'
+        ], 'public/css/iziToast/iziToast.css')
 
 
         .scripts([
@@ -92,7 +99,13 @@ const mix = require('laravel-mix');
                 'resources/adminlte3/dist/js/adminlte.js',
                 'resources/adminlte3/dist/js/demo.js',
                 //'resources/adminlte3/dist/js/pages/dashboard.js', //  incluir este archivo implica obtener errores por líneas de código en jquery.vmap.min.js
-        ], 'public/js/administration/datatables.js');
+        ], 'public/js/administration/datatables.js')
+        
+        
+        // JS PARA IZITOAST
+        .scripts([
+            'resources/iziToast/dist/js/iziToast.js'
+        ], 'public/js/iziToast/iziToast.js');
 
 
 

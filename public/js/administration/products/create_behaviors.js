@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    
+
     //  ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
         $('#input_marca').change( function() {
             //  Referenciar valor
@@ -39,6 +41,9 @@ $(document).ready(function() {
                 });// \.ajax
         }); //\.$('#input_marcas').change 
     //\.ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
+
+
+
 
 
     
@@ -99,34 +104,44 @@ $(document).ready(function() {
                         contentType: false,
                         beforeSend:function (response) {                        
                             //input_archivos_alert.style.visibility="hidden";
-                            //input_archivos_alert.innerHTML= "";
+                            //input_archivos_alert.innerHTML=" ";
                             // $(".alert").fadeTo(500, 1)
                         },// \.beforeSend
                         success: function (response) {
-                            console.log(response.mensaje);
-                            if(response.mensaje!=""){
-                                input_archivos_alert.innerHTML= response.mensaje;
+                            //console.log("-"+response.mensaje_error+"-");
+                            if(response.mensaje_error!=""){
+                                input_archivos_alert.innerHTML= response.mensaje_error;
                                 $(".alert").fadeTo(500, 1);
                                 setTimeout(function() {
                                     $(".alert").fadeTo(500, 0);
                                     //$(".alert").slideUp(500);
                                 }, 2000);
                             }
-                            
-                            
-                            //   $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-                            //     $("#success-alert").slideUp(500);
-                            //   });
-                            
-                            //console.log(response.mensaje);
-                            //input_archivos_alert.style.visibility="visible";
-                            
-                            //console.log(input_archivos_alert.innerHTML);
-                            // setTimeout(function(){
-                            //     input_archivos_alert.innerHTML= "";
-                            //     input_archivos_alert.style.transition="opacity 500ms ease;";
-                            //     input_archivos_alert.style.visibility="hidden";
-                            // }, 3000);
+
+                            if(response.mensaje_creacion_producto=="ok"){
+                                        //console.log("CREACION DE PRODUCTO EXITOSA");
+                                // success
+                                    iziToast.success({
+                                        timeout: 1500, 
+                                        icon: 'fas fa-check', 
+                                        title: 'Creación exitosa!', 
+                                        //message: 'iziToast.sucess() with custom icon!'
+                                        progressBar:false,      // barra de progreso de cierre
+                                        close: false,           // boton x de cerrar
+                                        closeOnEscape: true,    // cerrar al apretar ESC
+                                        closeOnClick: true,     // cerrar al hacer click sobre alerta
+                                        position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
+                                        transitionIn: 'flipInX',
+                                        transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
+                                        animateInside: false,
+                                        onClosed: function () {window.location.replace('/admin/productos/crear');}  //  REDIRECCIONA cuando el toast se cierra
+                                    });
+                                        //  REDIRECCIONAR PÁGINA
+                                            /*setTimeout( function() {
+                                                window.location.replace('/admin/productos/crear');
+                                            }, 2000);// Se esperará cierto tiempo antes de ejecutarse */
+                            }
+
                         },// \.success
                     });
                 // \.ajax

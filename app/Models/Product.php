@@ -41,4 +41,30 @@ class Product extends Model
 
         return $rs_mdl;
     }
+
+    public static function Buscar(){
+        
+        $rs_mdl= DB::SELECT('CALL sp_productos_buscar_completo();');
+        //var_dump(sizeof($rs_mdl));exit;
+
+        return $rs_mdl;
+    }
+
+    public static function Dame_producto($argumentos){
+        
+        $rs_mdl= DB::SELECT('CALL sp_productos_dame(?);', $argumentos);
+        //var_dump(sizeof($rs_mdl));exit;
+
+        return $rs_mdl;
+    }
+
+
+
+    public static function Alta($argumentos){
+        
+        $rs_mdl= DB::SELECT('CALL sp_productos_alta(?, ?, ?, ?, ?, ?, ?);', $argumentos);      //echo "<pre>";var_dump($rs_mdl[0]);exit;
+        //var_dump(sizeof($rs_mdl));exit;
+
+        return $rs_mdl;
+    }
 }   //\.class Product extends Model

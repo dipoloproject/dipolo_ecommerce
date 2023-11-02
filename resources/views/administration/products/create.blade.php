@@ -50,6 +50,19 @@
 
 @include ('administration/templates/header')
 
+<style>
+    #galeria{
+        display: flex;
+    }
+    #galeria img{
+        width: 85px;
+        height: 85px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        opacity: 85%;
+    }
+</style>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -165,33 +178,53 @@
                                                     class="custom-file-input" 
                                                     name="file"
                                                     id="inputArchivos"
-                                                    accept="image/*">
+                                                    accept="image/*"
+                                                    onchange="javascript:updateList(event)">
+                                                    <!-- al cargar archivos, se ejecuta la funcion updateList() -->
+                                                    
                                             <label  class="custom-file-label" 
-                                                    for="exampleInputFile">Choose file</label>
-                                            <output id="list"></output>
+                                                    for="exampleInputFile">Elegir archivos</label>
+                                            <!-- <output id="list"></output> -->
                                         </div>
+                                        <!-- <div class="preview-area" id="preview_files" style="width: 300px;">asdfasdfasdfasfads</div> -->
+                                        
                                         <!-- <div class="input-group-append">
                                             <span class="input-group-text">Upload</span>
                                         </div> -->
                                     </div>
-
                                     <!-- NOTIFICACION-ALERTA sobre archivos precargados (para subir) -->
-                                        <div class="alert alert-danger fade mb-0 py-1" 
+                                        <div class="alert alert-danger fade mb-0 py-1 mb-2" 
                                             id="input_archivos_alert"
                                             style="background-color:#f8d7da;color:#721c24;" 
                                             role="alert">&nbsp;</div>
+                                    <!-- \.NOTIFICACION-ALERTA sobre archivos precargados (para subir) -->
+                                    <!-- VISTA PREVIA de archivos precargados -->
+                                        <div class="row px-5">
+                                            <!-- <div class="col-md-1"></div> -->
+                                            <div class="col-md-12">
+                                                <label for="exampleInputFile">Vista previa (archivos precargados)</label>
+                                                <div class="rounded" 
+                                                    id="galeria" 
+                                                    style="background-color:#e9ecef;">
+                                                    <div id="fileList" style="width:100%;">
+                                                        <h5 class="text-center m-0 py-2">No se cargaron archivos</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- \.VISTA PREVIA de archivos precargados -->
                                 </div>
                                 <!-- <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                                 </div> -->
+                                
                             </div>
                             <!-- /.card-body -->
-
                             <div class="card-footer">
-                            <button type="button" 
-                                    class="btn btn-primary"
-                                    id="boton_crear_producto">Crear</button>
+                                <button type="button" 
+                                        class="btn btn-primary"
+                                        id="boton_crear_producto">Crear</button>
                             </div>
                         </form>
                     </div>
@@ -223,3 +256,62 @@
     <script src="../../js/administration/utility_functions.js"></script>            <!-- funciones de utilidad -->
     <script src="../../js/administration/products/create_behaviors.js"></script>    <!-- scrip propio de la vista -->
 
+<script>
+
+    // AL CARGAR ARCHIVOS en input de tipo file
+        updateList =    function(event) {
+                            var input = document.getElementById('inputArchivos');   // referencia al input de tipo file
+                            var output = document.getElementById('fileList');       // referencia al div que contendrá la vista previa de los archivos precargados
+                            var children = "";                                      // elemento html que representa la/s imagen/es precargadas
+                            for (var i = 0; i < input.files.length; ++i) {
+                                    var urls = URL.createObjectURL(event.target.files[i]);  // se recorre los archivos precargados y se rescata su url
+                                    children += '<img style="padding:5px;" src="'+urls+'">';    // se forma el elemento de vista previa con dicha url obtenida
+                            }
+
+                            if(children==""){   //  No se cargó ningún archivo -> se muestra mensaje 
+                                children += '<h5 class="text-center m-0 py-2">No se cargaron archivos</h5>';    
+                            }
+                            output.innerHTML = children;    /*  se introduce elementos de vista previa de archivos cargados en el div. 
+                                                                O bién sólo el mensaje "No se cargaron archivos"*/
+                        }
+    // \.AL CARGAR ARCHIVOS en input de tipo file
+
+
+    // settings
+    /*iziToast.settings({
+      timeout: 3000, // default timeout
+      resetOnHover: true,
+      // icon: '', // icon class
+      transitionIn: 'flipInX',
+      transitionOut: 'flipOutX',
+      position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+      onOpen: function () {
+        console.log('callback abriu!');
+      },
+      onClose: function () {
+        console.log("callback fechou!");
+      }
+    });*/
+
+
+    // success
+    /*iziToast.success({
+        timeout: 4000, 
+        icon: 'fas fa-check', 
+        title: 'Creación exitosa!', 
+        //message: 'iziToast.sucess() with custom icon!'
+        progressBar:false,      // barra de progreso de cierre
+        close: false,           // boton x de cerrar
+        closeOnEscape: true,    // cerrar al apretar ESC
+        closeOnClick: true,     // cerrar al hacer click sobre alerta
+        position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
+        /*transitionIn: 'flipInX',
+        transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
+        /*animateInside: false,
+    });*/
+
+    //window.location.href = "{{route('administracion.productos.agregar')}}";
+    //iziToast.success({timeout: 5000, icon: 'fa fa-chrome', title: 'OK', message: 'iziToast.sucess() with custom icon!'});
+
+
+</script>

@@ -26,7 +26,11 @@ use Illuminate\Support\Facades\Route;
     Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
     Route::get('/admin/productos/crear', [ProductsController::class, 'crear'])->name('administracion.productos.agregar');
     
-    Route::post('/ajax_fetch_modelos', [ProductsController::class, 'buscar_xmarca']);
+    
+        Route::post('/ajax_fetch_productos', [ProductsController::class, 'ajax_fetch_productos']);
+    
+        Route::post('/ajax_fetch_modelos', [ProductsController::class, 'buscar_xmarca']);
+        
     Route::post('/subir_archivos_productos', [ProductsController::class, 'subir_archivos_productos']);
     Route::post('/admin/productos/formulario', [ProductsController::class, 'formulario'])->name('administracion.productos.formulario');
 
@@ -38,6 +42,6 @@ use Illuminate\Support\Facades\Route;
 //  ECOMMERCE
 
     Route::get('/', [ProductsController::class, 'home']);
-
+    Route::get('/producto/{id}', [ProductsController::class, 'producto'])->name('producto_singular');
 
     

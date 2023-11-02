@@ -641,7 +641,7 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
      var $this = $(this);
      var $details = $this.siblings('.product-details-images');
      $this.slick({
-        slidesToShow: 4,
+        slidesToShow: 3,/*estilo editado 4 */	/*carrousel de imagenes del producto*/
         slidesToScroll: 1,
         autoplay: false,
         autoplaySpeed: 5000,
