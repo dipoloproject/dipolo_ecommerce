@@ -430,7 +430,7 @@
                                         <div class="single-product-wrap">
                                             <div class="product-image">
                                                 <a href="{{route('producto_singular',['id' => 2])}}">
-                                                    <img src="../../storage/archivos_multimedia/6536ea8519202_0.png" alt="Li's Product Image">
+                                                    <img src="../../storage/archivos_multimedia/6543fd3980166_0.jpg" alt="Li's Product Image">
                                                 </a>
                                                 <span class="sticker bg-danger">NewGAP</span>
                                             </div>
