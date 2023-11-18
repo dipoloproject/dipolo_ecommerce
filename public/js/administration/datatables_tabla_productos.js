@@ -1,10 +1,7 @@
 $( document ).ready(function() {
-    //console.log( "ready!" );
 
     $(function () {
         $("#example1").DataTable({
-
-
 
             //  LLAMADA al archivo que trae los registros
                 "ajax":{
@@ -14,7 +11,7 @@ $( document ).ready(function() {
                     "dataSrc":""
                 },
             //  \.LLAMADA al archivo que trae los registros       
-        
+            
             //  CONFECCION de campos a mostrar
                 "columns":[
                     
@@ -25,6 +22,7 @@ $( document ).ready(function() {
                     //                     //return '<div style="width:100px;">'+row.fecha_evento+'</div>';
                     //                 }
                     // },
+                    
 
                     {   "data": "idModelo",
                         "className":"align-middle",
@@ -79,19 +77,22 @@ $( document ).ready(function() {
                                     return html_out;
                                 }
                     },
-
+                        
                     {"data": null,
-                    "render":   function (data, type, row) {    
+                    "render":   function (data, type, row) {
+                                    // En cada enlace, la propiedad href será explícitamente la ruta url ya que NO se pudo usar la funcion route o url
                                     return "<div class='row text-center' >\
                                                 <div class='col-md-6 d-flex justify-content-center' style='padding:5px;'>\
                                                     <input  type='hidden' \
                                                             name='id_evento_actualizar' \
                                                             value="+row.idProducto+">\
-                                                    <button type='button' class='editar btn btn-lg'\
-                                                            data-toggle='tooltip' data-placement='top' \
-                                                            title='ACTUALIZAR'>\
-                                                        <i class='fas fa-edit fa-lg text-info'></i>\
-                                                    </button>\
+                                                    <a href='/admin/productos/editar/"+row.idProducto+"'>\
+                                                        <button type='button' class='editar btn btn-lg'\
+                                                                data-toggle='tooltip' data-placement='top' \
+                                                                title='ACTUALIZAR'>\
+                                                            <i class='fas fa-edit fa-lg text-info'></i>\
+                                                        </button>\
+                                                    </a>\
                                                 </div>\
                                                 \
                                                 <div class='col-md-6 d-flex justify-content-center' style='padding:5px;'>\

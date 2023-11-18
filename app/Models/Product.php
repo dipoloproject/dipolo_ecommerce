@@ -50,6 +50,17 @@ class Product extends Model
         return $rs_mdl;
     }
 
+    public static function Buscar_xid($argumentos){
+        
+        $rs_mdl= DB::SELECT('CALL sp_productos_buscar_id(?);', $argumentos);
+        //var_dump(sizeof($rs_mdl));exit;
+
+        return $rs_mdl;
+    }
+
+
+
+
     public static function Dame_producto($argumentos){
         
         $rs_mdl= DB::SELECT('CALL sp_productos_dame(?);', $argumentos);

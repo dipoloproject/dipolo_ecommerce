@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\MediaFilesController;
 use App\Http\Controllers\MarcasController;
 
 use Illuminate\Support\Facades\Route;
@@ -25,9 +26,13 @@ use Illuminate\Support\Facades\Route;
     Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
     Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
     Route::get('/admin/productos/crear', [ProductsController::class, 'crear'])->name('administracion.productos.agregar');
-    
+    Route::get('/admin/productos/editar/{id}', [ProductsController::class, 'editar'])->name('administracion.productos.editar');
+
+    Route::get('/admin/archivos_multimedia/{id}', [MediaFilesController::class, 'ver_orden'])->name('administracion.archivos_multimedia.ver_orden');
+    Route::post('/ajax_fetch_order_media_files', [MediaFilesController::class, 'ajax_fetch_order_media_files']);
     
         Route::post('/ajax_fetch_productos', [ProductsController::class, 'ajax_fetch_productos']);
+        Route::post('/ajax_fetch_producto_xid', [ProductsController::class, 'ajax_fetch_producto_xid']);
     
         Route::post('/ajax_fetch_modelos', [ProductsController::class, 'buscar_xmarca']);
         

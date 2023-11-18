@@ -52,6 +52,29 @@ class ProductsController extends Controller
     }
 
 
+    public function editar(Request $request){
+        $marcas = Product::Get_all_brands();
+        $categorias = Product::Get_all_categories();
+        //var_dump($request['id']);exit;
+        // Recuperar PRODUCTO segun id
+            $argumentos=[
+                intval($request['id'])
+            ];
+            $producto= Product::Dame_producto($argumentos)[0];
+                //echo "<pre>";var_dump($producto);exit;
+        //  Recuperar ARCHIVOS MULTIMEDIA segun id del producto
+            $archivos = MediaFile::Dame_archivos_multimedia_xidProducto($argumentos);
+                //$result = json_encode($producto);
+                // // convert object $result to array
+                //     $array_asoc = json_decode($result, true);
+                //     //echo "<pre>"; var_dump($array_asoc);exit;
+                //     $producto=$array_asoc;
+            //$result = json_encode($producto);
+                // convert object $result to array
+            //$producto = json_decode($result, true);
+
+        return view('administration/products/edit', compact('marcas', 'categorias', 'producto', 'archivos'));
+    }
 
 
 
@@ -62,65 +85,7 @@ class ProductsController extends Controller
 
     public function ajax_fetch_productos(){
 
-
-
-        
-
-        function resultset_to_ajax($rows) {
-
-                //echo "<pre>";var_dump($rows[0]->idModelo);exit;
-                //var_dump(sizeof($rows));exit;
-            //  Determina la cantidad de columnas que posee el resultset
-                $cant_fields= sizeof($rows);
-            
-            //  vector a retornar
-                $array = array();
-        
-            //$rows->MoveFirst();
-
-            //  Recorre cada fila del resultset
-                foreach($rows as $object){
-                        //echo "<pre>".var_dump($object);
-                    $result = json_encode($object);
-                // convert object $result to array
-                    $array_asoc = json_decode($result, true);
-                    //var_dump($output);exit;
-                    array_push($array, $array_asoc);
-                }
-                //var_dump($array);exit;
-
-            //while(!$rows->EOF()){    
-            //$i=0;
-                //  Convierte cada fila el resultset en un vector asociativo
-                    //  declara el vector asociativo
-                        //$array_asoc = [];
-                    //  genera llave + valor del vector asociativo
-                    /*while($i < $cant_fields) {
-                        $array_asoc[$rows->FieldName($i)]= utf8_encode($rows->Fields($rows->FieldName($i)));
-                        $i++ ;
-                    }*/
-                    //  vector asociativo es integrado como elemento del vector a retornar
-                        //array_push($array, $array_asoc);
-                //  siguiente fila del resultset
-                    //$rows->MoveNext();
-            //}
-            
-            return $array;
-        }   //\.function resultset_to_ajax($rows)
-
-
-
-
-
-
-
-
-        //$idMarca=  $_POST['idMarca_ajax'];
-        $argumentos=[
-                        1
-                    ];
-        //$modelos = Product::Buscar_xmarca($argumentos);     //var_dump($modelos);exit;
-        $modelos = Product::Buscar();     //var_dump($modelos);exit;
+        $productos = Product::Buscar();
 
         /*  Se retorna de esta manera para poder enviar más variables de ser necesario
             Por ejemplo: return response()->json([
@@ -129,20 +94,34 @@ class ProductsController extends Controller
                                                 'variable2'=> true
                                             ]);
         */
-            /*return response()->json([
-                //'hay_registros'=> $hay_registros,
-                'modelos'=> $modelos
-            ]); //  esto se retorn al ajax*/
-            //echo "<pre>";var_dump($modelos);exit;
-
-            /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
-            para poder ser leido en archivo javascript*/
-            $array =resultset_to_ajax($modelos); //  funcion definida en funciones_php_js.php
-
+            
+        /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
+        para poder ser leido en archivo javascript*/
+            $elements_to_ajax =modelresult_to_datatables($productos);
+            //var_dump($elements_to_ajax);exit;
+    
         //  Retorna al archvo show_locations_according_dpto.js un vector de vectores asociativos
-            echo json_encode($array); //var_dump($array);exit;
+            echo json_encode($elements_to_ajax); //var_dump($array);exit;
     }
 
+
+    public function ajax_fetch_producto_xid(){
+        
+        $id= intval($_POST['idProducto_ajax']);
+        $argumentos=[
+                        $id
+                    ];
+        $producto = Product::Buscar_xid($argumentos);
+
+        /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
+        para poder ser leido en archivo javascript*/
+            $element_to_ajax= modelresult_to_ajax($producto);
+
+            return response()->json([
+                //'hay_registros'=> $hay_registros,
+                'producto'=> $element_to_ajax
+            ]); //  esto se retorn al ajax
+    }
 
 
 
@@ -236,7 +215,7 @@ class ProductsController extends Controller
         
         // TRADUCIR MENSAJES DE ERROR -> HECHO EN FORMA PARCIAL EN VALIDATE
             
-        //return $request->all();
+        //return $request->all();exit;
             //var_dump(intval($request->input_marca));exit;
         //  GUARDADO EN BASE DE DATOS
             $argumentos=[
@@ -252,14 +231,19 @@ class ProductsController extends Controller
 
             $idProducto= $rs_insert_rt_id[0]->last_id;      //echo "ultimo id:";var_dump($idProducto);exit;
 
-            foreach($vector_filesnames as $filename){
-                //echo "nombre de archivo:".$filename."<br>";
+            //debbug($request->order_list);
+            //  VECTOR que contiene los data-id en el orden deseado
+                $order_vector= explode(",",$request->order_list);   //debbug($order_vector);exit;
+                $i=1;   // iniciar contador (data-id del 1er archivo)
 
+            foreach($vector_filesnames as $filename){
                 $argumentos=[
                                 intval($idProducto),
-                                $filename
+                                $filename, 
+                                array_search($i, $order_vector)+1   //posicion del data-id en el vector ordenado = posicion a ocupar el archivo
                             ];                                  //echo "<pre>";var_dump($argumentos);exit;
                 $rs_insert_mf = MediaFile::Alta($argumentos);   //echo "<pre>";var_dump($rs_insert_mf);exit;
+                $i++;   // data-id del archivo siguiente
             }   //exit;
 
         //  \.GUARDADO EN BASE DE DATOS
