@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\MediaFile;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -180,9 +181,9 @@ class ProductsController extends Controller
                 ]);
             }
         
-        /*  Ver contenido completo de $request (todo)
-            return $request->all();
-        */
+            //  Ver contenido completo de $request (todo)
+                //return $request->all();exit;
+        
         //  VECTOR/ARRAY que contendrá nombres de archivos cargados/subidos
             $vector_filesnames= [];     //var_dump($vector_filesnames);exit;
         
@@ -264,21 +265,147 @@ class ProductsController extends Controller
     }
 
 
-    /*public function subir_archivos_productos(){
-        echo "adsf";exit;
-        $conteo = count($_FILES["archivos"]["name"]);
-        for ($i = 0; $i < $conteo; $i++) {
-            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
-            $nombreArchivo = $_FILES["archivos"]["name"][$i];
-            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
-            // Renombrar archivo
-                $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
-            // Mover del temporal al directorio actual
-                //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
-        }
-        // Responder al cliente
-        echo json_encode(true);
-    }*/
+
+
+    public function actualizar_archivos_y_productos(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;
+        */
+
+        //  RECUPERA idProducto del campo hidden
+            $idProducto= intval($request->input_hidden_idProducto);
+
+        //  VECTOR/ARRAY que contendrá nombres de archivos cargados/subidos
+            $vector_filesnames= [];     //var_dump($vector_filesnames);exit;
+
+        //  Determina si se cargo o no algun archivo nuevo
+            if(isset($_FILES["archivos"])){     //  EXISTE la key "archivos" en la variable $_FILES -> hay nuevos archivos cargados
+                $cantidad_archivos = count($_FILES["archivos"]["name"]);
+            }else{                              // NO existe la key "archivos" en la variable $_FILES
+                $cantidad_archivos = 0;
+            }
+
+            if($cantidad_archivos>0){   //  HAY archivos nuevos cargados
+                /*  TRY - Si el/los archivos precargados cumplen con las condiciones, pasa al bloque de GUARDADO*/
+                /*  CATCH - De lo contrario, captura el mensaje de error y lo envía al AJAX*/
+                    try {
+                        /*  Dentro de la funcion validate() se definen condiciones de validación y los correspondientes
+                            mensajes de error según corresponda a la condición que no se cumpla */
+                            $request->validate( [   //  impone condiciones a cada elemento del array archivos
+                                                    'archivos'=> 'required|array|min:1',
+                                                    'archivos.*'=> 'required|image|max:2048'
+                                                ],
+                                                [   //  define el mensaje de error a mostrar
+                                                    'archivos.required'=> 'Es necesario cargar un archivo',
+                                                    'archivos.*.max'=> 'El tamaño del/algún archivo es muy grande'
+                                                ]
+                                            );
+                            
+                    } catch (\Illuminate\Validation\ValidationException $th) {
+                            //var_dump($th->validator->errors());exit;
+                        return response()->json([
+                            'mensaje_error'=> $th->validator->errors()->first()
+                            //  NO se define la key 'mensaje_creacion_producto. Ambas keys se definen más adelante'
+                        ]);
+                    }
+                //\.try/catch
+
+                        
+                //  GUARDADO de archivos precargados en SERVIDOR
+                    $conteo = count($_FILES["archivos"]["name"]);   //var_dump($conteo);exit; // cantidad de archivos a subir
+                    for ($i = 0; $i < $conteo; $i++) {
+                        //  Archivo en sí + Extension
+                            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
+                            $nombreArchivo = $_FILES["archivos"]["name"][$i];
+                            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+                        // Renombrar archivo
+                            $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
+
+                        //  FORMAR vector de nombres de archivos (necesario para guardar en base de datos)
+                            array_push($vector_filesnames, $nuevoNombre);
+                        // Mover del temporal al directorio actual
+                                //echo $nuevoNombre."<br>";
+                                //echo $extension."<br>";
+                                //echo filesize($_FILES["archivos"]["tmp_name"][$i])."<br>";  // tamaño en bytes del archivo
+                            //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
+
+                        //  USAR INTERVENTION IMAGE O LO QUE SEA PARA AJUSTAR TAMAÑO DE IMAGENES - O HACER ESTO FUERA DE ESTE LOOP
+
+                        //  Por cada archivo multimedia seleccionado, guarda en ubicacion destino con el nombre previamente establecido
+                            $request->file('archivos')[$i]->storeAs('public/archivos_multimedia/', $nuevoNombre);   //DESCOMENTAR - NO GUARDA NADA
+                    }
+                
+
+                    // ELIMINAR archivos del servidor (elimina por nombre de los archivos)
+                        $argumentos=[
+                            $idProducto,
+                        ];
+                        $rs_get_mf = MediaFile::Dame_archivos_multimedia_xidProducto($argumentos);      //var_dump($rs_get_mf);exit;
+
+                        foreach($rs_get_mf as $row){
+                            //echo $row->nombreArchivoMultimedia."<br>";
+                            Storage::delete("public/archivos_multimedia/".$row->nombreArchivoMultimedia."");
+                        }
+    
+                    // ELIMINAR archivos de base de datos (elimina por idProducto)
+                        $argumentos=[
+                            $idProducto,
+                        ];
+                        $rs_delete_mf = MediaFile::Elimina($argumentos);    //var_dump($rs_delete_mf);exit;
+        
+                //  GUARDA EN BASE DE DATOS LOS NUEVOS ARCHIVOS
+                    //  VECTOR que contiene los data-id en el orden deseado
+                        $order_vector= explode(",",$request->order_list);   //debbug($order_vector);exit;
+                        $i=1;   // iniciar contador (data-id del 1er archivo)
+        
+                        foreach($vector_filesnames as $filename){
+                            $argumentos=[
+                                            intval($idProducto),
+                                            $filename, 
+                                            array_search($i, $order_vector)+1   //posicion del data-id en el vector ordenado = posicion a ocupar el archivo
+                                        ];                                  //echo "<pre>";var_dump($argumentos);exit;
+                            $rs_insert_mf = MediaFile::Alta($argumentos);   //echo "<pre>";var_dump($rs_insert_mf);exit;
+                            $i++;   // data-id del archivo siguiente
+                        }   //exit;
+
+
+            }   //  \.if
+
+        //  Ver contenido completo de $request (todo)
+            //return $request->all();exit;
+                            
+        //  ACTUALIZACION EN BASE DE DATOS
+            $argumentos=[
+                            intval($idProducto),
+                            intval($request->input_marca),
+                            intval($request->input_modelo),
+                            intval($request->input_categoria),
+                            $request->input_nombre,
+                            $request->input_es_destacado,
+                            $request->input_stock,
+                            $request->input_estado
+                        ];      //var_dump($argumentos);exit;
+            $rs_insert_rt_id = Product::Actualiza($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
+           
+
+        //  \.ACTUALIZACION EN BASE DE DATOS
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            $rs_salida_sp= "ok";    //  RESPUESTA TEMPORAL
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_creacion_producto'=> $rs_salida_sp
+            ]); //  esto se retorn al ajax
+    }
+
 
 
     public function producto(Request $request){

@@ -121,6 +121,13 @@
                         <!-- form start -->
                         <form enctype='multipart/form-data' method='POST' action="#">
                             <div class="card-body">
+                                <div class="form-group m-0">
+                                    <input  type="hidden" 
+                                            class="form-control" 
+                                            name="input_hidden_idProducto" 
+                                            id="input_hidden_idProducto"
+                                            value="<?php echo $idProducto;?>">
+                                </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Marca</label>
                                     <select class="form-control select2" 
@@ -398,7 +405,7 @@
             store: {
                 set: function (sortable) {
                     const sorts= sortable.toArray();
-                    console.log("Sortable:"+sorts);
+                    console.log("editable:"+sorts);
                 }
             }
         });
