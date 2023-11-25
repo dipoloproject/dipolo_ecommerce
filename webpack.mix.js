@@ -28,7 +28,6 @@ const mix = require('laravel-mix');
         mix.styles([
                     'resources/adminlte3/plugins/fontawesome-free/css/all.css',
                     //'resources/adminlte3/plugins/fontawesome-free/css/all.min.css',
-
                     'resources/adminlte3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
                     'resources/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css',
                     'resources/adminlte3/plugins/jqvmap/jqvmap.min.css',
@@ -36,6 +35,7 @@ const mix = require('laravel-mix');
                     'resources/adminlte3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
                     'resources/adminlte3/plugins/daterangepicker/daterangepicker.css',
                     'resources/adminlte3/plugins/summernote/summernote-bs4.min.css',
+                    
         ], 'public/css/administration/administration_all.css')
         /*
             En:
@@ -48,6 +48,7 @@ const mix = require('laravel-mix');
             'resources/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
             'resources/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
             'resources/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css',
+            
         ], 'public/css/administration/datatables.css')
 
 
@@ -73,6 +74,7 @@ const mix = require('laravel-mix');
             'resources/adminlte3/plugins/summernote/summernote-bs4.min.js',
             'resources/adminlte3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
             'resources/adminlte3/dist/js/adminlte.js',
+            
             'resources/adminlte3/dist/js/demo.js',
             //'resources/adminlte3/dist/js/pages/dashboard.js', //  incluir este archivo implica obtener errores por líneas de código en jquery.vmap.min.js
         ], 'public/js/administration/administration_all.js')
@@ -105,9 +107,14 @@ const mix = require('laravel-mix');
         // JS PARA IZITOAST
         .scripts([
             'resources/iziToast/dist/js/iziToast.js'
-        ], 'public/js/iziToast/iziToast.js');
+        ], 'public/js/iziToast/iziToast.js')
 
 
+
+        // JS PARA SWEETALERT2_EMERGENT_MESSAGES
+        .scripts([
+                    'resources/adminlte3/plugins/sweetalert2/sweetalert2_emergent_messages.js',
+        ], 'public/js/sweetalert2/sweetalert2_emergent_messages.js');
 
 
 

@@ -36,6 +36,9 @@
         <link rel="stylesheet" href="{{asset("css./administration/administration_all.css")}}">
         <link rel="stylesheet" href="{{asset("css./administration/datatables.css")}}">
         <link rel="stylesheet" href="{{asset("css./iziToast/iziToast.css")}}">
+
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
+        
     <!-- \.TODOS LOS ESTILOS -->
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

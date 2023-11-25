@@ -408,6 +408,47 @@ class ProductsController extends Controller
 
 
 
+    
+    public function eliminar_producto(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;*/
+        
+        $idProducto= intval($request->idProducto_ajax);
+
+        //echo $request->idProducto_ajax; exit;
+
+        // ELIMINAR archivos del servidor (elimina por nombre de los archivos)
+            $argumentos=[
+                            $idProducto,
+            ];
+            $rs_get_mf = MediaFile::Dame_archivos_multimedia_xidProducto($argumentos);      //var_dump($rs_get_mf);exit;
+
+            foreach($rs_get_mf as $row){
+                //echo $row->nombreArchivoMultimedia."<br>";
+                Storage::delete("public/archivos_multimedia/".$row->nombreArchivoMultimedia."");
+            }
+
+        // ELIMINAR registros de la base de datos
+            $argumentos=[
+                            $idProducto,
+                        ];                                  //var_dump($argumentos);exit;
+            $rs_delete = Product::Elimina($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
+
+
+
+            $rs_salida_sp= "ok";    //  RESPUESTA TEMPORAL
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_eliminacion_producto'=> $rs_salida_sp
+            ]); //  esto se retorn al ajax
+    }
+
+
+
+
     public function producto(Request $request){
         //var_dump($request['id']);exit;
         $argumentos=[

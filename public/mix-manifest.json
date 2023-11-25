@@ -5,6 +5,7 @@
     "/js/administration/administration_all.js": "/js/administration/administration_all.js",
     "/js/administration/datatables.js": "/js/administration/datatables.js",
     "/js/iziToast/iziToast.js": "/js/iziToast/iziToast.js",
+    "/js/sweetalert2/sweetalert2_emergent_messages.js": "/js/sweetalert2/sweetalert2_emergent_messages.js",
     "/css/all.css": "/css/all.css",
     "/js/all.js": "/js/all.js"
 }

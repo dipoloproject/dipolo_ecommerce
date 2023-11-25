@@ -49,7 +49,7 @@
                       <th style='width:5%;'>ID</th>
                       <th style='width:5%;'>idMarca</th>
                       <th style='width:10%;'>NOMBRE</th>
-                      <th>IMAGENES</th>
+                      <th>IMAGENES <i class="fas fa-photo-video"></i></th>
                       <th style='width:5%;'>ESTADO</th>
                       <th style='width:10%;'>ACCIONES</th>
                     </tr>
@@ -76,7 +76,3 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 	<script src="../../js/administration/datatables_tabla_productos.js"></script>
-
-<script>
-  
-</script>

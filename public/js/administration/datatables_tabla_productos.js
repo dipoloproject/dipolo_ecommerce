@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 
-    $(function () {
-        $("#example1").DataTable({
+    //    $(function () {
+        var table =$("#example1").DataTable({
 
             //  LLAMADA al archivo que trae los registros
                 "ajax":{
@@ -87,7 +87,7 @@ $( document ).ready(function() {
                                                             name='id_evento_actualizar' \
                                                             value="+row.idProducto+">\
                                                     <a href='/admin/productos/editar/"+row.idProducto+"'>\
-                                                        <button type='button' class='editar btn btn-lg'\
+                                                        <button class='editar btn btn-lg'\
                                                                 data-toggle='tooltip' data-placement='top' \
                                                                 title='ACTUALIZAR'>\
                                                             <i class='fas fa-edit fa-lg text-info'></i>\
@@ -101,7 +101,7 @@ $( document ).ready(function() {
                                                             value="+row.idProducto+">\
                                                     <button type='button' class='eliminar btn btn-lg' \
                                                             data-toggle='tooltip' data-placement='top'\
-                                                            title='ELIMINAR'>\
+                                                            title='ELIMINAR' value="+row.idProducto+">\
                                                         <i class='fas fa-trash-alt fa-lg text-danger'></i>\
                                                     </button>\
                                                 </div>\
@@ -273,7 +273,91 @@ $( document ).ready(function() {
           "autoWidth": false,
           "responsive": true,
         });*/
-      });   //  \. $(function () {})
-});
 
 
+        //  HACER CLICK SOBRE ICONO ELIMINAR EN DATATABLE
+            $('#example1 tbody').on( 'click', 'button.eliminar', function () {
+                var value = $(this).val();   //  recupera el valor de la propiedad value de <button class="eliminar">
+
+                //  MOSTRAR CUADRO DE CONFIRMACION
+                    Swal.fire({
+                        title: '¿Desea eliminar el registro?',
+                        //text: "You won't be able to revert this!",
+                        icon: 'question',
+                        //iconColor: '#d9534f',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',  //  color azul
+                        cancelButtonColor: '#6c757d',   //  color gris
+                        confirmButtonText: 'Eliminar',
+                        cancelButtonText: 'Cancelar',
+                        customClass:{
+                            icon:'fa fa-lg',
+                            confirmButton:'ml-5 mr-5 font-weight-bold',
+                            cancelButton:'ml-5 mr-5 font-weight-bold',
+                        }
+                    }).then((result) => {   
+                        if (result.isConfirmed) {   //  SE CONFIRMA LA ACCION
+                            //  AJAX 
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/eliminar_producto",
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                    data: {
+                                        idProducto_ajax: value
+                                    },
+                                    dataType: "json",
+                                    success: function (response) {
+                                        //console.log(response['creacion_proyectos']);
+                                        switch (true) {
+                                            case response['mensaje_eliminacion_producto']=='ok':    //  CREACION OK
+                                                // success
+                                                    iziToast.success({
+                                                        timeout: 1500, 
+                                                        icon: 'fas fa-check', 
+                                                        title: 'Eliminación exitosa!', 
+                                                        //message: 'iziToast.sucess() with custom icon!'
+                                                        progressBar:false,      // barra de progreso de cierre
+                                                        close: false,           // boton x de cerrar
+                                                        closeOnEscape: true,    // cerrar al apretar ESC
+                                                        closeOnClick: true,     // cerrar al hacer click sobre alerta
+                                                        position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
+                                                        transitionIn: 'flipInX',
+                                                        transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
+                                                        animateInside: false,
+                                                        onClosed: function () {window.location.replace('/admin/productos/ver_todos');}  //  REDIRECCIONA cuando el toast se cierra
+                                                    });
+                                                /*    
+                                                //  SUCCESS message
+                                                    swa2_success_up_right('Registro eliminado con éxito');
+                                                //Redirigir a la vista welcome luego de cierto tiempo
+                                                    setTimeout( function() {
+                                                        window.location.replace('/admin/productos/ver_todos');    //luego de esta sentencia, NO se puede volver a la pantalla de login con ATRAS
+                                                    }, 2000);// Se esperará cierto tiempo antes de ejecutarse
+                                                */
+
+                                                break;
+                                            case response['mensaje_eliminacion_producto']=='error':   //  FECHA INVALIDA
+                                                //  ERROR message
+                                                    swa2_register_not_deleted();
+                                                break;
+                                        }   //  \.SWITCH
+                                    }
+                                    // \.success
+                                });
+                            // \.ajax
+                        }   // \.if (result.isConfirmed)
+                    })
+                //  \.MOSTRAR CUADRO DE CONFIRMACION
+            });
+        //  HACER CLICK SOBRE ICONO ELIMINAR EN DATATABLE
+
+
+
+
+
+
+    //});   //  \. $(function () {})
+
+
+
+}); //\.$( document ).ready(function() {

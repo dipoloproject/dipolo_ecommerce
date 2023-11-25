@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
         
     Route::post('/subir_archivos_productos', [ProductsController::class, 'subir_archivos_productos']);
     Route::post('/actualizar_archivos_y_productos', [ProductsController::class, 'actualizar_archivos_y_productos']);
+    Route::post('/eliminar_producto', [ProductsController::class, 'eliminar_producto']);
     Route::post('/admin/productos/formulario', [ProductsController::class, 'formulario'])->name('administracion.productos.formulario');
 
 
