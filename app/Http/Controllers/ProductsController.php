@@ -217,7 +217,7 @@ class ProductsController extends Controller
         // TRADUCIR MENSAJES DE ERROR -> HECHO EN FORMA PARCIAL EN VALIDATE
             
         //return $request->all();exit;
-            //var_dump(intval($request->input_marca));exit;
+            var_dump(intval($request->input_marca));exit;
         //  GUARDADO EN BASE DE DATOS
             $argumentos=[
                             intval($request->input_categoria),
@@ -225,9 +225,9 @@ class ProductsController extends Controller
                             intval($request->input_marca),
                             $request->input_nombre,
                             $request->input_es_destacado,
-                            $request->input_stock,
+                            intval($request->input_stock),
                             $request->input_estado
-                        ];                                  //var_dump($argumentos);exit;
+                        ];                                  echo "<pre>";var_dump($argumentos);exit;
             $rs_insert_rt_id = Product::Alta($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
 
             $idProducto= $rs_insert_rt_id[0]->last_id;      //echo "ultimo id:";var_dump($idProducto);exit;

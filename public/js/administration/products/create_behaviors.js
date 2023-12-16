@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-    
-
     //  ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
         $('#input_marca').change( function() {
             //  Referenciar valor
@@ -9,11 +7,6 @@ $(document).ready(function() {
             generate_model_options_xidMarca(idMarca);
         }); //\.$('#input_marcas').change 
     //\.ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
-
-
-
-
-
     
     
     //  REFERENCIAR EL BOTON CREAR producto

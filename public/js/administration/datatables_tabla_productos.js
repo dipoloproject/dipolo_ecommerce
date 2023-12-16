@@ -14,15 +14,6 @@ $( document ).ready(function() {
             
             //  CONFECCION de campos a mostrar
                 "columns":[
-                    
-                    // {   "data": "fecha_evento",
-                    //     "className":"rojo",
-                    //     "render":   function (data, type, row) {    
-                    //                     return '<div style="width:100px;">'+moment( row.fecha_evento, 'YYYY-MM-DD' ).format('YYYY-MM-DD')+'</div>';
-                    //                     //return '<div style="width:100px;">'+row.fecha_evento+'</div>';
-                    //                 }
-                    // },
-                    
 
                     {   "data": "idModelo",
                         "className":"align-middle",
@@ -108,72 +99,9 @@ $( document ).ready(function() {
                                             </div>";
                                 }
                     },
-                    /*{"defaultContent": "<div class='row text-center'>\
-                                            <div class='col-md-6 d-flex justify-content-center' style='padding:5px;'>\
-                                                \
-                                                    <input  type='hidden' \
-                                                            name='id_evento_actualizar' \
-                                                            value="+row.id_evento+">\
-                                                    <button type='submit' class='editar btn btn-lg'\
-                                                            data-toggle='tooltip' data-placement='top' \
-                                                            title='ACTUALIZAR'>\
-                                                                <span  data-toggle='modal' data-target='#exampleModal_crear'>\
-                                                                    <i class='fa fa-pen-to-square fa-lg text-info'></i>\
-                                                                </span>\
-                                                    </button>\
-                                                \
-                                            </div>\
-                                            <div class='col-md-6 d-flex justify-content-center' style='padding:5px;'>\
-                                                <form class='formulario_eliminar_eventos' method='POST' style='width:50px;'>\
-                                                    <input  type='hidden' \
-                                                            name='id_evento_eliminar' \
-                                                            value='<?php echo $id_evento; ?>'>\
-                                                    \
-                                                    <button type='submit' class='btn btn-lg' \
-                                                            data-toggle='tooltip' data-placement='top'\
-                                                            title='ELIMINAR'\
-                                                            style='width:50px;'>\
-                                                        <i class='fa fa-trash fa-lg text-danger'></i>\
-                                                    </button>\
-                                                </form>\
-                                            </div>\
-                                        </div>"}*/
-
-                    /*{"data":null,"defaultContent":"<div class='row text-center'>\
-                                                        <div class='col-md-6 d-flex justify-content-center' style='padding:5px;'>\
-                                                            <form class='boton_accion_actualizar_gas' method='POST'>\
-                                                                <input  type='hidden' \
-                                                                        name='id_evento_actualizar' \
-                                                                        value=>\
-                                                                <button type='submit' class='btn btn-lg'\
-                                                                        data-toggle='tooltip' data-placement='top' \
-                                                                        title='ACTUALIZAR'>\
-                                                                            <span  data-toggle='modal' data-target='#exampleModal_crear'>\
-                                                                                <i class='fa fa-pen-to-square fa-lg text-info'></i>\
-                                                                            </span>\
-                                                                </button>\
-                                                            </form>\
-                                                        </div>\
-                                                        <div class='col-md-6 d-flex justify-content-center' style='padding:5px;'>\
-                                                            <form class='formulario_eliminar_eventos' method='POST' style='width:50px;'>\
-                                                                <input  type='hidden' \
-                                                                        name='id_evento_eliminar' \
-                                                                        value='<?php echo $id_evento; ?>'>\
-                                                                \
-                                                                <button type='submit' class='btn btn-lg' \
-                                                                        data-toggle='tooltip' data-placement='top'\
-                                                                        title='ELIMINAR'\
-                                                                        style='width:50px;'>\
-                                                                    <i class='fa fa-trash fa-lg text-danger'></i>\
-                                                                </button>\
-                                                            </form>\
-                                                        </div>\
-                                                    </div>"}*/
                     
                 ],
             //  \.CONFECCION de campos a mostrar
-
-
 
             language: {
                 "decimal": "",
@@ -327,7 +255,7 @@ $( document ).ready(function() {
                                                         onClosed: function () {window.location.replace('/admin/productos/ver_todos');}  //  REDIRECCIONA cuando el toast se cierra
                                                     });
                                                 /*    
-                                                //  SUCCESS message
+                                                //  SUCCESS message - con SWEETALERT2
                                                     swa2_success_up_right('Registro eliminado con éxito');
                                                 //Redirigir a la vista welcome luego de cierto tiempo
                                                     setTimeout( function() {
@@ -351,13 +279,6 @@ $( document ).ready(function() {
             });
         //  HACER CLICK SOBRE ICONO ELIMINAR EN DATATABLE
 
-
-
-
-
-
     //});   //  \. $(function () {})
-
-
 
 }); //\.$( document ).ready(function() {

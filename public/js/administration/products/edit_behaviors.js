@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     //  ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
         $('#input_marca').change( function() {
             //  Referenciar valor
@@ -171,8 +170,6 @@ $(document).ready(function() {
                 }); 
             // \.ajax
         }); //\.$btnEditarProducto.addEventListener("click"
-
-
 
 
 });    //\.$(document).ready(function() {
