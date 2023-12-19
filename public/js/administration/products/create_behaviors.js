@@ -80,6 +80,7 @@ $(document).ready(function() {
                             },// \.beforeSend
                             success: function (response) {
                                 //console.log("-"+response.mensaje_error+"-");
+                                
                                 if(response.mensaje_error!=""){
                                     input_archivos_alert.innerHTML= response.mensaje_error;
                                     $(".alert").fadeTo(500, 1);
@@ -89,30 +90,33 @@ $(document).ready(function() {
                                     }, 2000);
                                 }
 
-                                if(response.mensaje_creacion_producto=="ok"){
-                                            //console.log("CREACION DE PRODUCTO EXITOSA");
-                                    // success
-                                        iziToast.success({
-                                            timeout: 1500, 
-                                            icon: 'fas fa-check', 
-                                            title: 'Creación exitosa!', 
-                                            //message: 'iziToast.sucess() with custom icon!'
-                                            progressBar:false,      // barra de progreso de cierre
-                                            close: false,           // boton x de cerrar
-                                            closeOnEscape: true,    // cerrar al apretar ESC
-                                            closeOnClick: true,     // cerrar al hacer click sobre alerta
-                                            position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
-                                            transitionIn: 'flipInX',
-                                            transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
-                                            animateInside: false,
-                                            onClosed: function () {window.location.replace('/admin/productos/crear');}  //  REDIRECCIONA cuando el toast se cierra
-                                        });
-                                            //  REDIRECCIONAR PÁGINA
-                                                /*setTimeout( function() {
-                                                    window.location.replace('/admin/productos/crear');
-                                                }, 2000);// Se esperará cierto tiempo antes de ejecutarse */
-                                }
-
+                                if(response.mensaje_creacion_producto != ""){
+                                    if(response.mensaje_creacion_producto=="ok"){
+                                                //console.log("CREACION DE PRODUCTO EXITOSA");
+                                        // success
+                                            iziToast.success({
+                                                timeout: 1500, 
+                                                icon: 'fas fa-check', 
+                                                title: 'Creación exitosa!', 
+                                                //message: 'iziToast.sucess() with custom icon!'
+                                                progressBar:false,      // barra de progreso de cierre
+                                                close: false,           // boton x de cerrar
+                                                closeOnEscape: true,    // cerrar al apretar ESC
+                                                closeOnClick: true,     // cerrar al hacer click sobre alerta
+                                                position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
+                                                transitionIn: 'flipInX',
+                                                transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
+                                                animateInside: false,
+                                                onClosed: function () {window.location.replace('/admin/productos/crear');}  //  REDIRECCIONA cuando el toast se cierra
+                                            });
+                                                //  REDIRECCIONAR PÁGINA
+                                                    /*setTimeout( function() {
+                                                        window.location.replace('/admin/productos/crear');
+                                                    }, 2000);// Se esperará cierto tiempo antes de ejecutarse */
+                                    }else{
+                                        swa2_campo_obligatorio(response.mensaje_creacion_producto);
+                                    }
+                                }                                
                             },// \.success
                         });
                     // \.ajax

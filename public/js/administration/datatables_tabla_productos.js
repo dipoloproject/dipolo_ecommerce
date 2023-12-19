@@ -22,10 +22,17 @@ $( document ).ready(function() {
                                     }
                     },
 
-                    {   "data": "idMarca",
+                    {   "data": "nombreMarca",
                         "className":"align-middle",
                         "render":   function (data, type, row) {    
-                                        return decodeURIComponent(escape(row.idMarca));
+                                        return decodeURIComponent(escape(row.nombreMarca));
+                                    }
+                    },
+
+                    {   "data": "nombreModelo",
+                        "className":"align-middle",
+                        "render":   function (data, type, row) {    
+                                        return decodeURIComponent(escape(row.nombreModelo));
                                     }
                     },
 
@@ -130,7 +137,8 @@ $( document ).ready(function() {
 
 
           	dom: 'Bfrtip',
-            dom:'<"container-fluid"<"row"<"col"B><"col"f>>>rtip',   //para mostrar BOTONES Y SEARCH en la misma linea. Linea origina: '<"container-fluid"<"row"<"col"B><"col"l><"col"f>>>rtip'
+            //dom:'<"container-fluid"<"row"<"col"B><"col"f>>>rtip',   //para mostrar BOTONES Y SEARCH en la misma linea. Linea origina: '<"container-fluid"<"row"<"col"B><"col"l><"col"f>>>rtip'
+            dom:'<"container-fluid"<"row"<"col"B><"col">> <"row"<"col"f><"col"p>>>rti',   //para mostrar BOTONES Y SEARCH en la misma linea. Linea origina: '<"container-fluid"<"row"<"col"B><"col"l><"col"f>>>rtip'
             buttons:[ 
                 {
                     extend:    'excelHtml5',
@@ -192,6 +200,18 @@ $( document ).ready(function() {
             ]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+
+    //  Estilos CSS para el input BUSCAR/SEARCH
+            //$('#example_filter').addClass("col-md-12");
+            $('#example1_filter').css({'width':'100%','padding-top':'20px'});
+            $('#example1_filter label').css({'width':'100%','display':'inline-block', 'padding':'0px', 'justify-content': 'start'}); // ubicar campo SEARCH a la izquierda
+        //  Estilos CSS para la PAGINATION
+            $('#example1_paginate').css({'width':'100%','display':'inline-block', 'padding':'10px'});
+        //  Estilos CSS para la INFORMATION
+            //$('#example1_info').css({'width':'100%','display':'inline-block', 'padding':'15px'});
+
+
+
         /*$('#example2').DataTable({
           "paging": true,
           "lengthChange": false,
@@ -201,6 +221,7 @@ $( document ).ready(function() {
           "autoWidth": false,
           "responsive": true,
         });*/
+
 
 
         //  HACER CLICK SOBRE ICONO ELIMINAR EN DATATABLE

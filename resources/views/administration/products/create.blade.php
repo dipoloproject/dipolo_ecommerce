@@ -62,6 +62,22 @@
         opacity: 85%;
         margin: 5px;
     }
+
+
+    /*Estilos para OCULTAR flechas de inputs de type=number*/
+        /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+        /* Firefox */
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
+    /*\.Estilos para OCULTAR flechas de inputs de type=number*/
+
 </style>
 
   <!-- Content Wrapper. Contains page content -->
@@ -163,10 +179,10 @@
                                                     value="">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1">Estado</label>
+                                            <label for="exampleInputPassword1">Condición</label>
                                             <select class="form-control select2" 
-                                                    name="input_estado"
-                                                    id="input_estado"
+                                                    name="input_condicion"
+                                                    id="input_condicion"
                                                     style="width: 100%;">
                                                             <option value="" selected>-</option>
                                                             <option value="N">Nuevo</option>
@@ -239,8 +255,8 @@
                                             <label for="exampleInputPassword1">Código</label>&nbsp;<span class="text-secondary">(opcional)</span>
                                             <input  type="text" 
                                                     class="form-control" 
-                                                    name="input_nombre" 
-                                                    id="input_nombre" 
+                                                    name="input_codigo" 
+                                                    id="input_codigo" 
                                                     placeholder="Código del producto"
                                                     value="">
                                         </div>
@@ -248,8 +264,8 @@
                                             <label for="exampleInputPassword1">Descripción</label>&nbsp;<span class="text-secondary">(opcional)</span>
                                             <input  type="text" 
                                                     class="form-control" 
-                                                    name="input_nombre" 
-                                                    id="input_nombre" 
+                                                    name="input_descripcion" 
+                                                    id="input_descripcion" 
                                                     placeholder="Descripción del producto"
                                                     value="">
                                         </div>
@@ -268,45 +284,58 @@
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Origen</label>&nbsp;<span class="text-secondary">(opcional)</span>
                                             <select class="form-control select2" 
-                                                    name="input_subcategoria"
-                                                    id="input_subcategoria"
+                                                    name="input_origen"
+                                                    id="input_origen"
                                                     style="width: 100%;">
                                                             <option value="" selected>-</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Precio tachado</label>&nbsp;<span class="text-secondary">(opcional)</span>
-                                            <input  type="number" class="form-control" 
-                                                    name="input_stock" id="input_stock"
-                                                    value="">
+                                            <input  type="number" 
+                                                    class="form-control" 
+                                                    name="input_precio_tachado" 
+                                                    id="input_precio_tachado"
+                                                    placeholder="0.00"
+                                                    oninput="limitDecimalPlaces(event, 2)">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Precio venta</label>&nbsp;<span class="text-secondary">(opcional)</span>
-                                            <input  type="number" class="form-control" 
-                                                    name="input_stock" id="input_stock"
-                                                    value="">
+                                            <input  type="number" 
+                                                    class="form-control" 
+                                                    name="input_precio_venta" 
+                                                    id="input_precio_venta"
+                                                    placeholder="0.00"
+                                                    oninput="limitDecimalPlaces(event, 2)">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Precio Lista</label>&nbsp;<span class="text-secondary">(opcional)</span>
-                                            <input  type="number" class="form-control" 
-                                                    name="input_stock" id="input_stock"
-                                                    value="">
+                                            <input  type="number" 
+                                                    class="form-control" 
+                                                    name="input_precio_lista" 
+                                                    id="input_precio_lista"
+                                                    placeholder="0.00"
+                                                    oninput="limitDecimalPlaces(event, 2)">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Orden</label>&nbsp;<span class="text-secondary">(opcional)</span>
-                                            <input  type="number" class="form-control" 
-                                                    name="input_stock" id="input_stock"
+                                            <input  type="number" 
+                                                    class="form-control" 
+                                                    name="input_orden" 
+                                                    id="input_orden"
                                                     step="1" min="0" oninput="validity.valid||(value='');"
                                                     value="">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Vistas</label>&nbsp;<span class="text-secondary">(opcional)</span>
-                                            <input  type="number" class="form-control" 
-                                                    name="input_stock" id="input_stock"
+                                            <input  type="number" 
+                                                    class="form-control" 
+                                                    name="input_vistas" 
+                                                    id="input_vistas"
                                                     step="1" min="0" oninput="validity.valid||(value='');"
                                                     value="">
                                         </div>
@@ -438,3 +467,17 @@
     </script>
 <!-- \.jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
 
+
+
+<!-- INPUTS de precios -> sólo  muetren count cifras decimales -->
+    <script>
+        function limitDecimalPlaces(e, count) {
+            if(e.target.value.indexOf('.') == -1){ 
+                return;
+            }
+            if( (e.target.value.length - e.target.value.indexOf('.')) > count   ){
+                e.target.value = parseFloat(e.target.value).toFixed(count);
+            }
+        }
+    </script>
+<!-- \.INPUTS de precios -> sólo  muetren count cifras decimales -->

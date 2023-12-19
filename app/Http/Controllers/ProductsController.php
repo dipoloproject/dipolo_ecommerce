@@ -176,78 +176,90 @@ class ProductsController extends Controller
             } catch (\Illuminate\Validation\ValidationException $th) {
                     //var_dump($th->validator->errors());exit;
                 return response()->json([
-                    'mensaje_error'=> $th->validator->errors()->first()
+                    'mensaje_error'=> $th->validator->errors()->first(),
+                    'mensaje_creacion_producto'=> ""
                     //  NO se define la key 'mensaje_creacion_producto. Ambas keys se definen más adelante'
                 ]);
             }
-        
-            //  Ver contenido completo de $request (todo)
-                //return $request->all();exit;
-        
-        //  VECTOR/ARRAY que contendrá nombres de archivos cargados/subidos
-            $vector_filesnames= [];     //var_dump($vector_filesnames);exit;
-        
-        //  GUARDADO de archivos precargados
-            $conteo = count($_FILES["archivos"]["name"]);   //var_dump($conteo);exit; // cantidad de archivos a subir
-            for ($i = 0; $i < $conteo; $i++) {
-                //  Archivo en sí + Extension
-                    $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
-                    $nombreArchivo = $_FILES["archivos"]["name"][$i];
-                    $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
-                // Renombrar archivo
-                    $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
 
-                //  FORMAR vector de nombres de archivos (necesario para guardar en base de datos)
-                    array_push($vector_filesnames, $nuevoNombre);
-                // Mover del temporal al directorio actual
-                        //echo $nuevoNombre."<br>";
-                        //echo $extension."<br>";
-                        //echo filesize($_FILES["archivos"]["tmp_name"][$i])."<br>";  // tamaño en bytes del archivo
-                    //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
-
-                //  USAR INTERVENTION IMAGE O LO QUE SEA PARA AJUSTAR TAMAÑO DE IMAGENES - O HACER ESTO FUERA DE ESTE LOOP
-
-                //  Por cada archivo multimedia seleccionado, guarda en ubicacion destino con el nombre previamente establecido
-                    $request->file('archivos')[$i]->storeAs('public/archivos_multimedia/', $nuevoNombre);   //DESCOMENTAR - NO GUARDA NADA
-            }
-                //echo "<pre>";var_dump($vector_filesnames);exit;
-        // Responder al cliente
-            //echo json_encode(true);
-        
-        // TRADUCIR MENSAJES DE ERROR -> HECHO EN FORMA PARCIAL EN VALIDATE
-            
         //return $request->all();exit;
-            var_dump(intval($request->input_marca));exit;
+            //var_dump(intval($request->input_marca));exit;
         //  GUARDADO EN BASE DE DATOS
             $argumentos=[
-                            intval($request->input_categoria),
-                            intval($request->input_modelo),
-                            intval($request->input_marca),
-                            $request->input_nombre,
-                            $request->input_es_destacado,
-                            intval($request->input_stock),
-                            $request->input_estado
-                        ];                                  echo "<pre>";var_dump($argumentos);exit;
+                            // PARAMETROS OBLIGATORIOS
+                                intval($request->input_categoria),
+                                intval($request->input_modelo),
+                                intval($request->input_marca),
+                                $request->input_nombre,
+                                $request->input_es_destacado,
+                                intval($request->input_stock),
+                                $request->input_condicion,
+                            // PARAMETROS OPCIONALES
+                                $request->input_codigo,
+                                $request->input_descripcion,    
+                                $request->input_origen,
+                                floatval($request->input_precio_tachado),
+                                floatval($request->input_precio_venta),
+                                floatval($request->input_precio_lista),
+                                intval($request->input_orden),
+                                intval($request->input_vistas)
+
+                        ];                                  //echo "<pre>";var_dump($argumentos);exit;
             $rs_insert_rt_id = Product::Alta($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
 
-            $idProducto= $rs_insert_rt_id[0]->last_id;      //echo "ultimo id:";var_dump($idProducto);exit;
+                //debbug($rs_insert_rt_id[0]->mensaje);
+            if($rs_insert_rt_id[0]->mensaje=='ok'){ // SI LA INSERCION ANTERIOR FUE EXITOSA, se hace los inserts en tabla Archivos_Multimedia
+                              
+                //  VECTOR/ARRAY que contendrá nombres de archivos cargados/subidos
+                    $vector_filesnames= [];     //var_dump($vector_filesnames);exit;
+                
+                //  GUARDADO de archivos precargados
+                    $conteo = count($_FILES["archivos"]["name"]);   //var_dump($conteo);exit; // cantidad de archivos a subir
+                    for ($i = 0; $i < $conteo; $i++) {
+                        //  Archivo en sí + Extension
+                            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
+                            $nombreArchivo = $_FILES["archivos"]["name"][$i];
+                            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+                        // Renombrar archivo
+                            $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
+        
+                        //  FORMAR vector de nombres de archivos (necesario para guardar en base de datos)
+                            array_push($vector_filesnames, $nuevoNombre);
+                        // Mover del temporal al directorio actual
+                                //echo $nuevoNombre."<br>";
+                                //echo $extension."<br>";
+                                //echo filesize($_FILES["archivos"]["tmp_name"][$i])."<br>";  // tamaño en bytes del archivo
+                            //move_uploaded_file($ubicacionTemporal, $nuevoNombre);
+        
+                        //  USAR INTERVENTION IMAGE O LO QUE SEA PARA AJUSTAR TAMAÑO DE IMAGENES - O HACER ESTO FUERA DE ESTE LOOP
+        
+                        //  Por cada archivo multimedia seleccionado, guarda en ubicacion destino con el nombre previamente establecido
+                            $request->file('archivos')[$i]->storeAs('public/archivos_multimedia/', $nuevoNombre);   //DESCOMENTAR - NO GUARDA NADA
+                    }
+                //\.GUARDADO de archivos precargados
 
-            //debbug($request->order_list);
-            //  VECTOR que contiene los data-id en el orden deseado
-                $order_vector= explode(",",$request->order_list);   //debbug($order_vector);exit;
-                $i=1;   // iniciar contador (data-id del 1er archivo)
 
-            foreach($vector_filesnames as $filename){
-                $argumentos=[
-                                intval($idProducto),
-                                $filename, 
-                                array_search($i, $order_vector)+1   //posicion del data-id en el vector ordenado = posicion a ocupar el archivo
-                            ];                                  //echo "<pre>";var_dump($argumentos);exit;
-                $rs_insert_mf = MediaFile::Alta($argumentos);   //echo "<pre>";var_dump($rs_insert_mf);exit;
-                $i++;   // data-id del archivo siguiente
-            }   //exit;
+
+                $idProducto= $rs_insert_rt_id[0]->last_id;      //echo "ultimo id:";var_dump($idProducto);exit;
+                
+                //  VECTOR que contiene los data-id en el orden deseado
+                    $order_vector= explode(",",$request->order_list);   //debbug($order_vector);exit;
+                    $i=1;   // iniciar contador (data-id del 1er archivo)
+
+                    foreach($vector_filesnames as $filename){
+                        $argumentos=[
+                                        intval($idProducto),
+                                        $filename, 
+                                        array_search($i, $order_vector)+1   //posicion del data-id en el vector ordenado = posicion a ocupar el archivo
+                                    ];                                  //echo "<pre>";var_dump($argumentos);exit;
+                        $rs_insert_mf = MediaFile::Alta($argumentos);   //echo "<pre>";var_dump($rs_insert_mf);exit;
+                        $i++;   // data-id del archivo siguiente
+                    }   //exit;
+            }
 
         //  \.GUARDADO EN BASE DE DATOS
+
+
         /*  Se retorna de esta manera para poder enviar más variables de ser necesario
             Por ejemplo: return response()->json([
                                                 'modelos'=> $modelos, 
@@ -255,12 +267,11 @@ class ProductsController extends Controller
                                                 'variable2'=> true
                                             ]);
         */
-            $rs_salida_sp= "ok";    //  RESPUESTA TEMPORAL
             return response()->json([
                 /*  Aquí sí se definen ambas keys. 
                     La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
                     'mensaje_error'=> "",
-                    'mensaje_creacion_producto'=> $rs_salida_sp
+                    'mensaje_creacion_producto'=> $rs_insert_rt_id[0]->mensaje
             ]); //  esto se retorn al ajax
     }
 
@@ -384,7 +395,7 @@ class ProductsController extends Controller
                             $request->input_nombre,
                             $request->input_es_destacado,
                             $request->input_stock,
-                            $request->input_estado
+                            $request->input_condicion
                         ];      //var_dump($argumentos);exit;
             $rs_insert_rt_id = Product::Actualiza($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
            

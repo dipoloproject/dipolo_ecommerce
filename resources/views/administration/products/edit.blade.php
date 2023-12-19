@@ -190,10 +190,10 @@
                                             oninput="this.value = Math.round(this.value);">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Estado</label>
+                                    <label for="exampleInputPassword1">Condición</label>
                                     <select class="form-control select2" 
-                                            name="input_estado"
-                                            id="input_estado"
+                                            name="input_condicion"
+                                            id="input_condicion"
                                             style="width: 100%;">
                                                     <option value="" selected>-</option>
                                                     <option value="N">Nuevo</option>

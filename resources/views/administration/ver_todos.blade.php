@@ -34,7 +34,8 @@
                   <thead class="bg-primary">
                     <tr>
                       <th style='width:5%;'>ID</th>
-                      <th style='width:5%;'>idMarca</th>
+                      <th style='width:5%;'>Marca</th>
+                      <th style='width:5%;'>Modelo</th>
                       <th style='width:10%;'>NOMBRE</th>
                       <th>IMAGENES <i class="fas fa-photo-video"></i></th>
                       <th>ESTADO</th>
@@ -47,7 +48,8 @@
                   <tfoot class="bg-secondary">
                     <tr>
                       <th style='width:5%;'>ID</th>
-                      <th style='width:5%;'>idMarca</th>
+                      <th style='width:5%;'>Marca</th>
+                      <th style='width:5%;'>Modelo</th>
                       <th style='width:10%;'>NOMBRE</th>
                       <th>IMAGENES <i class="fas fa-photo-video"></i></th>
                       <th style='width:5%;'>ESTADO</th>
