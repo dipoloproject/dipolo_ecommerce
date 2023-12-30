@@ -15,8 +15,16 @@ $( document ).ready(function() {
             //  CONFECCION de campos a mostrar
                 "columns":[
 
+                    /*
+                        PROPIEDAD: responsivePriority
+                            Asignar "responsivePriority": 1, a una columna es hacer que sea la última en colapsarse
+                            Asignar "responsivePriority": 10000, es la prioridad por defecto 
+                            Asignar "responsivePriority": 10001, a una columna es hacer que se colapse antes que cualquier otra
+                    */
+
+                    //  columna que se oculta pero se la define para rescatar idProducto
                     {   "data": "idModelo",
-                        "visible": false,
+                        "visible": false,   // quita la visibilidad de la columna
                         "className":"align-middle",
                         "render":   function (data, type, row) {    
                                         return '<div>'+decodeURIComponent(escape(row.idProducto))+'</div>';
@@ -45,6 +53,7 @@ $( document ).ready(function() {
                     },
 
                     {   "data": "nombreProducto",
+                        "responsivePriority": 1,    // asigna prioridad a la columna para que sea la última en colapsar al achicar la pantalla
                         "className":"align-middle",
                         "render":   function (data, type, row) {    
                                         return decodeURIComponent(escape(row.nombreProducto));
@@ -58,7 +67,32 @@ $( document ).ready(function() {
                                 }
                     },
 
+                    {   "data": "precioTachadoProducto", 
+                        "responsivePriority": 10003,
+                        "className":"align-middle",
+                        "render":   function (data, type, row) {    
+                                    return '<div style="text-decoration:line-through;">'+row.precioTachadoProducto+'</div>';
+                                }
+                    },
+
+                    {   "data": "precioVentaProducto", 
+                        "responsivePriority": 10001,
+                        "className":"align-middle",
+                        "render":   function (data, type, row) {    
+                                    return '<div>'+row.precioVentaProducto+'</div>';
+                                }
+                    },
+
+                    {   "data": "precioListaProducto", 
+                        "responsivePriority": 10002,
+                        "className":"align-middle",
+                        "render":   function (data, type, row) {    
+                                    return '<div>'+row.precioListaProducto+'</div>';
+                                }
+                    },
+
                     {   "data": "nombreArchivosMultimedia", 
+                        "responsivePriority": 1,
                         "className":"align-middle",
                         "render":   function (data, type, row) {
                                             var array_archivos= row.nombreArchivosMultimedia.split(';');
@@ -79,6 +113,7 @@ $( document ).ready(function() {
                     },
 
                     {   "data": "estadoProducto", 
+                        "responsivePriority": 10,
                         "className":"align-middle",
                         "render":   function (data, type, row) {
                                     var html_out='';
@@ -92,6 +127,7 @@ $( document ).ready(function() {
                     },
                         
                     {"data": null,
+                    "responsivePriority": 1,
                     "render":   function (data, type, row) {
                                     // En cada enlace, la propiedad href será explícitamente la ruta url ya que NO se pudo usar la funcion route o url
                                     return "<div class='row text-center' >\
@@ -145,7 +181,6 @@ $( document ).ready(function() {
                     "previous": "Anterior"
                 }
             },
-
 
 			"responsive": true, "lengthChange": false, "autoWidth": false,
 			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
@@ -214,6 +249,29 @@ $( document ).ready(function() {
                 
             ]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+
+
+// Add event listener for opening and closing details
+table.on('click', 'td.dt-control', function (e) {
+    let tr = e.target.closest('tr');
+    let row = table.row(tr);
+ 
+    if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+    }
+    else {
+        // Open this row
+        row.child(format(row.data())).show();
+    }
+});
+
+
+
+
+
+
 
 
     //  Estilos CSS para el input BUSCAR/SEARCH

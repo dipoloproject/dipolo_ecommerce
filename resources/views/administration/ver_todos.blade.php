@@ -39,6 +39,9 @@
                       <th style='width:5%;'>CATEGORÍA</th>
                       <th style='width:10%;'>NOMBRE</th>
                       <th style='width:10%;'>DESCRIPCIÓN</th>
+                      <th style='width:10%;'>PRECIO TACHADO</th>
+                      <th style='width:10%;'>PRECIO VENTA</th>
+                      <th style='width:10%;'>PRECIO LISTA</th>
                       <th>IMAGENES <i class="fas fa-photo-video"></i></th>
                       <th>ESTADO</th>
                       <th style='width:10%;'>ACCIONES</th>
@@ -55,6 +58,9 @@
                       <th style='width:5%;'>CATEGORÍA</th>
                       <th style='width:10%;'>NOMBRE</th>
                       <th style='width:10%;'>DESCRIPCIÓN</th>
+                      <th style='width:10%;'>PRECIO TACHADO</th>
+                      <th style='width:10%;'>PRECIO VENTA</th>
+                      <th style='width:10%;'>PRECIO LISTA</th>
                       <th>IMAGENES <i class="fas fa-photo-video"></i></th>
                       <th style='width:5%;'>ESTADO</th>
                       <th style='width:10%;'>ACCIONES</th>

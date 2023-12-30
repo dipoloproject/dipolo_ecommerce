@@ -159,7 +159,7 @@ class ProductsController extends Controller
 
 
 
-    
+    // CREAR
     public function subir_archivos_productos(Request $request){
 
         /*  Mirar contenido de $request (archivos seleccionados)
@@ -285,7 +285,7 @@ class ProductsController extends Controller
 
 
 
-
+    // ACTUALIZAR
     public function actualizar_archivos_y_productos(Request $request){
 
         /*  Mirar contenido de $request (archivos seleccionados)
@@ -396,6 +396,7 @@ class ProductsController extends Controller
                             
         //  ACTUALIZACION EN BASE DE DATOS
             $argumentos=[
+                    // PARAMETROS OBLIGATORIOS
                             intval($idProducto),
                             intval($request->input_marca),
                             intval($request->input_modelo),
@@ -403,7 +404,17 @@ class ProductsController extends Controller
                             $request->input_nombre,
                             $request->input_es_destacado,
                             $request->input_stock,
-                            $request->input_condicion
+                            $request->input_condicion,
+                            $request->input_estado,
+                    // PARAMETROS OPCIONALES
+                            $request->input_codigo,
+                            $request->input_origen,    
+                            $request->input_descripcion,
+                            floatval($request->input_precio_tachado),
+                            floatval($request->input_precio_venta),
+                            floatval($request->input_precio_lista),
+                            intval($request->input_orden),
+                            intval($request->input_vistas)
                         ];      //var_dump($argumentos);exit;
             $rs_insert_rt_id = Product::Actualiza($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
            
