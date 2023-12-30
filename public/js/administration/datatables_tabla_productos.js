@@ -16,6 +16,7 @@ $( document ).ready(function() {
                 "columns":[
 
                     {   "data": "idModelo",
+                        "visible": false,
                         "className":"align-middle",
                         "render":   function (data, type, row) {    
                                         return '<div>'+decodeURIComponent(escape(row.idProducto))+'</div>';
@@ -36,10 +37,24 @@ $( document ).ready(function() {
                                     }
                     },
 
-                    {   "data": "nombreProducto", 
+                    {   "data": "nombreRubro",
                         "className":"align-middle",
                         "render":   function (data, type, row) {    
-                                    return '<div style="width:300px;">'+row.nombreProducto+'</div>';
+                                        return decodeURIComponent(escape(row.nombreRubro));
+                                    }
+                    },
+
+                    {   "data": "nombreProducto",
+                        "className":"align-middle",
+                        "render":   function (data, type, row) {    
+                                        return decodeURIComponent(escape(row.nombreProducto));
+                                    }
+                    },
+
+                    {   "data": "descripcionProducto", 
+                        "className":"align-middle",
+                        "render":   function (data, type, row) {    
+                                    return '<div style="width:300px;">'+row.descripcionProducto+'</div>';
                                 }
                     },
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Origin;
 use App\Models\MediaFile;
 
 use Illuminate\Http\Request;
@@ -48,14 +49,21 @@ class ProductsController extends Controller
     public function crear(){
         $marcas = Product::Get_all_brands();
         $categorias = Product::Get_all_categories();
+        $origenes = Origin::List_all_origins();
 
-        return view('administration/products/create', compact('marcas', 'categorias'));
+        $create_edit= "create";
+
+        return view('administration/products/create', compact('marcas', 'categorias', 'origenes', 'create_edit'));
     }
 
 
     public function editar(Request $request){
         $marcas = Product::Get_all_brands();
         $categorias = Product::Get_all_categories();
+        $origenes = Origin::List_all_origins();
+
+        $create_edit= "edit";
+
         //var_dump($request['id']);exit;
         // Recuperar PRODUCTO segun id
             $argumentos=[
@@ -74,7 +82,7 @@ class ProductsController extends Controller
                 // convert object $result to array
             //$producto = json_decode($result, true);
 
-        return view('administration/products/edit', compact('marcas', 'categorias', 'producto', 'archivos'));
+        return view('administration/products/edit', compact('marcas', 'categorias' ,'origenes', 'create_edit', 'producto', 'archivos'));
     }
 
 
@@ -183,7 +191,7 @@ class ProductsController extends Controller
             }
 
         //return $request->all();exit;
-            //var_dump(intval($request->input_marca));exit;
+            //var_dump($request->input_descripcion);exit;
         //  GUARDADO EN BASE DE DATOS
             $argumentos=[
                             // PARAMETROS OBLIGATORIOS

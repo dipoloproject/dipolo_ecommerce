@@ -120,7 +120,7 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <form enctype='multipart/form-data' method='POST' action="#">
-                            <div class="card-body">
+                            <!-- <div class="card-body"> -->
                                 <div class="form-group m-0">
                                     <input  type="hidden" 
                                             class="form-control" 
@@ -128,164 +128,11 @@
                                             id="input_hidden_idProducto"
                                             value="<?php echo $idProducto;?>">
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Marca</label>
-                                    <select class="form-control select2" 
-                                            name="input_marca"        
-                                            id="input_marca"
-                                            style="width: 100%;">
-                                                    <option value="" selected>-</option>
-                                        <?php   foreach($marcas as $marca):     ?>
-                                                    <option value="{{$marca->idMarca}}">{{$marca->nombreMarca}}</option>    
-                                        <?php   endforeach;                     ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Modelo</label>
-                                    <select class="form-control select2 select_input_modelo" 
-                                            name="input_modelo"
-                                            id="input_modelo"
-                                            style="width: 100%;">
-                                                    <option value="" selected>-</option>
-                                            <!-- EL RESTO DE OPCIONES SE GENERA CON JAVASCRIPT -->
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Categoría</label>
-                                    <select class="form-control select2" 
-                                            name="input_categoria"
-                                            id="input_categoria"
-                                            style="width: 100%;">
-                                                    <option value="" selected>-</option>
-                                        <?php       
-                                                    echo  createTreeView( null, $menus, 0); 
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Nombre</label>
-                                    <input  type="text" 
-                                            class="form-control" 
-                                            name="input_nombre" 
-                                            id="input_nombre" 
-                                            placeholder="Nombre del producto">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Es destacado</label>
-                                    <select class="form-control select2" 
-                                            name="input_es_destacado"
-                                            id="input_es_destacado"
-                                            style="width: 100%;">
-                                                    <option value="" selected>-</option>
-                                                    <option value="N">NO</option>
-                                                    <option value="S">SI</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Stock</label>
-                                    <input  type="number" 
-                                            class="form-control" 
-                                            name="input_stock" id="input_stock"
-                                            min="0"
-                                            oninput="this.value = Math.round(this.value);">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Condición</label>
-                                    <select class="form-control select2" 
-                                            name="input_condicion"
-                                            id="input_condicion"
-                                            style="width: 100%;">
-                                                    <option value="" selected>-</option>
-                                                    <option value="N">Nuevo</option>
-                                                    <option value="U">Usado</option>
-                                    </select>
-                                </div>
 
-                                <div class="form-group">
-                                    <label  for="exampleInputPassword1" 
-                                            class="text-black" 
-                                            id="label_field_reorder_mediafiles">Reordenar archivos multimedia</label>
-                                    <!-- VISTA PREVIA de archivos precargados -->
-                                        <div class="row px-5">
-                                            <!-- <div class="col-md-1"></div> -->
-                                            <div class="col-md-12 px-0">
-                                                <!-- <label for="exampleInputFile">Vista previa (archivos precargados)</label> -->
-                                                <div class="rounded grey_area_reorder" 
-                                                    id="galeria_sortable" 
-                                                    style="background-color:#e9ecef;">
-                                                    <div id="fileList_sortable" class="row px-2" style="width:100%;">
-                                                        <?php
-                                                            foreach($archivos as $archivo ):
-                                                        ?>
-                                                                <div class="lg-image-reorder" 
-                                                                    style="cursor:grab;"
-                                                                    data-id="{{$archivo->idArchivoMultimedia}}">
-                                                                    <img    style="padding:5px;" 
-                                                                            src="../../../storage/archivos_multimedia/{{$archivo->nombreArchivoMultimedia}}" 
-                                                                            alt="product image" 
-                                                                            width="100px;" height="100px;">
-                                                                </div>
-                                                        <?php
-                                                            endforeach;
-                                                        ?>
-                                                                    <!-- <img style="padding:5px;"  width="100" src="../../storage/archivos_multimedia/65445e2d33867_2.jpg"> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <!-- \.VISTA PREVIA de archivos precargados -->
-                                </div>
+                                <!-- INPUTS DEL FORMULARIO DE CREACION/EDICION DE PRODCUTO -->
+                                    @include ('administration/products/inputs_form_create_edit_product');
 
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Imágenes</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input  type="file" multiple 
-                                                    class="custom-file-input" 
-                                                    name="file"
-                                                    id="inputArchivos"
-                                                    accept="image/*"
-                                                    onchange="javascript:updateList(event)">
-                                                    <!-- al cargar archivos, se ejecuta la funcion updateList() -->
-                                                    
-                                            <label  class="custom-file-label" 
-                                                    for="exampleInputFile">Volver a elegir archivos</label>
-                                            <!-- <output id="list"></output> -->
-                                        </div>
-                                        <!-- <div class="preview-area" id="preview_files" style="width: 300px;">asdfasdfasdfasfads</div> -->                                        
-                                        <!-- <div class="input-group-append">
-                                            <span class="input-group-text">Upload</span>
-                                        </div> -->
-                                    </div>
-                                    <!-- NOTIFICACION-ALERTA sobre archivos precargados (para subir) -->
-                                        <div class="alert alert-danger fade mb-0 py-1 mb-2" 
-                                            id="input_archivos_alert"
-                                            style="background-color:#f8d7da;color:#721c24;" 
-                                            role="alert">&nbsp;</div>
-                                    <!-- \.NOTIFICACION-ALERTA sobre archivos precargados (para subir) -->
-                                    <!-- VISTA PREVIA de archivos precargados -->
-                                        <div class="row px-5">
-                                            <!-- <div class="col-md-1"></div> -->
-                                            <div class="col-md-12">
-                                                <label for="exampleInputFile">Vista previa (archivos precargados)</label>
-                                                <div class="rounded" 
-                                                    id="galeria_edit" 
-                                                    style="background-color:#e9ecef;">
-                                                    <div id="fileList_edit" 
-                                                         class="d-flex justify-content-start" 
-                                                         style="width:100%;">
-                                                        <h5 class="text-center m-0 py-2">No se cargaron archivos</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <!-- \.VISTA PREVIA de archivos precargados -->                                    
-                                </div>
-                                <!-- <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                </div> -->
-                            </div>
+                            <!-- </div> -->
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="button" 
@@ -413,6 +260,18 @@
 <!-- \.jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
 
 
+<!-- INPUTS de precios -> sólo  muetren count cifras decimales -->
+    <script>
+        function limitDecimalPlaces(e, count) {
+            if(e.target.value.indexOf('.') == -1){ 
+                return;
+            }
+            if( (e.target.value.length - e.target.value.indexOf('.')) > count   ){
+                e.target.value = parseFloat(e.target.value).toFixed(count);
+            }
+        }
+    </script>
+<!-- \.INPUTS de precios -> sólo  muetren count cifras decimales -->
 
 <script>
     //  AL CARGAR ARCHIVOS EN INPUT FILE

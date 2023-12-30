@@ -9,13 +9,25 @@ $(document).ready(function() {
     //\.ELEGIR MARCA -> FORMAR INPUTS SELECT DE MODELOS
         
     //  AL CARGAR LA PAGINA, SE RESCATAN LOS DATOS DEL PRODUCTO A EDITAR 
+        // CAMPOS OBLIGATORIOS
             var idMarca= document.getElementById("input_marca");
             //var idModelo= document.getElementById("input_modelo");
             var idRubro= document.getElementById("input_categoria");
             var nombreProducto= document.getElementById("input_nombre");
             var destacadoProducto= document.getElementById("input_es_destacado");
             var stockProducto= document.getElementById("input_stock");
+            var condicion= document.getElementById("input_condicion");
+        // CAMPOS OPCIONALES
+            var codigoProducto= document.getElementById("input_codigo");
+            var descripcionProducto= document.getElementById("input_descripcion");
+            var origen= document.getElementById("input_origen");
+            var precioTachadoProducto= document.getElementById("input_precio_tachado");
+            var precioVentaProducto= document.getElementById("input_precio_venta");
+            var precioListaProducto= document.getElementById("input_precio_lista");
+            var ordenProducto= document.getElementById("input_orden");
+            var vistasProducto= document.getElementById("input_vistas");
             var estadoProducto= document.getElementById("input_estado");
+            
 
         //  AJAX
             $.ajax({
@@ -35,16 +47,29 @@ $(document).ready(function() {
                 },// \.beforeSend
                 success: function (response) {
                     //  SETEAR CAMPOS
-                        nombreProducto.value= response['producto'].nombreProducto;
-                        destacadoProducto.value= response['producto'].destacadoProducto;
-                        stockProducto.value= response['producto'].stockProducto;
-                        estadoProducto.value= response['producto'].condicion;
-                        idMarca.value= response['producto'].idMarca;
-                        //  CAMPO DEPENDIENTE de idMarca
-                            delete_options_by_select_id('input_modelo');    // borrar opciones
-                            generate_model_options_xidMarca(idMarca.value, response['producto'].idModelo);  // generar opciones + seteo
-                        
-                        idRubro.value= response['producto'].idRubro;
+                        // CAMPOS OBLIGATORIOS
+                            nombreProducto.value= response['producto'].nombreProducto;
+                            destacadoProducto.value= response['producto'].destacadoProducto;
+                            stockProducto.value= response['producto'].stockProducto;
+                            condicion.value= response['producto'].condicion;
+                            idMarca.value= response['producto'].idMarca;
+                            //  CAMPO DEPENDIENTE de idMarca
+                                delete_options_by_select_id('input_modelo');    // borrar opciones
+                                generate_model_options_xidMarca(idMarca.value, response['producto'].idModelo);  // generar opciones + seteo
+                            
+                            idRubro.value= response['producto'].idRubro;
+
+                        // CAMPOS OPCIONALES
+                            codigoProducto.value= response['producto'].codigoProducto;
+                            descripcionProducto.value= response['producto'].descripcionProducto;
+                            origen.value= response['producto'].origen;
+                            precioTachadoProducto.value= response['producto'].precioTachadoProducto;
+                            precioVentaProducto.value= response['producto'].precioVentaProducto;
+                            precioListaProducto.value= response['producto'].precioListaProducto;
+                            ordenProducto.value= response['producto'].ordenProducto;
+                            vistasProducto.value= response['producto'].vistasProducto;
+                            estadoProducto.value= response['producto'].estadoProducto;
+
                 },// \.success
             });
         // \.ajax
