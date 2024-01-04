@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MediaFilesController;
 use App\Http\Controllers\MarcasController;
@@ -24,6 +26,10 @@ use Illuminate\Support\Facades\Route;
 //  ADMINISTRATION
 
     Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
+
+    Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos');
+    Route::post('/ajaxpro', [CategoriesController::class, 'ajaxpro']);
+
     Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
     Route::get('/admin/productos/crear', [ProductsController::class, 'crear'])->name('administracion.productos.agregar');
     Route::get('/admin/productos/editar/{id}', [ProductsController::class, 'editar'])->name('administracion.productos.editar');
