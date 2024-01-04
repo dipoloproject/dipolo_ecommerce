@@ -45,6 +45,14 @@ class CategoriesController extends Controller
 
     public function ajaxpro(){
 
+        function show_badge($cant){
+            if($cant>0){
+                return '<span class="badge float-none" style="vertical-align: top;">'.$cant.'</span>';
+            }else{
+                return '';
+            }
+        }
+
 
         function membersTree($parentKey){
 
@@ -56,26 +64,35 @@ class CategoriesController extends Controller
             //$sql = 'SELECT id, name from item WHERE parent_id="'.$parentKey.'"';
             $categorias_hijas = Category::Buscar_hijos_xidRubroPadre($argumentos);   //echo "<pre>";var_dump($categorias_hijas);
                 //var_dump(sizeof($categorias_hijas));exit;
-                
-            //$result = $mysqli->query($sql);
-            //echo $parentKey;exit;
-            //echo sizeof($categorias_hijas);exit;
-            //echo '<pre>';var_dump($categorias_hijas);exit;
-            //var_dump($categorias_hijas[0]->nombreRubro);exit;
+
 
             if(sizeof($categorias_hijas)>0){
                 foreach($categorias_hijas as $categoria){
+
+
+                    // Determina numero en badge
+                        $argumentos=[
+                            intval($categoria->idRubro)
+                        ];
+                        $categorias = Category::Buscar_hijos_xidRubroPadre($argumentos);   //echo "<pre>";var_dump($categorias_hijas);
+                    //\.Determina numero en badge
+
+
                     $id = $categoria->idRubro;
                     $row1[$id]['id'] = $categoria->idRubro;
                     //$row1[$id]['name'] = $categoria->nombreRubro;
-                    $row1[$id]['text'] = $categoria->nombreRubro.'  <button class="m-2 float-right btn btn-danger" onclick="deleteCategoryButtonPressed('.$id.')">
-                                                                        <i class="fas fa-trash-alt fa-lg text-white"></i>
+                    $row1[$id]['text'] =                        '   <span class="btn m-2 p-0">'.$categoria->nombreRubro.'</span>'.
+                                                                '  <button  class="m-2 float-right btn btn-danger"
+                                                                            style=" " 
+                                                                            onclick="deleteCategoryButtonPressed('.$id.')">
+                                                                                <i class="fas fa-trash-alt fa-lg text-white"></i>
                                                                     </button>'.
-                                                                '   <button class="m-2 float-right btn btn-primary" onclick="editCategoryButtonPressed('.$id.')">
-                                                                        <i class="fas fa-edit fa-lg text-white"></i>
-                                                                    </button>';
-
-
+                                                                '   <button class="m-2 float-right btn btn-primary" 
+                                                                            style=" "
+                                                                            onclick="editCategoryButtonPressed('.$id.')">
+                                                                                <i class="fas fa-edit fa-lg text-white"></i>
+                                                                    </button>'.
+                                                                    show_badge(sizeof($categorias));
 
 
                     //  Se determina si el nodo hijo (actual) posee hijos

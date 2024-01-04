@@ -49,16 +49,35 @@
 
 
 
-
-
-
 @include ('administration/templates/header')
 
 <!-- ESTILOS PARA TREEVIEW -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" /> -->
 <!--\.ESTILOS PARA TREEVIEW -->
 
+<style>
+    .treeview .list-group-item{
+        cursor:pointer;
+        
+    }
+    
+    .treeview span.indent{
+        margin-left:10px;
+        margin-right:10px
+    }
+    
+    .treeview span.icon{
+        width:12px;
+        margin-right:5px
+    }
+        
+    .treeview .node-disabled{
+        color:silver;
+        cursor:not-allowed
+    }
+
+</style>
 
 
 
@@ -146,8 +165,8 @@
 
             <div class="card">
               <div class="card-body">
-                <div class="container">
-                  <div class="panel panel-default">
+                <!-- <div class="container"> -->
+                  <!-- <div class="panel panel-default"> -->
                     <!-- <div class="panel-heading">
                       <h1>Create Dynamic Treeview Example with PHP MySQL - ItSolutionStuff.com</h1>
                     </div> -->
@@ -155,8 +174,8 @@
                       <div class="col-md-8" id="treeview_json">
                       </div>
                     </div>
-                  </div>
-                </div>
+                  <!-- </div> -->
+                <!-- </div> -->
               </div>
             </div>
 
@@ -180,97 +199,83 @@
 @include ('administration/templates/footer')
 
 
+
+<style>
+  #treeview_json >ul .list-group >li .list-group-item .node-treeview_json{
+    background-color: red !important;
+  }
+</style>
+
+
 <!-- Archivos propios de la vista -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <!-- <script src="../../js/administration/datatables_tabla_productos.js"></script> -->
 
-	<!-- <script src="../../js/administration/datatables_tabla_productos.js"></script> -->
+    <!-- ARCHIVOS PARA TREEVIEW -->
+        <!-- <script type="text/javascript" charset="utf8" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script> -->
+        <!-- <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script> -->
+        <script src="../../js/administration/bootstrap-treeview.js"></script>
+    <!--\.ARCHIVOS PARA TREEVIEW -->
 
-  
+<!--\.Archivos propios de la vista -->
 
-
-
-<!-- ARCHIVOS PARA TREEVIEW -->
-    <!-- <script type="text/javascript" charset="utf8" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script> -->
-    <!-- <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script> -->
-
-    <script src="../../js/administration/bootstrap-treeview.js"></script>
-<!--\.ARCHIVOS PARA TREEVIEW -->
 
 <!-- SCRIPT PARA TREEVIEW -->
-  <script type="text/javascript">
-    
-    function editCategoryButtonPressed(id){
-        console.log("editar:_"+id);
-    }
+    <script type="text/javascript">
+        let tree;
+        let treedata;
 
-    function deleteCategoryButtonPressed(id){
-        console.log("eliminar:_"+id);
-    }
+        $(document).ready(function(){
+                
+            //let tree;
+            var treeData;
+        
+            $.ajax({
+                    type: "POST",  
+                    url: "/ajaxpro",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    dataType: "json",       
+                    success: function(response){
+                        treedata= response;
+                        initTree(response);
+                    } //\.success
+            }); //\.$.ajax
 
+                
+            function initTree(treeData) {
+                /*var*/ tree=$('#treeview_json').treeview({
+                                                        data: treeData,
+                                                        selectedIcon: "",   //  icono a mostrar cuando un nodo esté seleccionado
+                                                        collapseIcon:'fa fa-minus',
+                                                        expandIcon:'fa fa-plus',                                        
+                                                        emptyIcon: "",  // icono para cuando el nodo NO tenga hijos: ""= nada
+                                                        //icon: true,
+                                                        levels: 10,    // propiedad configurada al azar
+                                                        highlightSelected: false,   // resaltar nodo seleccionado
 
+                                                        onNodeSelected: function(event, node) {                                                  
+                                                            tree.treeview('toggleNodeExpanded', [ node.id-1, { silent: true } ]);   // expande o colapsa si el nodo está colapsado o expandido respectivamente
+                                                            tree.treeview('toggleNodeSelected', [ node.id-1, { silent: true } ]);   // deselecciona un nodo si está seleccionado y viceversa
+                                                        },
+                                                        
+                                                        }); //\.var tree=$('#treeview_json').treeview
 
-    $(document).ready(function(){
+            }   //\.function initTree(treeData)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      var treeData;
-      
-      $.ajax({
-            type: "POST",  
-            url: "/ajaxpro",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            dataType: "json",       
-            success: function(response)  
-            {
-              initTree(response)
-            }   
-      });
-      
-      function initTree(treeData) {
-        var tree=$('#treeview_json').treeview({
-                                        data: treeData,
-                                        selectedIcon: "",
-                                        
-                                        collapseIcon:'fa fa-minus',
-                                        expandIcon:'fa fa-plus',
-                                        
-                                        emptyIcon: "",
-                                        //icon: false,
-                                        levels: 100,    // propiedad configurada al azar
-                                        
-                                        
-                                        highlightSelected: false,
-
-                                        onNodeSelected: function(event, data) {
-                                          //console.log(data.id);
-                                          //console.log(data.nodes);
-                                          //console.log(data.nodes.length);
-                                          //'toggleNodeExpanded', [ data.id, { silent: true } ]
-                                          //'getExpanded', data.id
-
-                                        }
-                                        
-                                    });
-
-      }
+        }); //\.$(document).ready(function()
 
 
-     
-      
-      
-    });
-  </script>
+        // CUANDO SE PRESIONA UN BOTÓN DE EDITAR/ELIMINIAR UN NODO
+            function editCategoryButtonPressed(id){
+                console.log("editar:_"+id);
+                tree.treeview('toggleNodeExpanded', [ id-1, { silent: true } ]);    // al hacer click sobre EDITAR, el efecto es que el nodo continua colapsado o expandido
+            } //\.editCategoryButtonPressed
+
+            function deleteCategoryButtonPressed(id){
+                console.log("eliminar:_"+id);
+                tree.treeview('toggleNodeExpanded', [ id-1, { silent: true } ]);    // al hacer click sobre EDITAR, el efecto es que el nodo continua colapsado o expandido
+            }
+        //\.CUANDO SE PRESIONA UN BOTÓN DE EDITAR/ELIMINIAR UN NODO
+
+    </script>
 <!--\.SCRIPT PARA TREEVIEW -->
