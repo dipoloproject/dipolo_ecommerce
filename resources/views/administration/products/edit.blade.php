@@ -130,13 +130,13 @@
                                 </div>
 
                                 <!-- INPUTS DEL FORMULARIO DE CREACION/EDICION DE PRODCUTO -->
-                                    @include ('administration/products/inputs_form_create_edit_product');
+                                    @include ('administration/products/inputs_form_create_edit_product')
 
                             <!-- </div> -->
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="button" 
-                                        class="btn btn-primary"
+                                        class="btn btn-primary text-bold"
                                         id="boton_editar_producto">Actualizar</button>
                             </div>
                         </form>

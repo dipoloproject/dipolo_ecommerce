@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Origin;
+use App\Models\MediaFile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -47,7 +49,8 @@ class CategoriesController extends Controller
 
         function show_badge($cant){
             if($cant>0){
-                return '<span class="badge float-none" style="vertical-align: top;">'.$cant.'</span>';
+                return '<span   class="badge float-none bg-info" 
+                                style="vertical-align: top;">'.$cant.'</span>';
             }else{
                 return '';
             }
@@ -81,7 +84,7 @@ class CategoriesController extends Controller
                     $id = $categoria->idRubro;
                     $row1[$id]['id'] = $categoria->idRubro;
                     //$row1[$id]['name'] = $categoria->nombreRubro;
-                    $row1[$id]['text'] =                        '   <span class="btn m-2 p-0">'.$categoria->nombreRubro.'</span>'.
+                    $row1[$id]['text'] =                        '   <span class="btn p-0" style="margin:15px 15px 15px 0px;">'.$categoria->nombreRubro.'</span>'.
                                                                 '  <button  class="m-2 float-right btn btn-danger"
                                                                             style=" " 
                                                                             onclick="deleteCategoryButtonPressed('.$id.')">
@@ -159,7 +162,173 @@ class CategoriesController extends Controller
     
         //  Retorna al archvo show_locations_according_dpto.js un vector de vectores asociativos
             //echo json_encode($elements_to_ajax); //var_dump($array);exit;
+    }//\.ajaxpro
+
+
+    public function crear(){
+        //$marcas = Product::Get_all_brands();
+        $categorias = Product::Get_all_categories();
+        //$origenes = Origin::List_all_origins();
+
+        $create_edit= "create";
+
+        return view('administration/categories/create', compact( 'categorias', 'create_edit'));
     }
+
+
+    public function subir_categoria(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)    */
+                //return $request->file('archivos')[1];exit;
+                //return $request->all();exit;
+
+        //  GUARDADO EN BASE DE DATOS
+            $argumentos=[
+                            // PARAMETROS OBLIGATORIOS
+                                $request->input_nombreRubro,
+                                intval($request->input_ordenRubro),
+                                $request->input_destacadoRubro,
+                                $request->input_menuRubro,
+                                $request->input_estadoRubro,
+                            // PARAMETROS OPCIONALES
+                                intval($request->input_idRubroPadre),
+                                $request->input_descripcionRubro,
+
+                        ];                                  //echo "<pre>";var_dump($argumentos);exit;
+            $rs_insert = Category::Alta($argumentos);       //echo "<pre>";var_dump($rs_insert);exit;
+
+        //  \.GUARDADO EN BASE DE DATOS
+
+
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_creacion_categoria'=> $rs_insert[0]->mensaje
+            ]); //  esto se retorn al ajax
+    }
+
+
+    
+    public function eliminar_categoria(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;*/
+        
+        $idRubro= intval($request->idRubro_ajax);        //echo $request->idRubro_ajax; exit;
+
+        // ELIMINAR registros de la base de datos
+            $argumentos=[
+                            $idRubro,
+                        ];                                  //var_dump($argumentos);exit;
+            $rs_delete = Category::Elimina($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
+
+
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_eliminacion_categoria'=> $rs_delete[0]->mensaje
+            ]); //  esto se retorn al ajax
+    }
+
+
+
+
+
+    public function editar(Request $request){
+        $marcas = Product::Get_all_brands();
+        $categorias = Product::Get_all_categories();
+        $origenes = Origin::List_all_origins();
+
+        $create_edit= "edit";
+
+            //var_dump($request['id']);exit;
+        // Recuperar PRODUCTO segun id
+            $argumentos=[
+                intval($request['id'])
+            ];
+            $rubro= Category::Dame_rubro($argumentos)[0];       //echo "<pre>";var_dump($rubro);exit;
+
+        return view('administration/categories/edit', compact('marcas', 'categorias' ,'origenes', 'create_edit', 'rubro'));
+    }
+
+
+
+    public function ajax_fetch_rubro_xid(){
+        
+        $id= intval($_POST['idRubro_ajax']);
+        $argumentos=[
+                        $id
+                    ];
+        $producto = Category::Buscar_xid($argumentos);
+
+        /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
+        para poder ser leido en archivo javascript*/
+            $element_to_ajax= modelresult_to_ajax($producto);
+
+            return response()->json([
+                //'hay_registros'=> $hay_registros,
+                'rubro'=> $element_to_ajax
+            ]); //  esto se retorn al ajax
+    }
+
+
+
+    public function actualizar_categorias(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;
+        */
+        /*  Mirar contenido de $request (todo)
+            return $request;exit;
+        */
+
+        //  RECUPERA idProducto del campo hidden
+            //$idRubro= intval($request->input_hidden_idRubro);
+
+        //  Ver contenido completo de $request (todo)
+            //return $request->all();exit;
+                            
+        //  ACTUALIZACION EN BASE DE DATOS
+            $argumentos=[
+                    // PARAMETROS OBLIGATORIOS
+                            intval($request->input_hidden_idRubro),
+                            $request->input_nombreRubro,
+                            intval($request->input_ordenRubro),
+                            $request->input_destacadoRubro,
+                            $request->input_menuRubro,
+                            $request->input_estadoRubro,
+                    // PARAMETROS OPCIONALES
+                            intval($request->input_idRubroPadre),
+                            $request->input_descripcionRubro,
+                        ];      //var_dump($argumentos);exit;
+            $rs_update = Category::Actualiza($argumentos);  //echo "<pre>";var_dump($rs_update[0]->mensaje);exit;
+           
+
+        //  \.ACTUALIZACION EN BASE DE DATOS
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_creacion_producto'=> $rs_update[0]->mensaje
+            ]); //  esto se retorn al ajax
+    }
+
 
 
 
