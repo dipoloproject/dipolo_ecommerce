@@ -75,6 +75,12 @@ class Category extends Model
         return $rs_mdl;
     }
 
+    public static function Dame_RubroPadre_xidRubroPadre($argumentos){
+        $rs_mdl= DB::SELECT('CALL sp_categorias_dame_rubropadre_xidrubropadre(?);', $argumentos);      //echo "<pre>";var_dump($rs_mdl[0]);exit;
+        //var_dump(sizeof($rs_mdl));exit;
+
+        return $rs_mdl;
+    }
 
 
 }

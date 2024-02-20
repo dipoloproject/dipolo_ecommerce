@@ -117,7 +117,7 @@ $(document).ready(function() {
                     },// \.beforeSend
                     success: function (response) {
                         //console.log("-"+response.mensaje_error+"-");
-                        if(response.mensaje_creacion_producto=="ok"){
+                        if(response.mensaje_creacion_categoria=="ok"){
                                     //console.log("CREACION DE PRODUCTO EXITOSA");
                             // success
                                 iziToast.success({
@@ -139,6 +139,9 @@ $(document).ready(function() {
                                         /*setTimeout( function() {
                                             window.location.replace('/admin/productos/crear');
                                         }, 2000);// Se esperará cierto tiempo antes de ejecutarse */
+                        }
+                        if(response.mensaje_error!=""){
+                            swa2_campo_obligatorio(response.mensaje_error);
                         }
 
                     },  // \.success

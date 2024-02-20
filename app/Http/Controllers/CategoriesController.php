@@ -296,7 +296,42 @@ class CategoriesController extends Controller
 
         //  Ver contenido completo de $request (todo)
             //return $request->all();exit;
-                            
+
+
+        //  CONTROLAR que NO sea categoria hija/nieta de si misma
+            $permitido= false;  // se inicializa una bandera
+
+            $idRubroPadre= intval($request->input_idRubroPadre);    // guarda el idRubroPadre que se prentede actualizar
+
+            while( $idRubroPadre !=  intval($request->input_hidden_idRubro) && $permitido==false ){
+                /* Este ciclo while se detiene si se pretende que el Rubro sea hijo/nieto de si mismo */
+                    $argumento=[
+                        intval($idRubroPadre),
+                    ];
+
+                    if(intval($idRubroPadre)==0){   // el Rubro no tendrá padre (rubro genérico), ó puede ser hijo/nieto del Rubro en cuestión
+                        $permitido= true;
+                    }else{                          // se obtiene el padre del Rubro padre en cuestión (se analisan padres/abuelos)
+                        $rs= Category::Dame_RubroPadre_xidRubroPadre($argumento);
+                        $idRubroPadre= $rs[0]->idRubroPadre;
+                    }
+                
+            }
+
+            if($permitido==false){
+                //  NO es posible que un Rubro sea  hijo/nieto de si mismo
+                    return response()->json([
+                        /*  Aquí sí se definen ambas keys. 
+                            La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                            'mensaje_error'=> "La categoría NO puede ser hija/nieta de sí misma",
+                            'mensaje_creacion_categoria'=> ""
+                    ]); //  esto se retorn al ajax
+                    exit;   // se da fin a la ejecución del código aqui
+            }   
+            ####posible fin de ejecución
+        //\.CONTROLAR que NO sea categoria hija/nieta de si misma
+
+        # Si se llega hasta aquí, es porque ES POSIBLE LA ACTUALIZACION #
         //  ACTUALIZACION EN BASE DE DATOS
             $argumentos=[
                     // PARAMETROS OBLIGATORIOS
@@ -325,8 +360,10 @@ class CategoriesController extends Controller
                 /*  Aquí sí se definen ambas keys. 
                     La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
                     'mensaje_error'=> "",
-                    'mensaje_creacion_producto'=> $rs_update[0]->mensaje
+                    'mensaje_creacion_categoria'=> $rs_update[0]->mensaje
             ]); //  esto se retorn al ajax
+        
+        ####fin de ejecución
     }
 
 
@@ -407,3 +444,8 @@ class CategoriesController extends Controller
         //
     }
 }
+
+
+
+
+
