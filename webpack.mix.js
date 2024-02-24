@@ -99,7 +99,7 @@ const mix = require('laravel-mix');
                 'resources/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js',
                 
                 'resources/adminlte3/dist/js/adminlte.js',
-                'resources/adminlte3/dist/js/demo.js',
+                //'resources/adminlte3/dist/js/demo.js',        //  esta linea se comento porque en login mostraba error. VERIFICAR si no hay problemas en otras paginas
                 //'resources/adminlte3/dist/js/pages/dashboard.js', //  incluir este archivo implica obtener errores por líneas de código en jquery.vmap.min.js
         ], 'public/js/administration/datatables.js')
         

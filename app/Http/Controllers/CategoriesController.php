@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 
+
+use Illuminate\Support\Facades\Route;
+
 class CategoriesController extends Controller
 {
     /**
@@ -21,6 +24,14 @@ class CategoriesController extends Controller
      */
 
     public function ver_todos(){
+        
+
+        
+        
+            //echo "<pre>";var_dump(Route::currentRouteAction());exit;     // devuelve App\Http\Controllers\<controlador@metodo>
+            //echo "<pre>";var_dump(Route::currentRouteName());exit;     // devuelve alias de la ruta
+            //echo "<pre>";var_dump(Route::getCurrentRoute()->getAction()['controller']);exit;
+            //echo "<pre>";var_dump(Route::getCurrentRoute()->getAction());exit;
 
         $categorias = Product::Get_all_categories();
 

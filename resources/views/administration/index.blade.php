@@ -1,3 +1,11 @@
+<?php
+//session_destroy();
+session_start();
+//echo $_SESSION['user_login'];
+session_destroy();
+//exit;
+?>
+
 @include ('administration/templates/header')
 
   <!-- Content Wrapper. Contains page content -->

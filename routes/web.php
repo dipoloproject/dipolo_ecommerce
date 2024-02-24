@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MediaFilesController;
@@ -23,12 +24,26 @@ use Illuminate\Support\Facades\Route;
     return view('home');
 });*/
 
+    //  MIDDLEWARE
+
+        Route::middleware(['customauth',])->group(function(){
+
+            Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos');
+            Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
+
+        });
+
+
+//  LOGIN
+    Route::get('/login', [LoginController::class, 'login'])->name('users.login');
+    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('users.authenticate');
+
 //  ADMINISTRATION
 
     Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
 
     // CATEGORIAS
-        Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos');
+        #Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos')->middleware(['customauth',]);
             Route::post('/ajaxpro', [CategoriesController::class, 'ajaxpro']);
         Route::get('/admin/categorias/crear', [CategoriesController::class, 'crear'])->name('administracion.categorias.agregar');
             Route::post('/subir_categoria', [CategoriesController::class, 'subir_categoria']);
@@ -37,7 +52,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('/ajax_fetch_rubro_xid', [CategoriesController::class, 'ajax_fetch_rubro_xid']);
             Route::post('/actualizar_categorias', [CategoriesController::class, 'actualizar_categorias']);
     // PRODUCTOS
-        Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
+        #Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
         Route::get('/admin/productos/crear', [ProductsController::class, 'crear'])->name('administracion.productos.agregar');
         Route::get('/admin/productos/editar/{id}', [ProductsController::class, 'editar'])->name('administracion.productos.editar');
 
