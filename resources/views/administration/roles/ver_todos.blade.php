@@ -402,49 +402,74 @@
 														value=""> -->										
 
 												<div class="card">
-													<div class="card-header">
+													<div class="card-header bg-primary">
 														<h3 class="card-title text-bold">Listado de Permisos</h3>
 													</div>
 													<div class="card-body">
-														<div class="container">
-															<div class="panel panel-default">
-																<div class="panel-heading">
+														<div class="row col-md-12">
 
-																	<label class="checkbox-wrap">Gestión de productos
-																		<input type="checkbox" id="check_all_permisos_productos">
-																		<span class="checkmark"></span>
-																	</label>
-																	
-																	
-																</div>
+															<div class="col-md-6">
+																<div class="container">
+																	<div class="callout border-top" style="border-left-color:#00e676;">
+																		<div class="panel panel-default">
+																			<div class="panel-heading">
 
-																<div class="panel-body d-flex justify-content-center px-0">
-																	<div class="col-md-12 px-0" id="treeview_json_productos"></div>
+																				<label class="checkbox-wrap">Gestión de productos
+																					<input 	type="checkbox" 
+																							id="check_all_permisos_productos">
+																					<span class="checkmark"></span>
+																				</label>
+																				
+																				
+																			</div>
+
+																			<div class="panel-body d-flex justify-content-center px-0">
+																				<div class="col-md-12 px-0" id="treeview_json_productos"></div>
+																			</div>
+																		</div>
+																		<!-- div class="panel panel-default" -->
+																	</div>
 																</div>
+																<!-- \.div class="container"> -->
 															</div>
-															<!-- div class="panel panel-default" -->
+															<!-- div class="col-md-6" -->
+
+
+															<div class="col-md-6">
+																<div class="container">
+																	<div class="callout callout-danger border-top">
+																		<div class="panel panel-default">
+																			<div class="panel-heading">
+																				<label class="checkbox-wrap">Gestión de categorías
+																					<input 	type="checkbox"
+																							id="check_all_permisos_categorias">
+																					<span class="checkmark"></span>
+																				</label>
+																			</div>
+
+																			<div class="panel-body d-flex justify-content-center px-0">
+																				<div class="col-md-12 px-0" id="treeview_json_categorias"></div>
+																			</div>
+																		</div>
+																		<!-- div class="panel panel-default" -->
+																	</div>
+																</div>
+																<!-- \.div class="container"> -->
+															</div>
+															<!-- \.div class="col-md-6" -->
+
+
+
 														</div>
-														<!-- \.div class="container"> -->
+														<!-- \.<div class="row col-md-12"> -->
 													</div>
-													<!-- div class="card-body" -->
+													<!-- \.div class="card-body" -->
 
 
 													<div class="card-body">
 														<div class="container">
 															<div class="panel panel-default">
-																<div class="panel-heading">
-
-																	<label class="checkbox-wrap">Gestión de categorías
-																		<input type="checkbox">
-																		<span class="checkmark"></span>
-																	</label>
-																	
-																	
-																</div>
-
-																<div class="panel-body d-flex justify-content-center px-0">
-																	<div class="col-md-12 px-0" id="treeview_json_categorias"></div>
-																</div>
+																
 															</div>
 															<!-- div class="panel panel-default" -->
 														</div>

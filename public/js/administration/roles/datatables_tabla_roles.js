@@ -5,6 +5,46 @@
 
 $( document ).ready(function() {
 
+    function initTree(treeData, gestion_de_x, offset) {
+        /*  treeData
+            gestion_de_x -> representa el tipo de gestión (productos, categorias, usuarios, roles, marcas, etc) */
+            
+        /*  Declaración de variables DINAMICAMENTE
+            window["tree_"+gestion_de_x] -> declara el nombre de una variable. Por ejemplo, la variable tree_productos
+            es decir, que se llame como indica el string "tree_" y el contenido de la variable gestion_de_x ('productos','categorias', etc)*/
+
+        /*var*/ window["tree_"+gestion_de_x]=$('#treeview_json_'+gestion_de_x).treeview({
+                                                    data: treeData,
+                                                    text: "Node 1",															
+                                                    //icon: "fa fa-plus-square",
+                                                    multiSelect:true,
+                                                    showCheckbox:true,															
+                                                    //selectable: true,
+                                                    state: {
+                                                        checked: true,
+                                                        //disabled: true,
+                                                        //expanded: true,
+                                                        selected: true
+                                                    },							// todo el state se puede eliminar
+                                                    checkedIcon: "far fa-check-circle",
+                                                    uncheckedIcon: "far fa-circle",
+                                                    highlightSelected:false,
+
+                                                    /* node.id-x , x es la (cantidad de permisos con idPermisoPadre= NULL +1 )x1*/
+                                                        onNodeSelected: function(event, node) {      
+                                                            window["tree_"+gestion_de_x].treeview('toggleNodeChecked', [ node.id-offset, { silent: true } ]);
+                                                        },
+
+                                                        onNodeUnselected: function(event, node) {      
+                                                            window["tree_"+gestion_de_x].treeview('toggleNodeChecked', [ node.id-offset, { silent: true } ]);
+                                                        },
+
+                                                }); //\.var tree=$('#treeview_json_productos').treeview
+
+    }   //\.function initTree(treeData, gestion_de_x, offset)
+
+
+
     
 
     //  CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS - Gestión PRODUCTOS
@@ -19,13 +59,14 @@ $( document ).ready(function() {
                 dataType: "json",       
                 success: function(response){
                     treedata= response;
-                    initTree_productos(response);
+                    initTree(response, 'productos', 4);
                 } //\.success
         }); //\.$.ajax
 
     
-        function initTree_productos(treeData) {
-            /*var*/ tree_productos=$('#treeview_json_productos').treeview({
+        /*function initTree_productos(treeData) {
+            /*var*/ 
+            /*tree_productos=$('#treeview_json_productos').treeview({
                                                         data: treeData,
                                                         text: "Node 1",															
                                                         //icon: "fa fa-plus-square",
@@ -43,7 +84,7 @@ $( document ).ready(function() {
                                                         highlightSelected:false,
 
                                                         /* node.id-x , x es la (cantidad de permisos con idPermisoPadre= NULL +1 )x1*/
-                                                            onNodeSelected: function(event, node) {      
+                                                            /*onNodeSelected: function(event, node) {      
                                                                 tree_productos.treeview('toggleNodeChecked', [ node.id-4, { silent: true } ]);
                                                             },
 
@@ -54,6 +95,7 @@ $( document ).ready(function() {
                                                     }); //\.var tree=$('#treeview_json_productos').treeview
 
         }   //\.function initTree(treeData)
+        */
 
     //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión PRODUCTOS =========================================================================================
 
@@ -70,13 +112,14 @@ $( document ).ready(function() {
             dataType: "json",       
             success: function(response){
                 treedata= response;
-                initTree_categorias(response);
+                initTree(response, 'categorias', 8);
             } //\.success
         }); //\.$.ajax
 
 
-        function initTree_categorias(treeData) {
-        /*var*/ tree_categorias=$('#treeview_json_categorias').treeview({
+        /*function initTree_categorias(treeData) {
+            /*var*/ 
+                /*tree_categorias=$('#treeview_json_categorias').treeview({
                                                     data: treeData,
                                                     text: "Node 1",															
                                                     //icon: "fa fa-plus-square",
@@ -94,7 +137,7 @@ $( document ).ready(function() {
                                                     highlightSelected:false,
 
                                                     /* node.id-x , x es la (cantidad de permisos con idPermisoPadre= NULL +1)x2*/
-                                                        onNodeSelected: function(event, node) {      
+                                                        /*onNodeSelected: function(event, node) {      
                                                             tree_categorias.treeview('toggleNodeChecked', [ node.id-8, { silent: true } ]);
                                                         },
 
@@ -105,20 +148,15 @@ $( document ).ready(function() {
                                                 }); //\.var tree=$('#treeview_json_productos').treeview
 
         }   //\.function initTree(treeData)
+        */
+
 
     //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión CATEGORIAS =========================================================================================
 
 
 
-
-
-
-
-
-
-
-
-
+    //  CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión CATEGORIAS 
+    //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión CATEGORIAS =========================================================================================
 
 
 
@@ -381,7 +419,7 @@ $( document ).ready(function() {
 
             $("#check_all_permisos_productos").prop("checked", false);  // DESCHECKEAR input GESTION PRODUCTOS
                 $('#treeview_json_productos').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
-
+            $("#check_all_permisos_categorias").prop("checked", false);  // DESCHECKEAR input GESTION CATEGORIAS
                 $('#treeview_json_categorias').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
 
             var idRol = $(this).val();   //  recupera el valor de la propiedad value de <button class="ver_editar_permisos"> -> idRol del rol donde se hizo click
@@ -414,33 +452,41 @@ $( document ).ready(function() {
                                     case (5<=value.idPermiso <=8):
                                         $('#treeview_json_categorias').treeview('toggleNodeChecked', [ value.idPermiso-5, { silent: true } ]);
                                         break;
+                                    /*case (8<=value.idPermiso <=11):
+                                        $('#treeview_json_usuarios').treeview('toggleNodeChecked', [ value.idPermiso-8, { silent: true } ]);
+                                        break;*/
                                 }
                             //$('#treeview_json_productos').treeview('toggleNodeChecked', [ value.idPermiso-1, { silent: true } ]);
                             //$('#treeview_json_categorias').treeview('toggleNodeChecked', [ value.idPermiso-1, { silent: true } ]);
                         }); // \.each
 
                         //  CONTROLES
+
+                            //  HACERLO GENÉRICO
                             var id; // variable definida por necesidad de defecto
+
+
                             var permisos_checkeados_productos= $('#treeview_json_productos').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
                                 //console.log(permisos_checkeados_productos); // vector de objetos
                                 var array_ids= array_objects_permissions_to_array_ids(permisos_checkeados_productos);       //console.log(array_ids);
-                                array_ids.sort();
+                                array_ids.sort();   // ordenar los permisos checkeados
 
-                                var array_permissions_gestion_productos=[4,5,6,7];
-                                array_permissions_gestion_productos.sort();
+                                var array_permissions_gestion_productos=[4,5,6,7];  // hacer funcón ajax que recupere en un array los id´s de los permisos de gestion_de_x
+                                array_permissions_gestion_productos.sort(); // ordenar los permisos pertenecientes a gestion_de_x
 
                                 if( array_ids.length==array_permissions_gestion_productos.length && 
                                     array_ids.every(function(v,i)   { 
                                                                         return v === array_permissions_gestion_productos[i] 
                                                                     } )
-                                    ){
-                                        $("#check_all_permisos_productos").prop("checked", true);  // DESCHECKEAR input GESTION PRODUCTOS
-                                        console.log("asdf");
-                                    }else{
-                                        $("#check_all_permisos_productos").prop("checked", false);  // DESCHECKEAR input GESTION PRODUCTOS
-                                    }
+                                    )   //  compara longitud de arrays y si son iguales entre sus elementos uno a uno
+                                {
+                                        $("#check_all_permisos_productos").prop("checked", true);  // CHECKEAR input GESTEION DE X
+                                }else{
+                                        $("#check_all_permisos_productos").prop("checked", false);  // DESCHECKEAR input GESTION DE X
+                                }
+
                                 
-                                //if(permisos_checkeados_productos == [4,5,6,7]){console.log("IGUALES");}
+                                
                         //  \.CONTROLES
                     }
                     // \.success
@@ -480,6 +526,16 @@ $( document ).ready(function() {
                 }
             });
         //  \.PRESIONAR INPUT CHECK ALL permisos productos
+
+        //  PRESIONAR INPUT CHECK ALL permisos categorias
+            $('#check_all_permisos_categorias').click( function() {
+                if( $('#check_all_permisos_categorias').prop('checked') ){
+                    $('#treeview_json_categorias').treeview('checkAll', { silent: true });   // inicialmente descheckean todos los nodos
+                }else{
+                    $('#treeview_json_categorias').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
+                }
+            });
+        //  \.PRESIONAR INPUT CHECK ALL permisos categorias
 
     //  \.CHECK ALL PERMISOS s/SECCION
 
