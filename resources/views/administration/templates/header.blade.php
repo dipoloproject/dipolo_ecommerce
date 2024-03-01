@@ -598,14 +598,15 @@
 			</li>
 
 			<li class="nav-item">
-				<a href="#" class="nav-link">
-					<i class="nav-icon fas fa-shield-alt text-warning"></i>
+				<a href="{{route('administracion.roles.ver_todos')}}" class="nav-link">
+					<!-- <i class="nav-icon fas fa-shield-alt text-warning"></i> -->
+          <i class="nav-icon fas fa-user-shield text-warning"></i>
 					<p>
-						Permisos
+						Roles
 						<i class="fas fa-angle-left right"></i>
 					</p>
 				</a>
-				<ul class="nav nav-treeview">
+				<!-- <ul class="nav nav-treeview">
 					<li class="nav-item">
 						<a href="pages/tables/simple.html" class="nav-link">
 							<i class="fas fa-list nav-icon"></i>
@@ -618,7 +619,7 @@
 							<p>Agregar</p>
 						</a>
 					</li>
-				</ul>
+				</ul> -->
 			</li>
 
 			<li class="nav-item">

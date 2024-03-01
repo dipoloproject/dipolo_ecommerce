@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MediaFilesController;
@@ -41,6 +42,21 @@ use Illuminate\Support\Facades\Route;
 //  ADMINISTRATION
 
     Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
+
+    // ROLES
+        Route::get('/admin/roles/ver_todos', [RolesController::class, 'ver_todos'])->name('administracion.roles.ver_todos');
+            Route::post('/ajax_fetch_roles', [RolesController::class, 'ajax_fetch_roles']);
+            Route::post('/ajax_fetch_permisos_xidRol', [RolesController::class, 'ajax_fetch_permisos_xidRol']);
+            Route::post('/ajaxpro_treeview_permissions', [RolesController::class, 'ajaxpro_treeview_permissions']);
+        // Route::post('/ajaxpro', [RolesController::class, 'ajaxpro']);
+        // Route::get('/admin/roles/crear', [RolesController::class, 'crear'])->name('administracion.roles.agregar');
+        //     Route::post('/subir_categoria', [RolesController::class, 'subir_categoria']);
+        // Route::post('/eliminar_categoria', [RolesController::class, 'eliminar_categoria']);
+        // Route::get('/admin/roles/editar/{id}', [RolesController::class, 'editar'])->name('administracion.roles.editar');
+        //     Route::post('/ajax_fetch_rubro_xid', [RolesController::class, 'ajax_fetch_rubro_xid']);
+        //     Route::post('/actualizar_roles', [RolesController::class, 'actualizar_roles']);
+
+
 
     // CATEGORIAS
         #Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos')->middleware(['customauth',]);

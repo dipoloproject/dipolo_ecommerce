@@ -92,8 +92,7 @@
 		}
 		/*estilo editado*/
 		.treeview span.icon::before{        
-      font-size:1.5em;
-			/* padding:10px;	estilo editado para agrandar el área tactil del icono para colapsar/expandir un nodo */
+			padding:10px;	/*estilo editado para agrandar el área tactil del icono para colapsar/expandir un nodo */
 		}
 		
 
@@ -406,39 +405,25 @@
                 
             function initTree(treeData) {
                 /*var*/ tree=$('#treeview_json').treeview({
-															data: treeData,
-															text: "Node 1",															
-															//icon: "fa fa-plus-square",
-															multiSelect:true,
-															showCheckbox:true,															
-															//selectable: true,
-															state: {
-																checked: true,
-																//disabled: true,
-																//expanded: true,
-																selected: true
-															},							// todo el state se puede eliminar
-															checkedIcon: "far fa-check-circle",
-															uncheckedIcon: "far fa-circle",
-															highlightSelected:false,
+                                                        data: treeData,
+                                                        collapseIcon:'fa fa-minus-square',
+                                                        expandIcon:'fa fa-plus-square',                                        
+                                                        emptyIcon: "",  // icono para cuando el nodo NO tenga hijos: ""= nada
+                                                        //icon: true,
+                                                        levels: 10,    // propiedad configurada al azar
+                                                        highlightSelected: false,   // resaltar nodo seleccionado
 
-															onNodeSelected: function(event, node) {      
-																tree.treeview('toggleNodeChecked', [ node.id-1, { silent: true } ]);
-															},
-
-															onNodeUnselected: function(event, node) {      
-																tree.treeview('toggleNodeChecked', [ node.id-1, { silent: true } ]);
-															},
-
+                                                        onNodeSelected: function(event, node) {                                                  
+                                                            //tree.treeview('toggleNodeExpanded', [ node.id-1, { silent: true } ]);   // expande o colapsa si el nodo está colapsado o expandido respectivamente
+                                                            //tree.treeview('toggleNodeSelected', [ node.id-1, { silent: true } ]);   // deselecciona un nodo si está seleccionado y viceversa
+                                                        },
+                                                        
                                                         }); //\.var tree=$('#treeview_json').treeview
 
             }   //\.function initTree(treeData)
 
         }); //\.$(document).ready(function()
 
-
-
-       
 
         // CUANDO SE PRESIONA UN BOTÓN DE EDITAR/ELIMINIAR UN NODO
             function editCategoryButtonPressed(id){
@@ -525,10 +510,6 @@
                                 });
                             // \.ajax
                         }   // \.if (result.isConfirmed)
-                          else {                                                          // esta linea sera utilizada en permisos
-                            var tabla= $('#treeview_json').treeview('getChecked', id);   // esta linea sera utilizada en permisos
-                            console.log(tabla);                                     // esta linea sera utilizada en permisos
-                          }                                                               // esta linea sera utilizada en pernmisos
                     })
                 //  \.MOSTRAR CUADRO DE CONFIRMACION
 			} //\.function deleteCategoryButtonPressed(id)

@@ -43,7 +43,7 @@ class ProductsController extends Controller
         //var_dump($mensaje[0]->resultado);exit;
 
 
-        return view('administration/ver_todos');
+        return view('administration/products/ver_todos');
     }
 
     public function crear(){

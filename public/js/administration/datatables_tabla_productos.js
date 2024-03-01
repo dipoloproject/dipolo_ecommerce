@@ -114,7 +114,7 @@ $( document ).ready(function() {
 
                     {   "data": "estadoProducto", 
                         "responsivePriority": 10,
-                        "className":"align-middle",
+                        "className":"text-center align-middle",
                         "render":   function (data, type, row) {
                                     var html_out='';
                                     if(row.estadoProducto=="A"){
@@ -252,20 +252,20 @@ $( document ).ready(function() {
 
 
 
-// Add event listener for opening and closing details
-table.on('click', 'td.dt-control', function (e) {
-    let tr = e.target.closest('tr');
-    let row = table.row(tr);
- 
-    if (row.child.isShown()) {
-        // This row is already open - close it
-        row.child.hide();
-    }
-    else {
-        // Open this row
-        row.child(format(row.data())).show();
-    }
-});
+        // Add event listener for opening and closing details
+        table.on('click', 'td.dt-control', function (e) {
+            let tr = e.target.closest('tr');
+            let row = table.row(tr);
+        
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+            }
+            else {
+                // Open this row
+                row.child(format(row.data())).show();
+            }
+        });
 
 
 
