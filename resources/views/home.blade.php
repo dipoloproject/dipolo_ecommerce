@@ -329,7 +329,7 @@
                             <div id="slider-marcas"></div>
                         </div><!-- animacion slider infinito -->
                         <!-- Imagen de banner -->
-                        <img src="/images/banner.png" alt="banner de pagina principal" ">
+                        <img src="/images/banner.png" alt="banner de pagina principal">
                     </div>
 
                 </div>

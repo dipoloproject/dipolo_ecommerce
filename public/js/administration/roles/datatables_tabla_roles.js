@@ -1,17 +1,24 @@
 //  VARIABLES GLOBALES
     let tree;
     let treedata;
+
+    // CREAR VARIABLES permisos_x
+        let permisos_productos= [4,5,6,7];
+        let permisos_categorias= [8,9,10,11];
+        //CREAR DEMÁS VECTORES DE PERMISOS
+    // \.CREAR VARIABLES permisos_gestion_de_x
 //  \.VARIABLES GLOBALES ======================================
 
 $( document ).ready(function() {
 
-    function initTree(treeData, gestion_de_x, offset) {
+    function initTree(treeData, gestion_de_x, permisos,  offset) {
         /*  treeData
             gestion_de_x -> representa el tipo de gestión (productos, categorias, usuarios, roles, marcas, etc) */
             
         /*  Declaración de variables DINAMICAMENTE
             window["tree_"+gestion_de_x] -> declara el nombre de una variable. Por ejemplo, la variable tree_productos
             es decir, que se llame como indica el string "tree_" y el contenido de la variable gestion_de_x ('productos','categorias', etc)*/
+            //console.log(permisos_productos);
 
         /*var*/ window["tree_"+gestion_de_x]=$('#treeview_json_'+gestion_de_x).treeview({
                                                     data: treeData,
@@ -33,10 +40,14 @@ $( document ).ready(function() {
                                                     /* node.id-x , x es la (cantidad de permisos con idPermisoPadre= NULL +1 )x1*/
                                                         onNodeSelected: function(event, node) {      
                                                             window["tree_"+gestion_de_x].treeview('toggleNodeChecked', [ node.id-offset, { silent: true } ]);
+
+                                                            check_item_if_subitems_checked(gestion_de_x, permisos);
                                                         },
 
                                                         onNodeUnselected: function(event, node) {      
                                                             window["tree_"+gestion_de_x].treeview('toggleNodeChecked', [ node.id-offset, { silent: true } ]);
+                                                            
+                                                            check_item_if_subitems_checked(gestion_de_x, permisos);
                                                         },
 
                                                 }); //\.var tree=$('#treeview_json_productos').treeview
@@ -59,7 +70,7 @@ $( document ).ready(function() {
                 dataType: "json",       
                 success: function(response){
                     treedata= response;
-                    initTree(response, 'productos', 4);
+                    initTree(response, 'productos', permisos_productos, 4);
                 } //\.success
         }); //\.$.ajax
 
@@ -112,7 +123,7 @@ $( document ).ready(function() {
             dataType: "json",       
             success: function(response){
                 treedata= response;
-                initTree(response, 'categorias', 8);
+                initTree(response, 'categorias', permisos_categorias,  8);
             } //\.success
         }); //\.$.ajax
 
@@ -150,13 +161,12 @@ $( document ).ready(function() {
         }   //\.function initTree(treeData)
         */
 
-
     //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión CATEGORIAS =========================================================================================
 
 
 
-    //  CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión CATEGORIAS 
-    //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión CATEGORIAS =========================================================================================
+    //  CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión ROLES 
+    //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión ROLES =========================================================================================
 
 
 
@@ -402,7 +412,42 @@ $( document ).ready(function() {
     //  \.DATATABLES CONFIGURATION =============================================================================================
 
 
+    function check_item_if_subitems_checked(gestion_de_x, permisos_gestion_de_x){
+        var id; // variable definida por necesidad de defecto
+        var permisos_checkeados= $('#treeview_json_'+gestion_de_x).treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
+        //console.log(permisos_checkeados); // vector de objetos
+        var array_ids= array_objects_permissions_to_array_ids(permisos_checkeados);       //console.log(array_ids);
+        array_ids.sort();   // ordenar los permisos checkeados
 
+        var array_permissions_gestion= permisos_gestion_de_x;  // hacer funcón ajax que recupere en un array los id´s de los permisos de gestion_de_x
+        array_permissions_gestion.sort(); // ordenar los permisos pertenecientes a gestion_de_x
+
+        if( array_ids.length==array_permissions_gestion.length && 
+            array_ids.every(function(v,i)   { 
+                                                return v === array_permissions_gestion[i] 
+                                            } )
+            )   //  compara longitud de arrays y si son iguales entre sus elementos uno a uno
+        {
+                $("#check_all_permisos_"+gestion_de_x).prop("checked", true);  // CHECKEAR input GESTEION DE X
+        }else{
+                $("#check_all_permisos_"+gestion_de_x).prop("checked", false);  // DESCHECKEAR input GESTION DE X
+        }
+
+
+    }
+
+
+
+    function uncheck_all_inputs(){
+        $("#check_all_permisos_productos").prop("checked", false);  // DESCHECKEAR input GESTION PRODUCTOS
+            $('#treeview_json_productos').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
+        $("#check_all_permisos_categorias").prop("checked", false);  // DESCHECKEAR input GESTION CATEGORIAS
+            $('#treeview_json_categorias').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
+        
+        // roles
+        // marcas
+        // usuarios
+    }
 
 
     function array_objects_permissions_to_array_ids(objects_permissions){
@@ -417,10 +462,7 @@ $( document ).ready(function() {
     //  HACER CLICK SOBRE ICONO VER_EDITAR_PERMISOS EN DATATABLE
         $('#example1 tbody').on( 'click', 'button.ver_editar_permisos', function () {
 
-            $("#check_all_permisos_productos").prop("checked", false);  // DESCHECKEAR input GESTION PRODUCTOS
-                $('#treeview_json_productos').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
-            $("#check_all_permisos_categorias").prop("checked", false);  // DESCHECKEAR input GESTION CATEGORIAS
-                $('#treeview_json_categorias').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
+            uncheck_all_inputs();   //  descheckea todos los inputs
 
             var idRol = $(this).val();   //  recupera el valor de la propiedad value de <button class="ver_editar_permisos"> -> idRol del rol donde se hizo click
                 //console.log("rol: "+idRol);
@@ -439,6 +481,7 @@ $( document ).ready(function() {
                     success: function (response) {
                         //console.log(response['permisos']);
 
+                        //  CHECKEA inputs correspondientes (señala permisos del rol)
                         $.each(response['permisos'], function (key, value) {
                             //console.log(value.idPermiso);
                             //vector_permisos.push( (value.idPermiso-1) );    // hay que restar 1 porque la funcion toggleNodeChecked se rige por posicion desde 0
@@ -460,34 +503,18 @@ $( document ).ready(function() {
                             //$('#treeview_json_categorias').treeview('toggleNodeChecked', [ value.idPermiso-1, { silent: true } ]);
                         }); // \.each
 
-                        //  CONTROLES
+                        //  Checkear GESTION DE X si los subpermisos están checkeados
+                            
+                            var gestion_de_x= 'productos';
+                            var permisos_prod= [4,5,6,7];
+                            check_item_if_subitems_checked(gestion_de_x, permisos_prod);
 
-                            //  HACERLO GENÉRICO
-                            var id; // variable definida por necesidad de defecto
-
-
-                            var permisos_checkeados_productos= $('#treeview_json_productos').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
-                                //console.log(permisos_checkeados_productos); // vector de objetos
-                                var array_ids= array_objects_permissions_to_array_ids(permisos_checkeados_productos);       //console.log(array_ids);
-                                array_ids.sort();   // ordenar los permisos checkeados
-
-                                var array_permissions_gestion_productos=[4,5,6,7];  // hacer funcón ajax que recupere en un array los id´s de los permisos de gestion_de_x
-                                array_permissions_gestion_productos.sort(); // ordenar los permisos pertenecientes a gestion_de_x
-
-                                if( array_ids.length==array_permissions_gestion_productos.length && 
-                                    array_ids.every(function(v,i)   { 
-                                                                        return v === array_permissions_gestion_productos[i] 
-                                                                    } )
-                                    )   //  compara longitud de arrays y si son iguales entre sus elementos uno a uno
-                                {
-                                        $("#check_all_permisos_productos").prop("checked", true);  // CHECKEAR input GESTEION DE X
-                                }else{
-                                        $("#check_all_permisos_productos").prop("checked", false);  // DESCHECKEAR input GESTION DE X
-                                }
-
+                            var gestion_de_x= 'categorias';
+                            var permisos_cat= [8,9,10,11];
+                            check_item_if_subitems_checked(gestion_de_x, permisos_cat);
                                 
                                 
-                        //  \.CONTROLES
+                        //  \.Checkear GESTION DE X si los subpermisos están checkeados
                     }
                     // \.success
                 });
