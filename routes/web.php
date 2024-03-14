@@ -27,11 +27,13 @@ use Illuminate\Support\Facades\Route;
 
     //  MIDDLEWARE
 
-        Route::middleware(['customauth',])->group(function(){
+        Route::middleware(['customauth:administrador|vendedor',])->group(function(){
 
-            Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos');
+            //Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos');
             Route::get('/admin/productos/ver_todos', [ProductsController::class, 'ver_todos'])->name('administracion.productos.ver_todos');
+            //Route::get('/admin/roles/ver_todos', [RolesController::class, 'ver_todos'])->name('administracion.roles.ver_todos');
 
+            Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
         });
 
 
@@ -39,12 +41,14 @@ use Illuminate\Support\Facades\Route;
     Route::get('/login', [LoginController::class, 'login'])->name('users.login');
     Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('users.authenticate');
 
+    Route::get('/logout', [LoginController::class, 'logout'])->name('users.logout');
+
 //  ADMINISTRATION
 
-    Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
+    #Route::get('/admin', [ProductsController::class, 'index'])->name('administracion.index');
 
     // ROLES
-        Route::get('/admin/roles/ver_todos', [RolesController::class, 'ver_todos'])->name('administracion.roles.ver_todos');
+        Route::get('/admin/roles/ver_todos', [RolesController::class, 'ver_todos'])->name('administracion.roles.ver_todos')->middleware('customauth:administrador|vendedor');
             Route::post('/ajax_fetch_roles', [RolesController::class, 'ajax_fetch_roles']);
             Route::post('/ajax_fetch_permisos_xidRol', [RolesController::class, 'ajax_fetch_permisos_xidRol']);
             Route::post('/ajaxpro_treeview_permissions', [RolesController::class, 'ajaxpro_treeview_permissions']);
@@ -56,10 +60,11 @@ use Illuminate\Support\Facades\Route;
         //     Route::post('/ajax_fetch_rubro_xid', [RolesController::class, 'ajax_fetch_rubro_xid']);
         //     Route::post('/actualizar_roles', [RolesController::class, 'actualizar_roles']);
 
-
+        //  PEMRISOS_ROLES
+            Route::post('/actualizar_permisos_roles', [RolesController::class, 'actualizar_permisos_roles']);
 
     // CATEGORIAS
-        #Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos')->middleware(['customauth',]);
+        Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos')->middleware('customauth:administrador|vendedor');
             Route::post('/ajaxpro', [CategoriesController::class, 'ajaxpro']);
         Route::get('/admin/categorias/crear', [CategoriesController::class, 'crear'])->name('administracion.categorias.agregar');
             Route::post('/subir_categoria', [CategoriesController::class, 'subir_categoria']);

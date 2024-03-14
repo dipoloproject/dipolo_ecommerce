@@ -58,10 +58,17 @@ class RolesController extends Controller
                         $id
                     ];
         $permisos = Permission::Listar_xidRol($argumentos);         //var_dump($permisos);exit;
+                                                                    //echo sizeof($permisos);exit;
+
+        //if(sizeof($permisos)>0){
+            /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
+            para poder ser leido en archivo javascript*/
+            $element_to_ajax= modelresult_to_ajax_v2($permisos);       //var_dump($element_to_ajax);exit;    
+        //}
 
         /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
         para poder ser leido en archivo javascript*/
-            $element_to_ajax= modelresult_to_ajax($permisos);       //var_dump($element_to_ajax);exit;
+            //$element_to_ajax= modelresult_to_ajax($permisos);       var_dump($element_to_ajax);exit;
 
             return response()->json([
                 //'hay_registros'=> $hay_registros,
@@ -108,7 +115,7 @@ class RolesController extends Controller
                     $id = $permiso->idPermiso;
                     $row1[$id]['id'] = $permiso->idPermiso;
                     //$row1[$id]['name'] = $permiso->nombreRubro;
-                    $row1[$id]['text'] =                        '   <span class="btn p-0" style="margin:15px 15px 15px 0px;">'.$permiso->nombrePermiso.'</span>'.'';
+                    $row1[$id]['text'] =                        '   <span class="btn p-0" style="margin:15px 15px 15px 0px;">'.$permiso->descripcionPermiso.'</span>'.'';
                                                                 // '  <button  class="m-2 float-right btn btn-danger"
                                                                 //             style=" " 
                                                                 //             onclick="deleteCategoryButtonPressed('.$id.')">
@@ -198,6 +205,57 @@ class RolesController extends Controller
     }//\.ajaxpro
 
 
+
+
+    public function actualizar_permisos_roles(){
+        //  Ver contenido completo de $request (todo)
+            //return $request->all();exit;
+            //var_dump($_POST['array_nuevos_permisos']);exit;
+            //var_dump(isset($_POST['array_nuevos_permisos']));exit;
+
+        //  ELIMINACION de ACTUALES permisos -> que serían VIEJOS PERMISOS
+            $argumento=[
+                        intval($_POST['idRol_ajax']),
+                    ];      //var_dump($argumento);exit;
+            $rs_delete = Role::Elimina_permisos($argumento);  //echo "<pre>";var_dump($rs_delete[0]->mensaje);exit;        
+                $rs = $rs_delete;
+
+        /*  
+            SI se tildó algun permiso, SE DA DE ALTA AL PERMISO, de lo contrario, 
+            NO se hace nada (sólo se habrán eliminado los permisos como se indica en el paso anterior, 
+                            lo cual a nivel semántico está bien porque quiere decir que NO SE TILDÓ NINGUN PERMISO POR LO QUE SE ELIMINAN LOS QUE YA ESTAN EN LA BASE DE DATOS)
+        */
+            if( isset($_POST['array_nuevos_permisos'])  ){
+                //  ALTA DE NUEVOS PERMISOS
+                    foreach(    $_POST['array_nuevos_permisos'] as $id_nuevo_permiso){
+                        //  ACTUALIZACION EN BASE DE DATOS
+                            $argumentos=[
+                                // PARAMETROS OBLIGATORIOS
+                                        intval($_POST['idRol_ajax']),
+                                        $id_nuevo_permiso,
+                                    ];      //var_dump($argumentos);exit;
+                            $rs_update = Role::Alta_permiso($argumentos);  //echo "<pre>";var_dump($rs_update[0]->mensaje);exit;
+                    }   //exit;
+                        $rs = $rs_update;
+                //  \.ACTUALIZACION EN BASE DE DATOS
+            }
+        
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_alta_permisos_rol'=> $rs[0]->mensaje
+            ]); //  esto se retorn al ajax
+        
+        ####fin de ejecución
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

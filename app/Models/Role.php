@@ -21,6 +21,20 @@ class Role extends Model
         return $rs_mdl;
     }
 
+    public static function Elimina_permisos($argumento){
+        
+        $rs_mdl= DB::SELECT('CALL sp_roles_eliminar_permisos(?);', $argumento);      //echo "<pre>";var_dump($rs_mdl[0]);exit;
+        //var_dump(sizeof($rs_mdl));exit;
 
+        return $rs_mdl;
+    }
+
+    public static function Alta_permiso($argumentos){
+        
+        $rs_mdl= DB::SELECT('CALL sp_roles_alta_permiso( ?, ?);', $argumentos);      //echo "<pre>";var_dump($rs_mdl[0]);exit;
+        //var_dump(sizeof($rs_mdl));exit;
+
+        return $rs_mdl;
+    }
 
 }

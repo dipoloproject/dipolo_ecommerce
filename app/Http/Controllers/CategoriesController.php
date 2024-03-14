@@ -58,6 +58,8 @@ class CategoriesController extends Controller
 
     public function ajaxpro(){
 
+        session_start();
+
         function show_badge($cant){
             if($cant>0){
                 return '<span   class="badge float-none bg-info" 
@@ -67,7 +69,7 @@ class CategoriesController extends Controller
             }
         }
 
-
+        
         function membersTree($parentKey){
 
             $row1= array();
@@ -79,6 +81,12 @@ class CategoriesController extends Controller
             $categorias_hijas = Category::Buscar_hijos_xidRubroPadre($argumentos);   //echo "<pre>";var_dump($categorias_hijas);
                 //var_dump(sizeof($categorias_hijas));exit;
 
+            //var_dump(hide_style("categorias_editar"));//exit;
+            
+            
+            $show_hide_editar= hide_style("categorias.editar");
+            $show_hide_eliminar= hide_style("categorias.eliminar");
+            
 
             if(sizeof($categorias_hijas)>0){
                 foreach($categorias_hijas as $categoria){
@@ -97,12 +105,12 @@ class CategoriesController extends Controller
                     //$row1[$id]['name'] = $categoria->nombreRubro;
                     $row1[$id]['text'] =                        '   <span class="btn p-0" style="margin:15px 15px 15px 0px;">'.$categoria->nombreRubro.'</span>'.
                                                                 '  <button  class="m-2 float-right btn btn-danger"
-                                                                            style=" " 
+                                                                            style="'.$show_hide_eliminar.'" 
                                                                             onclick="deleteCategoryButtonPressed('.$id.')">
                                                                                 <i class="fas fa-trash-alt fa-lg text-white"></i>
                                                                     </button>'.
                                                                 '   <button class="m-2 float-right btn btn-primary" 
-                                                                            style=" "
+                                                                            style="'.$show_hide_editar.'"
                                                                             onclick="editCategoryButtonPressed('.$id.')">
                                                                                 <i class="fas fa-edit fa-lg text-white"></i>
                                                                     </button>'.

@@ -39,6 +39,9 @@
 
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
         
+      <!-- Font-awesome Animations -->
+        <link href="https://cdn.jsdelivr.net/npm/font-awesome-animation@1.1.1/css/font-awesome-animation.min.css" rel="stylesheet">
+
     <!-- \.TODOS LOS ESTILOS -->
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -104,6 +107,28 @@
           </form>
         </div>
       </li>
+
+      <!-- PROFILE Menu -> COPIA DE Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-user fa-lg"></i>
+          <!-- <span class="badge badge-danger navbar-badge">3</span> -->
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          
+          <!-- <a href="#" class="dropdown-item dropdown-footer">See All Messages</a> -->
+
+          <div class="dropdown-divider"></div>
+            <a href="{{route('users.logout')}}" class=" dropdown-item dropdown-footer 
+                                text-bold 
+                                faa-parent animated-hover">CERRAR SESIÓN&nbsp;
+                                                           <i class=" fas fa-sign-out-alt 
+                                                                      faa-passing faa-fast"></i>
+            </a>
+
+        </div>
+      </li>
+
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -195,11 +220,11 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
+      </li> -->
     </ul>
   </nav>
   <!-- /.navbar -->

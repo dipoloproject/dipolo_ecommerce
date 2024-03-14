@@ -326,15 +326,18 @@
                     <!-- <div class="panel-heading">
                       <h1>Create Dynamic Treeview Example with PHP MySQL - ItSolutionStuff.com</h1>
                     </div> -->
+                    
                     <div class="row">
                       <div class="col-md-12 d-flex justify-content-end py-2">
-                        <a 	href="{{route('administracion.categorias.agregar')}}"
-                          class="btn btn-success text-bold text-center">
-                                                  <i class="fas fa-plus-circle nav-icon"></i>&nbsp;Categoría
-                        </a>
+                        @if(show_or_hide('categorias.crear'))
+                          <a 	href="{{route('administracion.categorias.agregar')}}"
+                            class="btn btn-success text-bold text-center">
+                                                    <i class="fas fa-plus-circle nav-icon"></i>&nbsp;Categoría
+                          </a>
+                        @endif
                       </div>
                     </div>
-					
+
 
                     <div class="panel-body d-flex justify-content-center px-0">
                       <div class="col-md-12 px-0" id="treeview_json">

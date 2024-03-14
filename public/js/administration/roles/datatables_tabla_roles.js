@@ -5,6 +5,7 @@
     // CREAR VARIABLES permisos_x
         let permisos_productos= [4,5,6,7];
         let permisos_categorias= [8,9,10,11];
+        let permisos_usuarios= [12,13,14,15];
         //CREAR DEMÁS VECTORES DE PERMISOS
     // \.CREAR VARIABLES permisos_gestion_de_x
 //  \.VARIABLES GLOBALES ======================================
@@ -165,8 +166,22 @@ $( document ).ready(function() {
 
 
 
-    //  CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión ROLES 
-    //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión ROLES =========================================================================================
+    //  CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión USUARIOS 
+
+        $.ajax({
+            type: "POST",  
+            url: "/ajaxpro_treeview_permissions",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                idPermisoPadre_ajax: 3
+            },
+            dataType: "json",       
+            success: function(response){
+                treedata= response;
+                initTree(response, 'usuarios', permisos_usuarios,  12);
+            } //\.success
+        }); //\.$.ajax
+    //  \.CODIGO DE TREEVIEW -> LOGICA/VISTA DE PERMISOS  - Gestión USUARIOS =========================================================================================
 
 
 
@@ -236,6 +251,8 @@ $( document ).ready(function() {
                         {"data": null,
                         "responsivePriority": 1,
                         "render":   function (data, type, row) {
+                                            
+                                            var hidden=message();
                                         // En cada enlace, la propiedad href será explícitamente la ruta url ya que NO se pudo usar la funcion route o url
                                         return "<div class='row text-center' >\
                                                     <div class='col-md-4 d-flex justify-content-center' style='padding:5px;'>\
@@ -245,7 +262,7 @@ $( document ).ready(function() {
                                                         <a href='#'>\
                                                             <button class='ver_editar_permisos btn btn-lg px-2'\
                                                                     data-toggle='modal' data-target='#exampleModal_actualizar' \
-                                                                    title='PERMISOS' value="+row.idRol+">\
+                                                                    title='PERMISOS' value="+row.idRol+" "+hidden+">\
                                                                 <i class='fas fa-shield-alt fa-lg text-warning'></i>\
                                                             </button>\
                                                         </a>\
@@ -446,7 +463,8 @@ $( document ).ready(function() {
         
         // roles
         // marcas
-        // usuarios
+        $("#check_all_permisos_usuarios").prop("checked", false);  // DESCHECKEAR input GESTION usuarios
+            $('#treeview_json_usuarios').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
     }
 
 
@@ -464,9 +482,13 @@ $( document ).ready(function() {
 
             uncheck_all_inputs();   //  descheckea todos los inputs
 
-            var idRol = $(this).val();   //  recupera el valor de la propiedad value de <button class="ver_editar_permisos"> -> idRol del rol donde se hizo click
-                //console.log("rol: "+idRol);
-            var vector_permisos= new Array();
+            var idRol = $(this).val();      //  recupera el valor de la propiedad value de <button class="ver_editar_permisos"> -> idRol del rol donde se hizo click
+                                            //  console.log("rol: "+idRol);
+            //  Rescatar idRol del ROL seleccionado
+                var input_idRol= document.getElementById("input_idRol");
+                input_idRol.value= idRol;
+                
+            //var vector_permisos= new Array();
 
 
             //  AJAX 
@@ -480,7 +502,7 @@ $( document ).ready(function() {
                     dataType: "json",
                     success: function (response) {
                         //console.log(response['permisos']);
-
+                            console.log(response['permisos'].length);
                         //  CHECKEA inputs correspondientes (señala permisos del rol)
                         $.each(response['permisos'], function (key, value) {
                             //console.log(value.idPermiso);
@@ -489,12 +511,15 @@ $( document ).ready(function() {
                             /*  Por cada permiso que se encuentra al recorrer el resultSet se llama la siguiente función. 
                                 NO se puedo implementar un vector [0,1,2] para llamar la función una sola vez directamente*/
                                 switch(true){
-                                    case (value.idPermiso <=4):
-                                        $('#treeview_json_productos').treeview('toggleNodeChecked', [ value.idPermiso-1, { silent: true } ]);
-                                        break;
-                                    case (5<=value.idPermiso <=8):
-                                        $('#treeview_json_categorias').treeview('toggleNodeChecked', [ value.idPermiso-5, { silent: true } ]);
-                                        break;
+                                    case (4<=value.idPermiso <=7):
+                                        $('#treeview_json_productos').treeview('toggleNodeChecked', [ value.idPermiso-4, { silent: true } ]);
+                                        //break;
+                                    case (8<=value.idPermiso <=11):
+                                        $('#treeview_json_categorias').treeview('toggleNodeChecked', [ value.idPermiso-8, { silent: true } ]);
+                                        //break;
+                                    case (12<=value.idPermiso <=15):
+                                        $('#treeview_json_usuarios').treeview('toggleNodeChecked', [ value.idPermiso-12, { silent: true } ]);
+                                        //break;
                                     /*case (8<=value.idPermiso <=11):
                                         $('#treeview_json_usuarios').treeview('toggleNodeChecked', [ value.idPermiso-8, { silent: true } ]);
                                         break;*/
@@ -513,6 +538,9 @@ $( document ).ready(function() {
                             var permisos_cat= [8,9,10,11];
                             check_item_if_subitems_checked(gestion_de_x, permisos_cat);
                                 
+                            var gestion_de_x= 'usuarios';
+                            var permisos_cat= [12,13,14,15];
+                            check_item_if_subitems_checked(gestion_de_x, permisos_cat);
                                 
                         //  \.Checkear GESTION DE X si los subpermisos están checkeados
                     }
@@ -526,19 +554,87 @@ $( document ).ready(function() {
 
 
 
+
+
+
+
     $('#boton_formulario_actualizar_permisos').click( function() {
 
-        var id; // variable genérica requerida por defecto
-
-        var permisos_checkeados_productos= $('#treeview_json_productos').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
-            console.log(permisos_checkeados_productos);
-
-        var permisos_checkeados_categorias= $('#treeview_json_categorias').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
-            console.log(permisos_checkeados_categorias);
-
-        console.log("GUARDAR");
+        //  RECUPERA el idRol 
+            var idRol= document.getElementById("input_idRol").value;        //console.log(idRol);
         
-            
+            var id; // variable genérica requerida por defecto
+
+        //  RESCATAR vectores de permisos checkeados por sección
+            var permisos_checkeados_productos= $('#treeview_json_productos').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
+                    //console.log(permisos_checkeados_productos);
+                var ids_permisos_productos= array_objects_permissions_to_array_ids(permisos_checkeados_productos);
+
+            var permisos_checkeados_categorias= $('#treeview_json_categorias').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
+                    //console.log(permisos_checkeados_categorias);
+                var ids_permisos_categorias= array_objects_permissions_to_array_ids(permisos_checkeados_categorias);
+
+            var permisos_checkeados_usuarios= $('#treeview_json_usuarios').treeview('getChecked', id);  // guarda los idPermisos de los permisos que fueron checkeados en la variable tabla
+                    //console.log(permisos_checkeados_categorias);
+                var ids_permisos_usuarios= array_objects_permissions_to_array_ids(permisos_checkeados_usuarios);
+                    //console.log(ids_permisos_usuarios);
+
+        //  CONCATENAR VECTORES -> array_concat
+            var array_concat=  (    ids_permisos_productos.concat(ids_permisos_categorias)    
+                        ).concat(ids_permisos_usuarios);     //console.log(array_concat);
+
+        
+        //  AJAX PARA ELIMINAR PERMISOS DEL ROL +  AJAX PARA CREAR NUEVAMENTE LOS PERMISOS DEL ROL
+            $.ajax({
+                //async: false,   //  hace que esto se ejecute si o si antes de seguir con el siguiente codigo
+                type: "POST",
+                url: "/actualizar_permisos_roles",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{
+                        idRol_ajax: idRol, // variable obtenida de edit.blade.php
+                        array_nuevos_permisos: array_concat,
+                        //_token: $('input[name="_token"]').val()
+                    },
+                dataType: "json",
+                /*  Esto se comenta porque de lo contrario NO se podrá leer los valores pasados por data que son enviados al $_POST   */
+                        //processData: false,
+                        //contentType: false,
+                beforeSend:function (response) {                        
+
+                },// \.beforeSend
+                success: function (response) {
+                    //console.log("-"+response.mensaje_error+"-");
+                    if(response.mensaje_alta_permisos_rol=="ok"){
+                                //console.log("CREACION DE PRODUCTO EXITOSA");
+                        // success
+                            iziToast.success({
+                                timeout: 1000, 
+                                icon: 'fas fa-check', 
+                                title: 'Actualización exitosa!', 
+                                //message: 'iziToast.sucess() with custom icon!'
+                                progressBar:false,      // barra de progreso de cierre
+                                close: false,           // boton x de cerrar
+                                closeOnEscape: true,    // cerrar al apretar ESC
+                                closeOnClick: true,     // cerrar al hacer click sobre alerta
+                                position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
+                                transitionIn: 'flipInX',
+                                transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
+                                animateInside: false,
+                                //onClosing: function () {window.location.replace('/admin/categorias/ver_todos');}  //  REDIRECCIONA cuando el toast se cierra
+                            });
+                                //  REDIRECCIONAR PÁGINA
+                                    /*setTimeout( function() {
+                                        window.location.replace('/admin/productos/crear');
+                                    }, 2000);// Se esperará cierto tiempo antes de ejecutarse */
+                    }
+                    if(response.mensaje_error!=""){
+                        swa2_campo_obligatorio(response.mensaje_error);
+                    }
+
+                },  // \.success
+            }); 
+        // \.ajax
+                //console.log("GUARDAR");          
         $('#exampleModal_actualizar').modal('hide');    // cerrar MODAL de permisos
     });
 
@@ -564,9 +660,50 @@ $( document ).ready(function() {
             });
         //  \.PRESIONAR INPUT CHECK ALL permisos categorias
 
+        //  PRESIONAR INPUT CHECK ALL permisos usuarios
+            $('#check_all_permisos_usuarios').click( function() {
+                if( $('#check_all_permisos_usuarios').prop('checked') ){
+                    $('#treeview_json_usuarios').treeview('checkAll', { silent: true });   // inicialmente descheckean todos los nodos
+                }else{
+                    $('#treeview_json_usuarios').treeview('uncheckAll', { silent: true });   // inicialmente descheckean todos los nodos
+                }
+            });
+        //  \.PRESIONAR INPUT CHECK ALL permisos usuarios
+
     //  \.CHECK ALL PERMISOS s/SECCION
 
 
+    
+        //$('.sujeto_permisos').css('visibility', 'hidden');       
+        //console.log(document.getElementsByClassName('sujeto_permisos'));
 
+
+        /*window.addEventListener("load", function(event) {
+            p();
+        });
+       
+       function p(){
+       alert("el div cargo");
+       }*/
+
+
+       function message(){
+        //return 'visibility:hidden;';
+        //return 'disabled';
+        return '';
+        
+       }
+
+       /*var Pagar = document.getElementsByClassName('sujeto_permisos');
+            Pagar.disabled = true;*/
 
 }); //\.$( document ).ready(function() {
+
+
+/*document.addEventListener('DOMContentLoaded', () => {
+    function hola () {
+      console.log(1);
+    }
+    hola();
+  })*/
+

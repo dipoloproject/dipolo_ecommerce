@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\UserDev;
-
+use App\Models\Permission;
 
 
 
@@ -20,6 +20,12 @@ class LoginController extends Controller
 
 
     public function login(){
+        return view('administration/login/login');
+    }
+
+    public function logout(){
+        session_start();
+        session_destroy();  //  destruir variables de sesión
         return view('administration/login/login');
     }
 
@@ -37,7 +43,18 @@ class LoginController extends Controller
 
         if( $existe_usuario[0]->mensaje == 'si_existe'){
             session_start();
-            $_SESSION['user_login']= true;      // CREACION DE VARIABLE DE SESSION -> USUARIO LOGUEADO
+
+            //  FORMAR VARIABLE DE SESSION que indica que el usuario INICIÓN SESION
+                $_SESSION['user_login']= true;      // CREACION DE VARIABLE DE SESSION -> USUARIO LOGUEADO
+
+            //  FORMAR VECTOR DE PERMISOS DEL USUARIO LOGUEADO -> HACER ESTO CADA VEZ QUE SE MODIFIQUEN LOS PERMISOS DE LOS ROLES
+                $rs_mysql = Permission::Listar_xusuarioxpassword($argumentos);     //echo "<pre>";var_dump($rs_msql);exit;
+                $array= array();    // declaracion de array
+                foreach($rs_mysql as $mysql_object){
+                    array_push($array, $mysql_object->nombrePermiso);
+                }       //var_dump($array);exit;
+                $_SESSION['user_permissions']= $array;      //var_dump($_SESSION['user_permissions']);exit;
+            
         }
 
         return response()->json([

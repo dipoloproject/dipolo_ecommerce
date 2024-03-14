@@ -1,6 +1,6 @@
 <?php
 //session_destroy();
-session_start();
+//session_start();
 //echo $_SESSION['user_login'];
 session_destroy();
 //exit;

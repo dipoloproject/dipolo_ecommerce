@@ -381,12 +381,12 @@
 						style="padding-top:50px;">
 					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
-							<div class="modal-header">
+							<div class="modal-header py-2 px-3">
 
 								<h5 class="modal-title" id="modal_creacion_actualizacion_evento_agenda_titulo"></h5>
-								<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
-								</button> -->
+								</button>
 							</div>
 							<div class="modal-body">
 								<!-- CUERPO -->
@@ -396,10 +396,10 @@
 										<div class="col-md-12" id="formulario_actualizar_evento">
 											
 											<!-- CAMPO NECESARIO PARA ACTUALIZAR PROYECTO -->
-												<!-- <input  type="hidden" 
-														name="input_actualizar_id_evento" 
-														id="input_actualizar_id_evento"
-														value=""> -->										
+												<input  type="hidden" 
+														name="input_idRol" 
+														id="input_idRol"
+														value="">
 
 												<div class="card">
 													<div class="card-header bg-primary">
@@ -407,8 +407,6 @@
 													</div>
 													<div class="card-body">
 														<div class="row col-md-12">
-
-
 
 															<div class="col-md-6">
 																<div class="container">
@@ -461,23 +459,34 @@
 															<!-- \.div class="col-md-6" -->
 
 
+															<div class="col-md-6">
+																<div class="container">
+																	<div class="callout border-top" style="border-left-color:#a1d9d9;">
+																		<div class="panel panel-default">
+																			<div class="panel-heading">
+																				<label class="checkbox-wrap">Gestión de usuarios
+																					<input 	type="checkbox"
+																							id="check_all_permisos_usuarios">
+																					<span class="checkmark"></span>
+																				</label>
+																			</div>
+
+																			<div class="panel-body d-flex justify-content-center px-0">
+																				<div class="col-md-12 px-0" id="treeview_json_usuarios"></div>
+																			</div>
+																		</div>
+																		<!-- div class="panel panel-default" -->
+																	</div>
+																</div>
+																<!-- \.div class="container"> -->
+															</div>
+															<!-- \.div class="col-md-6" -->
 
 														</div>
 														<!-- \.<div class="row col-md-12"> -->
 													</div>
 													<!-- \.div class="card-body" -->
 
-
-													<div class="card-body">
-														<div class="container">
-															<div class="panel panel-default">
-																
-															</div>
-															<!-- div class="panel panel-default" -->
-														</div>
-														<!-- \.div class="container"> -->
-													</div>
-													<!-- div class="card-body" -->
 												</div>
 
 			

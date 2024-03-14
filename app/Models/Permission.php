@@ -22,6 +22,13 @@ class Permission extends Model
         return $rs_mdl;
     }
 
+    public static function Listar_xusuarioxpassword($argumentos){
+        
+        $rs_mdl= DB::SELECT('CALL sp_permisos_listar_xusuarioxpassword(?,?);', $argumentos);       //var_dump($rs_mdl);exit;
+
+        return $rs_mdl;
+    }
+
 
     public static function Buscar(){
         
