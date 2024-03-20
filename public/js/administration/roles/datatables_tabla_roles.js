@@ -272,7 +272,7 @@ $( document ).ready(function() {
                                                         <input  type='hidden' \
                                                                 name='id_evento_actualizar' \
                                                                 value="+row.idRol+">\
-                                                        <a href='/admin/productos/editar/"+row.idRol+"'>\
+                                                        <a href='/admin/roles/editar/"+row.idRol+"'>\
                                                             <button class='editar btn btn-lg px-2'\
                                                                     data-toggle='tooltip' data-placement='top' \
                                                                     title='ACTUALIZAR'>\
@@ -325,7 +325,10 @@ $( document ).ready(function() {
 
                 dom: 'Bfrtip',
                 //dom:'<"container-fluid"<"row"<"col"B><"col"f>>>rtip',   //para mostrar BOTONES Y SEARCH en la misma linea. Linea origina: '<"container-fluid"<"row"<"col"B><"col"l><"col"f>>>rtip'
-                dom:'<"container-fluid"<"row"<"col"B><"col">> <"row"<"col"f><"col"p>>>rti',   //para mostrar BOTONES Y SEARCH en la misma linea. Linea origina: '<"container-fluid"<"row"<"col"B><"col"l><"col"f>>>rtip'
+                dom:'<"container-fluid"<"row"<"col"><"col">> <"row"<"col"f><"col"p>>>rti',   //para mostrar BOTONES Y SEARCH en la misma linea. Linea origina: '<"container-fluid"<"row"<"col"B><"col"l><"col"f>>>rtip'
+                /*BORRANDO LA LETRA B de la linea anterior, se borra el boton de exportar en excel, De manera que la  linea quedaba:
+                    dom:'<"container-fluid"<"row"<"col"B><"col">> <"row"<"col"f><"col"p>>>rti',
+                */
                 buttons:[ 
                     {
                         extend:    'excelHtml5',
@@ -671,6 +674,87 @@ $( document ).ready(function() {
         //  \.PRESIONAR INPUT CHECK ALL permisos usuarios
 
     //  \.CHECK ALL PERMISOS s/SECCION
+
+
+    //  HACER CLICK SOBRE ICONO ELIMINAR EN DATATABLE
+        $('#example1 tbody').on( 'click', 'button.eliminar', function () {
+            var value = $(this).val();   //  recupera el valor de la propiedad value de <button class="eliminar">
+            
+            //  MOSTRAR CUADRO DE CONFIRMACION
+                Swal.fire({
+                    title: '¿Desea eliminar el registro?',
+                    //text: "You won't be able to revert this!",
+                    icon: 'question',
+                    //iconColor: '#d9534f',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',  //  color azul
+                    cancelButtonColor: '#6c757d',   //  color gris
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar',
+                    customClass:{
+                        icon:'fa fa-lg',
+                        confirmButton:'ml-5 mr-5 font-weight-bold',
+                        cancelButton:'ml-5 mr-5 font-weight-bold',
+                    }
+                }).then((result) => {   
+                    if (result.isConfirmed) {   //  SE CONFIRMA LA ACCION
+                        //  AJAX 
+                            $.ajax({
+                                type: "POST",
+                                url: "/eliminar_rol",
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                data: {
+                                    idRol_ajax: value
+                                },
+                                dataType: "json",
+                                success: function (response) {
+                                    //console.log(response['creacion_proyectos']);
+                                    switch (true) {
+                                        case response['mensaje_eliminacion_rol']=='ok':    //  CREACION OK
+                                            // success
+                                                iziToast.success({
+                                                    timeout: 1500, 
+                                                    icon: 'fas fa-check', 
+                                                    title: 'Eliminación exitosa!', 
+                                                    //message: 'iziToast.sucess() with custom icon!'
+                                                    progressBar:false,      // barra de progreso de cierre
+                                                    close: false,           // boton x de cerrar
+                                                    closeOnEscape: true,    // cerrar al apretar ESC
+                                                    closeOnClick: true,     // cerrar al hacer click sobre alerta
+                                                    position:'bottomRight',    /*bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.*/
+                                                    transitionIn: 'flipInX',
+                                                    transitionOut: 'fadeOutRight',/* bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight or flipInX.*/
+                                                    animateInside: false,
+                                                    onClosed: function () {window.location.replace('/admin/roles/ver_todos');}  //  REDIRECCIONA cuando el toast se cierra
+                                                });
+                                            /*    
+                                            //  SUCCESS message - con SWEETALERT2
+                                                swa2_success_up_right('Registro eliminado con éxito');
+                                            //Redirigir a la vista welcome luego de cierto tiempo
+                                                setTimeout( function() {
+                                                    window.location.replace('/admin/productos/ver_todos');    //luego de esta sentencia, NO se puede volver a la pantalla de login con ATRAS
+                                                }, 2000);// Se esperará cierto tiempo antes de ejecutarse
+                                            */
+
+                                            break;
+                                        case response['mensaje_eliminacion_rol']=='error':   //  FECHA INVALIDA
+                                            //  ERROR message
+                                                swa2_register_not_deleted();
+                                            break;
+                                    }   //  \.SWITCH
+                                }
+                                // \.success
+                            });
+                        // \.ajax
+                    }   // \.if (result.isConfirmed)
+                })
+            //  \.MOSTRAR CUADRO DE CONFIRMACION
+        });
+    //  HACER CLICK SOBRE ICONO ELIMINAR EN DATATABLE
+
+
+
+
 
 
     

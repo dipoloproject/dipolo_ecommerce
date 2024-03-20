@@ -53,12 +53,12 @@ use Illuminate\Support\Facades\Route;
             Route::post('/ajax_fetch_permisos_xidRol', [RolesController::class, 'ajax_fetch_permisos_xidRol']);
             Route::post('/ajaxpro_treeview_permissions', [RolesController::class, 'ajaxpro_treeview_permissions']);
         // Route::post('/ajaxpro', [RolesController::class, 'ajaxpro']);
-        // Route::get('/admin/roles/crear', [RolesController::class, 'crear'])->name('administracion.roles.agregar');
-        //     Route::post('/subir_categoria', [RolesController::class, 'subir_categoria']);
-        // Route::post('/eliminar_categoria', [RolesController::class, 'eliminar_categoria']);
-        // Route::get('/admin/roles/editar/{id}', [RolesController::class, 'editar'])->name('administracion.roles.editar');
-        //     Route::post('/ajax_fetch_rubro_xid', [RolesController::class, 'ajax_fetch_rubro_xid']);
-        //     Route::post('/actualizar_roles', [RolesController::class, 'actualizar_roles']);
+        Route::get('/admin/roles/crear', [RolesController::class, 'crear'])->name('administracion.roles.agregar')->middleware('customauth:administrador|vendedor');
+            Route::post('/subir_rol', [RolesController::class, 'subir_rol']);
+        Route::post('/eliminar_rol', [RolesController::class, 'eliminar_rol']);
+        Route::get('/admin/roles/editar/{id}', [RolesController::class, 'editar'])->name('administracion.roles.editar')->middleware('customauth:administrador|vendedor');
+            Route::post('/ajax_fetch_rol_xid', [RolesController::class, 'ajax_fetch_rol_xid']);
+            Route::post('/actualizar_roles', [RolesController::class, 'actualizar_roles']);
 
         //  PEMRISOS_ROLES
             Route::post('/actualizar_permisos_roles', [RolesController::class, 'actualizar_permisos_roles']);
@@ -66,10 +66,10 @@ use Illuminate\Support\Facades\Route;
     // CATEGORIAS
         Route::get('/admin/categorias/ver_todos', [CategoriesController::class, 'ver_todos'])->name('administracion.categorias.ver_todos')->middleware('customauth:administrador|vendedor');
             Route::post('/ajaxpro', [CategoriesController::class, 'ajaxpro']);
-        Route::get('/admin/categorias/crear', [CategoriesController::class, 'crear'])->name('administracion.categorias.agregar');
+        Route::get('/admin/categorias/crear', [CategoriesController::class, 'crear'])->name('administracion.categorias.agregar')->middleware('customauth:administrador|vendedor');
             Route::post('/subir_categoria', [CategoriesController::class, 'subir_categoria']);
         Route::post('/eliminar_categoria', [CategoriesController::class, 'eliminar_categoria']);
-        Route::get('/admin/categorias/editar/{id}', [CategoriesController::class, 'editar'])->name('administracion.categorias.editar');
+        Route::get('/admin/categorias/editar/{id}', [CategoriesController::class, 'editar'])->name('administracion.categorias.editar')->middleware('customauth:administrador|vendedor');
             Route::post('/ajax_fetch_rubro_xid', [CategoriesController::class, 'ajax_fetch_rubro_xid']);
             Route::post('/actualizar_categorias', [CategoriesController::class, 'actualizar_categorias']);
     // PRODUCTOS

@@ -86,7 +86,8 @@
 
 
 
-    function show_or_hide($permission_name){
+    function show_or_hide_php($permission_name){
+        //session_start();
         $have_permission = array_search($permission_name, $_SESSION['user_permissions']);       //var_dump($result);exit;
         if($have_permission){
             //echo 'TIENE PERMISO';exit;
@@ -100,7 +101,8 @@
 
     //session_start();
 
-    function hide_style($permission_name){
+    function show_or_hide_js($permission_name){
+        //session_start();
         $have_permission = array_search($permission_name, $_SESSION['user_permissions']);       //var_dump($result);exit;
         if($have_permission){
             //echo 'TIENE PERMISO';exit;

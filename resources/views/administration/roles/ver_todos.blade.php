@@ -1,57 +1,6 @@
 <?php
-
-/*
-//  FORMACION DE VISTA DE ARBOL EN INPUT SELECT CATEGORÍA/RUBRO
-    function createTreeView($parent, $menu, $nivel) {
-        //  Determina la cantidad de espacios vacíos a anteponer delante del nombre de cada rubro hijo
-            $spaces="";
-            $iteraciones=$nivel;
-            while($iteraciones>0){
-                $spaces.= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                $iteraciones--;
-            }
-
-        $html = "";
-        if (isset($menu['parents'][$parent])) {
-            $html .= "";
-            foreach ($menu['parents'][$parent] as $itemId) {
-                if(!isset($menu['parents'][$itemId])) {
-                    $html .= "<tr><th>".$spaces.$menu['items'][$itemId]->nombreRubro."</th></tr>";
-                }
-                if(isset($menu['parents'][$itemId])) {
-                    $html .= "<tr><th>".$spaces.$menu['items'][$itemId]->nombreRubro."";
-                    $html .= createTreeView( $itemId, $menu, $nivel+1);
-                    $html .= "</th></tr>";
-                }
-            }
-            $html .= "";
-        }
-        return $html;
-    }
-
-
-        $menus = array(
-            'items' => array(),
-            'parents' => array()
-        );
-    // Builds the array lists with data from the SQL result
-        foreach($categorias as $items ):
-            // Create current menus item id into array
-            $menus['items'][$items->idRubro] = $items;
-            // Creates list of all items with children
-            $menus['parents'][$items->idRubroPadre][] = $items->idRubro;
-        endforeach;
-    // Print all tree view menus 
-        //echo  createTreeView(0, $menus, 0);exit;
-
-*/
         
 ?>
-
-
-
-
-
 
 @include ('administration/templates/header')
 
@@ -335,7 +284,19 @@
                 <h3 class="card-title">Listado de Roles</h3>
               </div>
 			  <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body pt-1">
+
+				<div class="row">
+					<div class="col-md-12 d-flex justify-content-end py-2">
+					@if(show_or_hide_php('categorias.crear'))
+						<a 	href="{{route('administracion.roles.agregar')}}"
+							class="btn btn-success text-bold text-center col-2">
+												<i class="fas fa-plus-circle nav-icon"></i>&nbsp;Rol
+						</a>
+					@endif
+					</div>
+				</div>
+
                 <table id="example1" class="table table-bordered table-hover table-responsive">
                   <thead class="bg-primary">
                     <tr>
@@ -405,7 +366,7 @@
 													<div class="card-header bg-primary">
 														<h3 class="card-title text-bold">Listado de Permisos</h3>
 													</div>
-													<div class="card-body">
+													<div class="card-body" style="overflow-y:auto;height:60vh;"><!-- estilos agregados: scrollbar vertical y altura al 50& de la pantalla -->
 														<div class="row col-md-12">
 
 															<div class="col-md-6">

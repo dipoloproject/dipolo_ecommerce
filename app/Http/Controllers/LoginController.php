@@ -38,7 +38,7 @@ class LoginController extends Controller
             $request->login_password
         ];
 
-        $existe_usuario = UserDev::Existe($argumentos);     //echo "<pre>";var_dump($existe_usuario[0]);exit;
+        $existe_usuario = UserDev::Existe($argumentos);     //echo "<pre>";var_dump($existe_usuario[0]->mensaje);exit;
 
 
         if( $existe_usuario[0]->mensaje == 'si_existe'){
@@ -46,6 +46,7 @@ class LoginController extends Controller
 
             //  FORMAR VARIABLE DE SESSION que indica que el usuario INICIÓN SESION
                 $_SESSION['user_login']= true;      // CREACION DE VARIABLE DE SESSION -> USUARIO LOGUEADO
+                $_SESSION['user_idRol']= $existe_usuario[0]->idRol; //echo $existe_usuario[0]->idRol;exit;
 
             //  FORMAR VECTOR DE PERMISOS DEL USUARIO LOGUEADO -> HACER ESTO CADA VEZ QUE SE MODIFIQUEN LOS PERMISOS DE LOS ROLES
                 $rs_mysql = Permission::Listar_xusuarioxpassword($argumentos);     //echo "<pre>";var_dump($rs_msql);exit;

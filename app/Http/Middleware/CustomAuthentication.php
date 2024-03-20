@@ -35,7 +35,7 @@ class CustomAuthentication
             $permission_route= $controller.'.'.$action;    //echo $permission_route;exit;
        
 
-            //echo "<pre>";var_dump($_SESSION['user_permissions']);exit;
+            //cho "<pre>";var_dump($_SESSION['user_permissions']);exit;
             //echo "<pre>";var_dump($permission_route);exit;
 
         //echo "<pre>";var_dump(explode('|',$roles));exit; // esta linea ME SIRVE
@@ -53,17 +53,14 @@ class CustomAuthentication
             $have_permission = array_search($permission_route, $_SESSION['user_permissions']);       //var_dump($result);exit;
             if($have_permission){
                     //echo 'TIENE PERMISO';exit;
-                //return $next($request);             // REDIRIGIR a página solicitada
-                //$_SESSION['enable']= true;
+                return $next($request);             // REDIRIGIR a página solicitada
             }else{
-                //return $next;
-                //echo 'NO TIENE PERMISO';//exit;
-                //return $next($request);             // REDIRIGIR a página solicitada
-                //$_SESSION['enable']= false;
+                    //echo 'NO TIENE PERMISO';//exit;
+                return $next($request);             // REDIRIGIR a página solicitada -> BORRAR ESTA LINEA
+                //return redirect('/admin/productos/ver_todos');  // RUTA AL DASHBOARD!!<- CORREGIR Y CREAR EL DASHBOARD
             }
-            return $next($request);             // REDIRIGIR a página solicitada
-        }
-        // if-else
+            //return $next($request);             // REDIRIGIR a página solicitada
+        }   // if-else
     }   // function handle
 
 }

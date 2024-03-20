@@ -1,6 +1,6 @@
 <?php
-
-    //echo "en la vista <pre>";var_dump($rubro);exit;
+    
+    //echo "en la vista <pre>";var_dump($rubro);exit;asdfasd
 
 //  RECUPERAR VALORES DE LAS PROPIEDADES DEL OBJETO (proveniente del controlador)
     $idRubro= $rubro->idRubro;

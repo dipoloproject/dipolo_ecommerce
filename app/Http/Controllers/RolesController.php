@@ -29,6 +29,54 @@ class RolesController extends Controller
     }
 
 
+    public function crear(){
+        //$marcas = Product::Get_all_brands();
+        $categorias = Product::Get_all_categories();
+        //$origenes = Origin::List_all_origins();
+
+        $create_edit= "create";
+
+        return view('administration/roles/create', compact( 'categorias', 'create_edit'));
+    }
+
+    public function subir_rol(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)    */
+                //return $request->file('archivos')[1];exit;
+                //return $request->all();exit;
+
+        //  GUARDADO EN BASE DE DATOS
+            $argumentos=[
+                            // PARAMETROS OBLIGATORIOS
+                                $request->input_nombreRol,
+                                $request->input_estadoRol,
+                            // PARAMETROS OPCIONALES
+                                $request->input_observacionesRol,
+
+                        ];                                  //echo "<pre>";var_dump($argumentos);exit;
+            $rs_insert = Role::Alta($argumentos);       //echo "<pre>";var_dump($rs_insert);exit;
+
+        //  \.GUARDADO EN BASE DE DATOS
+
+
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_creacion_rol'=> $rs_insert[0]->mensaje
+            ]); //  esto se retorn al ajax
+    }
+
+
+
+
     public function ajax_fetch_roles(){
         
         $roles = Role::Listar();
@@ -256,6 +304,121 @@ class RolesController extends Controller
         
         ####fin de ejecución
     }
+
+
+
+
+
+
+    public function editar(Request $request){
+        
+        //$marcas = Product::Get_all_brands();
+        //$categorias = Product::Get_all_categories();
+        //$origenes = Origin::List_all_origins();
+
+        $create_edit= "edit";
+
+            //var_dump($request['id']);exit;
+        // Recuperar ROL segun id
+            $argumentos=[
+                intval($request['id'])
+            ];
+            $rol= Role::Dame_rol($argumentos)[0];       //echo "<pre>";var_dump($rol);exit;
+
+        return view('administration/roles/edit', compact('create_edit', 'rol'));
+    }
+
+    public function ajax_fetch_rol_xid(){
+        
+        $id= intval($_POST['idRol_ajax']);
+        $argumentos=[
+                        $id
+                    ];
+        $rol = Role::Buscar_xid($argumentos);
+
+        /*  Convierte el resultset (vector de objetos) en un vector de vectores asociativos 
+        para poder ser leido en archivo javascript*/
+            $element_to_ajax= modelresult_to_ajax($rol);
+
+            return response()->json([
+                //'hay_registros'=> $hay_registros,
+                'rubro'=> $element_to_ajax
+            ]); //  esto se retorn al ajax
+    }
+
+
+    public function actualizar_roles(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;
+        */
+        /*  Mirar contenido de $request (todo)
+            return $request;exit;
+        */
+
+        //  RECUPERA idProducto del campo hidden
+            //$idRubro= intval($request->input_hidden_idRubro);
+
+        //  Ver contenido completo de $request (todo)
+            //return $request->all();exit;       
+
+        # Si se llega hasta aquí, es porque ES POSIBLE LA ACTUALIZACION #
+        //  ACTUALIZACION EN BASE DE DATOS
+            $argumentos=[
+                    // PARAMETROS OBLIGATORIOS
+                            intval($request->input_hidden_idRol),
+                            $request->input_nombreRol,
+                            $request->input_estadoRol,
+                    // PARAMETROS OPCIONALES
+                            $request->input_observacionesRol,
+                        ];      //var_dump($argumentos);exit;
+            $rs_update = Role::Actualiza($argumentos);  //echo "<pre>";var_dump($rs_update[0]->mensaje);exit;
+           
+
+        //  \.ACTUALIZACION EN BASE DE DATOS
+        /*  Se retorna de esta manera para poder enviar más variables de ser necesario
+            Por ejemplo: return response()->json([
+                                                'modelos'=> $modelos, 
+                                                'variable1'=> 123456,
+                                                'variable2'=> true
+                                            ]);
+        */
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_creacion_rol'=> $rs_update[0]->mensaje
+            ]); //  esto se retorn al ajax
+        
+        ####fin de ejecución
+    }
+
+    public function eliminar_rol(Request $request){
+
+        /*  Mirar contenido de $request (archivos seleccionados)
+            return $request->file('archivos')[1];exit;*/
+        
+        $idRol= intval($request->idRol_ajax);
+
+        //echo $request->idRol_ajax; exit;
+
+        // ELIMINAR registros de la base de datos
+            $argumentos=[
+                            $idRol,
+                        ];                                  //var_dump($argumentos);exit;
+            $rs_delete = Role::Elimina($argumentos);  //echo "<pre>";var_dump($rs_insert_rt_id);exit;
+
+
+
+            $rs_salida_sp= "ok";    //  RESPUESTA TEMPORAL
+            return response()->json([
+                /*  Aquí sí se definen ambas keys. 
+                    La key-value 'mensaje_error'="" quiere decir que NO hubo errores al cargar archivos */
+                    'mensaje_error'=> "",
+                    'mensaje_eliminacion_rol'=> $rs_salida_sp
+            ]); //  esto se retorn al ajax
+    }
+
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,7 @@
 <?php
 
+    
+    
 //echo "<pre>";var_dump($producto[0]->nombreProducto);exit;
 //echo "<pre>";var_dump($producto->nombreProducto);exit;
 

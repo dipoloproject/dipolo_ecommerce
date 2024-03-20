@@ -1,5 +1,5 @@
 <?php
-
+//session_start();
 
 //  FORMACION DE VISTA DE ARBOL EN INPUT SELECT CATEGORÍA/RUBRO
     function createTreeView($parent, $menu, $nivel) {
@@ -29,7 +29,7 @@
         return $html;
     }
 
-
+    //  Variable 
         $menus = array(
             'items' => array(),
             'parents' => array()
@@ -258,7 +258,7 @@
           <div class="col-md-12">
 
             <!-- TABLA ELIMINADA TEMPORALMENTE -->
-            <div class="card">
+            <!-- <div class="card"> -->
               <!-- <div class="card-header">
                 <h3 class="card-title">Listado de todas las categorías</h3>
               </div> -->
@@ -329,9 +329,9 @@
                     
                     <div class="row">
                       <div class="col-md-12 d-flex justify-content-end py-2">
-                        @if(show_or_hide('categorias.crear'))
+                        @if(show_or_hide_php('categorias.crear'))
                           <a 	href="{{route('administracion.categorias.agregar')}}"
-                            class="btn btn-success text-bold text-center">
+                              class="btn btn-success text-bold text-center col-2">
                                                     <i class="fas fa-plus-circle nav-icon"></i>&nbsp;Categoría
                           </a>
                         @endif

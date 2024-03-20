@@ -83,9 +83,9 @@ class CategoriesController extends Controller
 
             //var_dump(hide_style("categorias_editar"));//exit;
             
-            
-            $show_hide_editar= hide_style("categorias.editar");
-            $show_hide_eliminar= hide_style("categorias.eliminar");
+            //  VARIABLE QUE MUESTRA/OCULTA BOTÓN según ROL+PERMISOS
+                $show_hide_editar= show_or_hide_js("categorias.editar");
+                $show_hide_eliminar= show_or_hide_js("categorias.eliminar");
             
 
             if(sizeof($categorias_hijas)>0){
